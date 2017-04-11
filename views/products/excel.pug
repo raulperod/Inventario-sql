@@ -1,0 +1,65 @@
+extends ../layout.pug
+block contenido
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Registrar productos con excel
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Ejemplo de tabla para excel
+          // /.panel-heading
+          .panel-body
+            .table-responsive
+              table.table.table-striped.table-bordered.table-hover
+                thead
+                  tr
+                    th Nombre
+                    th Descripcion
+                    th Categoria
+                    th Codigo
+                    th Minimo
+                    th Basico
+                tbody
+                  tr
+                    td Foundation
+                    td 15 ml
+                    td Gelish
+                    td 200032
+                    td 50
+                    td No
+                  tr
+                    td Passion
+                    td 15 ml
+                    td Gelish
+                    td 1213
+                    td 75
+                    td Si
+                  tr
+                    td Cleanser Shampoo
+                    td 300 ml
+                    td Nioxin
+                    td 301
+                    td 25
+                    td No
+              .well
+                h4 Subir productos con excel
+                form#uploadForm(enctype='multipart/form-data', action='/products/new/excel', method='POST')
+                   fieldset
+                     // input normal
+                     .col-md-12
+                       .col-md-4
+                         .form-group
+                           input(type='file', name='file')
+                         .form-group
+                           input(type='submit', value='Registrar productos', name='submit')
+  script(src='/public/dist/js/addRow.js')
+  // jQuery
+  script(src='/public/vendor/jquery/jquery.min.js')
+  // Bootstrap Core JavaScript
+  script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+  // Metis Menu Plugin JavaScript
+  script(src='/public/vendor/metisMenu/metisMenu.min.js')
+  // Custom Theme JavaScript
+  script(src='/public/dist/js/sb-admin-2.js')

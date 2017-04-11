@@ -1,0 +1,56 @@
+extends ../layout.pug
+block contenido
+
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Lista de categorias
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Categorias
+          .panel-body
+            table#dataTables-example.table.table-striped.table-bordered.table-hover
+              thead
+                tr
+                  th Nombre
+                  th Descripcion
+                  th Acción
+              tbody
+                for categoria in categorias
+                  tr.odd.gradeX
+                    td #{categoria.nombre}
+                    td #{categoria.descripcion}
+                    td
+                      a(class="btn btn btn-primary btn-circle" href="/categories/"+categoria._id)
+                        i.fa.fa-list(title="Editar")
+                      b &nbsp &nbsp &nbsp
+                      form(id="eliminar"  style="display:inline" action="/categories/"+categoria._id+"?_method=DELETE",method="POST" onsubmit="return confirm('¿Continuar con la eliminación?')")
+                        button(type="submit/image" alt="text" value="" class="btn btn-danger btn-circle")
+                          i.fa.fa-times(title="Eliminar")
+            // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    // jQuery
+    script(src='/public/vendor/jquery/jquery.min.js')
+    // Bootstrap Core JavaScript
+    script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='/public/vendor/metisMenu/metisMenu.min.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // DataTables JavaScript
+    script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
+    script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
+    script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // Page-Level Demo Scripts - Tables - Use for reference
+    script.
+      $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+          responsive: true
+        });
+      });

@@ -1,0 +1,156 @@
+extends ../layout.pug
+block contenido
+  
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Bajas de Productos
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Productos
+          .panel-body
+            table#dataTables-example.table.table-striped.table-bordered.table-hover
+              thead
+                tr
+                  th Producto
+                  th Cantidad
+                  th Usuario
+                  th Tecnica
+                  if usuario.permisos == 2
+                    th Sucursal
+                  th Fecha
+              tbody
+                if usuario.permisos == 1
+                  for baja in bajas
+                    tr.odd.gradeX
+                      td #{baja.producto.nombre}
+                      td #{baja.cantidad}
+                      td #{baja.usuario.nombre} #{baja.usuario.apellido}
+                      if baja.tecnica
+                        td #{baja.tecnica.nombreCompleto}
+                      else
+                        
+                        td Producto no basico
+                      
+                      if baja.fecha.getMonth() < 10
+                        - var month = "0"+baja.fecha.getMonth()          
+                      else
+                        
+                        - var month = baja.fecha.getMonth()
+                      
+                      if baja.fecha.getDate() < 10
+                        - var day = "0"+baja.fecha.getDate()          
+                      else
+                        
+                        - var day = baja.fecha.getDate()
+                      
+                      if baja.fecha.getHours() < 10
+                        - var hour = "0"+baja.fecha.getHours()        
+                      else
+                        
+                        - var hour = baja.fecha.getHours()
+                      
+                      if baja.fecha.getMinutes()  < 10
+                        - var minute = "0"+ baja.fecha.getMinutes()        
+                      else
+                        
+                        - var minute =  baja.fecha.getMinutes()
+                      
+                      if baja.fecha.getSeconds() < 10
+                        - var second = "0"+baja.fecha.getSeconds()        
+                      else
+                        
+                        - var second = baja.fecha.getSeconds()  
+                             
+                      td #{baja.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
+                      
+                else
+
+                  for baja in bajas
+                    tr.odd.gradeX
+                      td #{baja.producto.nombre}
+                      td #{baja.cantidad}
+                      td #{baja.usuario.nombre} #{baja.usuario.apellido}
+                      if baja.tecnica
+                        td #{baja.tecnica.nombreCompleto}
+                      else
+                        
+                        td Producto no basico
+                      td #{baja.sucursal.plaza}
+                      
+                      if baja.fecha.getMonth() < 10
+                        - var month = "0"+baja.fecha.getMonth()          
+                      else
+                        
+                        - var month = baja.fecha.getMonth()
+                      
+                      if baja.fecha.getDate() < 10
+                        - var day = "0"+baja.fecha.getDate()          
+                      else
+                        
+                        - var day = baja.fecha.getDate()
+                      
+                      if baja.fecha.getHours() < 10
+                        - var hour = "0"+baja.fecha.getHours()        
+                      else
+                        
+                        - var hour = baja.fecha.getHours()
+                      
+                      if baja.fecha.getMinutes()  < 10
+                        - var minute = "0"+ baja.fecha.getMinutes()        
+                      else
+                        
+                        - var minute =  baja.fecha.getMinutes()
+                      
+                      if baja.fecha.getSeconds() < 10
+                        - var second = "0"+baja.fecha.getSeconds()        
+                      else
+                        
+                        - var second = baja.fecha.getSeconds()  
+                             
+                      td #{baja.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
+            // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    // jQuery
+    script(src='/public/vendor/jquery/jquery.min.js')
+    // Bootstrap Core JavaScript
+    script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='/public/vendor/metisMenu/metisMenu.min.js')
+    // DataTables JavaScript
+    script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
+    script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
+    script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // Page-Level Demo Scripts - Tables - Use for reference
+    script(src="/public/excel/js/xlsx.core.min.js")
+    script(src="/public/excel/js/FileSaver.min.js")
+    script(src="/public/excel/js/tableexport.min.js")
+    if usuario.permisos == 2
+      script.
+        $(document).ready(function() {
+          $('#dataTables-example').DataTable({
+            responsive: true,
+            "order": [[ 5, "desc" ]]
+          });
+        });
+    else
+      
+      script.
+        $(document).ready(function() {
+          $('#dataTables-example').DataTable({
+            responsive: true,
+            "order": [[ 4, "desc" ]]
+          });
+        });
+    script.
+      $("table").tableExport({
+          formats: ["xlsx"],
+          bootstrap: true,
+          fileName: "Bajas"
+      });

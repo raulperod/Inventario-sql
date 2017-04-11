@@ -1,0 +1,34 @@
+extends ../layout.pug
+block contenido
+  #page-wrapper
+    .row
+      .col-md-4.col-md-offset-4
+        .login-panel.panel.panel-default
+          .panel-heading
+            h3.panel-title Editar tecnica
+          .panel-body
+            form(action="/tecnicas/"+tecnicaUpdate._id+"?_method=PUT",method="POST")
+              fieldset
+                .form-group
+                  h5  Nombres:
+                  input.form-control(type="text",name="name",value=tecnicaUpdate.nombre, pattern="{3,40}$", title="El nombre  debe tener un minimo 3 caracteres y 40 como maximo" required)
+                .form-group
+                  h5  Apellidos:
+                  input.form-control(type="text" ,name="last_name", value=tecnicaUpdate.apellido, pattern="{3,40}$", title="El apellido debe tener un minimo 3 caracteres y 40 como maximo" required)
+                if usuario.permisos == 2
+                  .form-group
+                    h5  Sucursal:
+                    select.form-control.selectpicker(name="plaza", data-live-search="true")
+                      for sucursal in sucursales
+                        option(name="1") #{sucursal.plaza}
+                  
+                input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
+  // jQuery
+  script(src='/public/vendor/jquery/jquery.min.js')
+  // Bootstrap Core JavaScript
+  script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+  // Metis Menu Plugin JavaScript
+  script(src='/public/vendor/metisMenu/metisMenu.min.js')
+  // Custom Theme JavaScript
+  script(src='/public/dist/js/sb-admin-2.js')
+  script(src='/public/dist/js/bootstrap-select.min.js')

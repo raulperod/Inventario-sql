@@ -1,0 +1,255 @@
+doctype html
+html(lang="es")
+  head
+    title Gelishtime
+    meta(charset="utf-8")
+    // Bootstrap Core CSS
+    link( href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet")
+    // MetisMenu CSS
+    link( href="/public/vendor/metisMenu/metisMenu.min.css" rel="stylesheet")
+    // Custom CSS
+    link( href="/public/dist/css/sb-admin-2.css" rel="stylesheet")
+    // DataTables CSS
+    link(href='/public/vendor/datatables-plugins/dataTables.bootstrap.css', rel='stylesheet')
+    // DataTables Responsive CSS
+    link(href='/public/vendor/datatables-responsive/dataTables.responsive.css', rel='stylesheet')
+    // Custom Fonts
+    link( href="/public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css")
+    // favicon
+    link(rel="icon" href="/public/images/icon.ico")
+    // select  
+    link(href='/public/dist/css/bootstrap-select.min.css', rel='stylesheet')
+    // excel
+    link( href="/public/excel/css/tableexport.min.css" rel="stylesheet")
+  body
+    #wrapper
+      nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bottom: 0')
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='/almacen')
+            a(title='gelishtime', href='/almacen')
+              img(src='/public/images/logo.png', alt='gelishtime' width="30%" height="30%")
+          // /.navbar-header
+          if usuario
+            ul.nav.navbar-top-links.navbar-right
+              li.dropdown
+                a.dropdown-toggle()
+                  i.fa.fa-user.fa-fw
+                  |  #{usuario.username}
+              li.dropdown(title="Cerrar Sesion")
+                a.dropdown-toggl(href='/logout')
+                  i.fa.fa-sign-out.fa-fw
+
+                // /.dropdown-user
+              // /.dropdown
+            // /.navbar-top-links
+            .navbar-default.sidebar(role='navigation')
+              .sidebar-nav.navbar-collapse
+                ul#side-menu.nav
+                  if usuario.permisos == 0
+
+                    li
+                      a(href='#')
+                        i.fa.fa-archive.fa-fw
+                        |  Almacen
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/almacen/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/almacen')
+                            i.fa.fa-edit
+                            |  Lista
+                    li
+                      a(href='/consumos')
+                        i.fa.fa-archive.fa-fw
+                        |  Consumo
+                    li
+                      a(href='/basicos')
+                        i.fa.fa-archive.fa-fw
+                        |  Basico    
+                        
+                  else if  usuario.permisos == 1
+
+                    li
+                      a(href='#')
+                        i.fa.fa-archive.fa-fw
+                        |  Almacen
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/almacen/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/almacen')
+                            i.fa.fa-edit
+                            |  Lista
+                    li
+                      a(href='/consumos')
+                        i.fa.fa-archive.fa-fw
+                        |  Consumo
+                    li
+                      a(href='/basicos')
+                        i.fa.fa-archive.fa-fw
+                        |  Basico    
+                    li
+                      a(href='#')
+                        i.fa.fa-user.fa-fw
+                        |  Usuarios
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/users/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/users')
+                            i.fa.fa-edit
+                            |  Ver
+                      // /.nav-second-level=
+                    li
+                      a(href='#')
+                        i.fa.fa-user.fa-fw
+                        |  Tecnicas
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/tecnicas/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/tecnicas')
+                            i.fa.fa-edit
+                            |  Ver
+                      // /.nav-second-level  
+                    li
+                      a(href='#')
+                        i.fa.fa-building-o.fa-fw
+                        |  Historial
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/historial/movimientos')
+                            i.fa.fa-book
+                            |  Bitacora de Movimientos
+                        li
+                          a(href='/historial/bajas')
+                            i.fa.fa-book
+                            |  Bitacora de Bajas
+                        li
+                          a(href='/historial/sucursal')
+                            i.fa.fa-bar-chart-o
+                            |  Estadisticas Sucursal
+
+                    // /.nav-second-level
+
+                  else
+
+                    li
+                      a(href='/almacen')
+                        i.fa.fa-archive.fa-fw
+                        |  Almacen
+                    li
+                      a(href='/consumos')
+                        i.fa.fa-archive.fa-fw
+                        |  Consumo
+                    li
+                      a(href='#')
+                        i.glyphicon.glyphicon-shopping-cart
+                        |  Productos
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/products/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/products')
+                            i.fa.fa-edit
+                            |  Lista
+                        li
+                          a(href='#')
+                            i.glyphicon.glyphicon-tags
+                            |  Categorias de productos
+                            span.fa.arrow
+                          ul.nav.nav-third-level
+                            li
+                              a(href='/categories/new')
+                                i.fa.fa-plus
+                                |  Registrar
+                            li
+                              a(href='/categories')
+                                i.fa.fa-edit
+                                |  Lista
+                      // /.nav-second-level=
+                    li
+                      a(href='#')
+                        i.fa.fa-user.fa-fw
+                        |  Usuarios
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/users/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/users')
+                            i.fa.fa-edit
+                            |  Ver
+                      // /.nav-second-level=
+                    li
+                      a(href='#')
+                        i.fa.fa-user.fa-fw
+                        |  Tecnicas
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/tecnicas/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/tecnicas')
+                            i.fa.fa-edit
+                            |  Ver
+                      // /.nav-second-level    
+                    li
+                      a(href='#')
+                        i.fa.fa-building-o.fa-fw
+                        |  Administrar Sucursales
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/sucursales/new')
+                            i.fa.fa-plus
+                            |  Registrar
+                        li
+                          a(href='/sucursales')
+                            i.fa.fa-edit
+                            |  Lista
+                      // /.nav-second-level
+                    li
+                      a(href='#')
+                        i.fa.fa-building-o.fa-fw
+                        |  Historial
+                        span.fa.arrow
+                      ul.nav.nav-second-level
+                        li
+                          a(href='/historial/movimientos')
+                            i.fa.fa-book
+                            |  Bitacora de Movimientos
+                        li
+                          a(href='/historial/bajas')
+                            i.fa.fa-book
+                            |  Bitacora de Bajas    
+                        li
+                          a(href='/historial/general')
+                            i.fa.fa-bar-chart-o
+                            |  Estadisticas Generales
+block contenido

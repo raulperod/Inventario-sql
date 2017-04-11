@@ -1,0 +1,59 @@
+extends ../layout.pug
+block contenido
+
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Asignacion y baja de producto basico
+    .row
+      .col-md-12
+        .panel.panel-primary
+          .panel-heading
+            | Eleccion
+          .panel-body
+            .row
+              .col-md-5
+                h4
+                  | Asignacion de basico
+                
+                form(action="/basicos?_method=PUT",method="POST",role='form')
+                  .form-group
+                    h5  Producto:
+                    select.form-control.selectpicker(name="producto", data-live-search="true")
+                      for producto in productos
+                        option(name="1") #{producto.nombre}
+                  .form-group
+                    h5  Tecnica:
+                    select.form-control.selectpicker(name="tecnica", data-live-search="true")
+                      for tecnica in tecnicas
+                        option(name="1") #{tecnica.nombreCompleto}     
+                  .form-group
+                    input(type="submit" value="Asignar" class="btn btn-lg btn-primary btn-block")
+              .col-md-1   
+              
+              .col-md-5      
+                h4
+                  | Baja de basico
+                  
+                form(action="/basicos?_method=DELETE",method="POST",role='form')
+                  .form-group
+                    h5  Producto:
+                    select.form-control.selectpicker(name="producto", data-live-search="true")
+                      for producto in productos
+                        option(name="1") #{producto.nombre}
+                  .form-group
+                    h5  Tecnica:
+                    select.form-control.selectpicker(name="tecnica", data-live-search="true")
+                      for tecnica in tecnicas
+                        option(name="1") #{tecnica.nombreCompleto}     
+                  .form-group
+                    input(type="submit" value="Baja" class="btn btn-lg btn-primary btn-block")
+  // jQuery
+  script(src='/public/vendor/jquery/jquery.min.js')
+  // Bootstrap Core JavaScript
+  script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+  // Metis Menu Plugin JavaScript
+  script(src='/public/vendor/metisMenu/metisMenu.min.js')
+  // Custom Theme JavaScript
+  script(src='/public/dist/js/sb-admin-2.js')
+  script(src='/public/dist/js/bootstrap-select.min.js')

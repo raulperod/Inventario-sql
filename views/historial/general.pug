@@ -1,0 +1,77 @@
+extends ../layout.pug
+block contenido
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Estadisticas
+      .col-md-12
+        .panel.panel-default
+          .panel-heading
+            | Estadisticas Generales
+          .panel-body
+            ul.nav.nav-tabs
+              li.active
+                a(href='#topten', data-toggle='tab') Top Ten
+              li
+                a(href='#basicos', data-toggle='tab') Basicos
+            .tab-content
+              #topten.tab-pane.fade.in.active
+                .col-lg-10.col-lg-offset-1
+                  .form-groups
+                    .panel-body
+                      .col-lg-4
+                        label Fecha Inicio:
+                        input.form-control(id="Finicial" type="date" name="inicioP" )
+                      .col-lg-4
+                        label Fecha Final:
+                        input.form-control(id="Ffinal" type="date" name="finalP" )
+                      .col-lg-4
+                        label Sucursal:
+                        select.form-control(id="sucursal" name="sucursal" )
+                          for sucursal in sucursales
+                            option(name="1") #{sucursal.plaza}      
+                        
+                .col-lg-10.col-lg-offset-1
+                  .form-groups
+                    .panel-body
+                      table#dataTables-example.table.table-striped.table-bordered.table-hover
+                        thead
+                          tr
+                            th Producto
+                            th Cantidad
+                        tbody
+                          // falta poner las filas  
+              #basicos.tab-pane.fade
+                .col-lg-12
+                  .form-groups
+                    .panel-body
+                      .col-lg-3
+                        label Fecha Inicio:
+                        input.form-control(id="FinicialB" type="date" name="inicioB" )
+                      .col-lg-3
+                        label Fecha Final:
+                        input.form-control(id="FfinalB" type="date" name="finalB")
+                      .col-lg-3
+                        label Producto:
+                        select.form-control(id="producto" name="basico" )
+                          for basico in basicos
+                            option(name="1") #{basico.nombre}
+                      .col-lg-3
+                        label Sucursal:
+                        select.form-control(id="sucursalGrafica" name="sucursalBasico" )
+                          for sucursal in sucursales
+                            option(name="1") #{sucursal.plaza}      
+                .col-lg-10.col-lg-offset-1
+                  #grafica
+  script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js') 
+  script(src='/public/vendor/jquery/jquery.min.js')
+  script(src='/public/data/fechaInicial.js')
+  script(src='/public/data/graficasGeneral.js' charset="utf-8")
+  // Bootstrap Core JavaScript
+  script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+  // Metis Menu Plugin JavaScript
+  script(src='/public/vendor/metisMenu/metisMenu.min.js')
+  // DataTables JavaScript
+  // Custom Theme JavaScript
+  script(src='/public/dist/js/sb-admin-2.js')
+  // inputs inicial del date  

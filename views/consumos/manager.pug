@@ -1,0 +1,99 @@
+extends ../layout.pug
+block contenido
+
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Productos en consumo
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Productos
+          .panel-body
+            table#dataTables-example.table.table-striped.table-bordered.table-hover
+              thead
+                tr
+                  th Nombre
+                  th Codigo
+                  th Cantidad
+                  if usuario.permisos==2
+                    th Sucursal
+                  else
+
+                    th Acción
+              tbody
+                if usuario.permisos < 2
+                  for consumo in consumos
+                    tr.odd.gradeX
+                      td #{consumo.producto.nombre}
+                      td #{consumo.producto.codigo}
+                      td(name=""+consumo._id) #{consumo.cantidad}
+                      td
+                        if !consumo.producto.esBasico
+                          form(id=""+consumo._id,style="display:inline" action="/consumos/"+consumo._id+"?_method=PUT",method="POST",  onsubmit="return false")
+                            input.form-control(id=""+consumo.producto.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required )
+                            b &nbsp &nbsp &nbsp
+                            button(type="submit/image" alt="text" name="button1" class="btn btn-danger btn-circle "+consumo._id+" "+consumo.producto.codigo ,onclick="return false")
+                              i.fa.fa-times(title="Pasar a bajas")
+                        else
+                          
+                          fieldset( disabled='')
+                            form(style="display:inline" action="/consumos/"+consumo._id+"?_method=PUT",method="POST",   onsubmit="return false")
+                              input#disabledInput.form-control(type="number" name="cantidad" min="0" max="10000" value="0" required disabled )
+                              b &nbsp &nbsp &nbsp
+                              button(type="submit/image" alt="text" class="btn btn-danger btn-circle")
+                                i.fa.fa-times(title="Pasar a bajas")
+                  
+                else
+
+                  for consumo in consumos
+                    tr.odd.gradeX
+                      td #{consumo.producto.nombre}
+                      td #{consumo.producto.codigo}
+                      td #{consumo.cantidad}
+                      td #{consumo.sucursal.plaza}
+              // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    // jQuery
+    script(src='/public/vendor/jquery/jquery.min.js')
+    script(src='/public/data/postConsumo.js')
+    // Bootstrap Core JavaScript
+    script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='/public/vendor/metisMenu/metisMenu.min.js')
+    // DataTables JavaScript
+    script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
+    script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
+    script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // Page-Level Demo Scripts - Tables - Use for reference
+    script.
+      $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+          responsive: true
+        });
+      });
+    script(src="/public/excel/js/xlsx.core.min.js")
+    script(src="/public/excel/js/FileSaver.min.js")
+    script(src="/public/excel/js/tableexport.min.js")
+    if usuario.permisos == 2 
+      script.
+        $("table").tableExport({
+            formats: ["xlsx"],
+            bootstrap: true,
+            fileName: "Consumo"
+        });
+    
+    else     
+      
+      script.
+        $("table").tableExport({
+            formats: ["xlsx"],
+            bootstrap: true,
+            ignoreCols: 3, 
+            fileName: "Consumo"
+        });

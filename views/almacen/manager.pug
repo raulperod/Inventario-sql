@@ -1,0 +1,109 @@
+extends ../layout.pug
+block contenido
+  
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Productos en existencia
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Productos
+          .panel-body
+            table#dataTables-example.table.table-striped.table-bordered.table-hover
+              thead
+                tr
+                  th Nombre
+                  th Codigo
+                  th Cantidad
+                  if usuario.permisos==2
+                    th Sucursal
+                  else
+
+                    th Acción
+              tbody
+                if usuario.permisos < 2
+                
+                  for alm in almacen
+                    tr.odd.gradeX
+                      td #{alm.producto.nombre}
+                      td #{alm.producto.codigo}
+                      if alm.cantidad > alm.producto.minimo
+                        td(name=""+alm._id) #{alm.cantidad}
+                      else
+                        
+                        td(name=""+alm._id style="color:red" title="Pocos productos") #{alm.cantidad}
+                      td
+                        form(id=""+alm._id,style="display:inline" action="/almacen/"+alm._id+"?_method=PUT",method="POST" onsubmit="return false")
+                          input.form-control(id=""+alm.producto.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required)
+                          b &nbsp &nbsp &nbsp
+                          button(type="submit/image", alt="text", name="button1", class="btn btn-primary btn-circle "+alm._id+" "+alm.producto.codigo+" "+alm.producto.minimo ,onclick="return false")
+                            i.fa.fa-plus(title="Agregar")
+                          if !alm.producto.esBasico                            
+                            b &nbsp &nbsp &nbsp
+                            button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle "+alm._id+" "+alm.producto.codigo+" "+alm.producto.minimo ,onclick="return false")
+                              i.fa.fa-minus(title="Pasar a consumo")
+                          
+                          else      
+                            
+                            b &nbsp &nbsp &nbsp
+                            button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle", disabled)
+                              i.fa.fa-minus(title="Pasar a consumo")
+                
+                else
+
+                  for alm in almacen
+                    tr.odd.gradeX
+                      td #{alm.producto.nombre}
+                      td #{alm.producto.codigo}
+                      if alm.cantidad > alm.producto.minimo
+                        td #{alm.cantidad}
+                      else
+
+                        td(style="color:red" title="Pocos productos")  #{alm.cantidad}
+                      td #{alm.sucursal.plaza}
+            // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    // jQuery
+    script(src='/public/vendor/jquery/jquery.min.js')
+    script(src='/public/data/postAlmacen.js')
+    // Bootstrap Core JavaScript
+    script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='/public/vendor/metisMenu/metisMenu.min.js')
+    // DataTables JavaScript
+    script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
+    script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
+    script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // Page-Level Demo Scripts - Tables - Use for reference
+    script(src="/public/excel/js/xlsx.core.min.js")
+    script(src="/public/excel/js/FileSaver.min.js")
+    script(src="/public/excel/js/tableexport.min.js")
+    script.
+      $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+          responsive: true
+        });
+      });
+    if usuario.permisos == 2 
+      script.
+        $("table").tableExport({
+            formats: ["xlsx"],
+            bootstrap: true,
+            fileName: "Almacen"
+        });
+    
+    else     
+      
+      script.
+        $("table").tableExport({
+            formats: ["xlsx"],
+            bootstrap: true,
+            ignoreCols: 3, 
+            fileName: "Almacen"
+        });

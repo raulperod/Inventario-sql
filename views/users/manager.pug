@@ -1,0 +1,89 @@
+extends ../layout.pug
+block contenido
+
+  #page-wrapper
+    .row
+      .col-lg-12
+        h3.page-header Lista de usuarios
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            | Usuarios
+          .panel-body
+            table#dataTables-example.table.table-striped.table-bordered.table-hover
+              thead
+                tr
+                  th Usuario
+                  th Password
+                  th Nombres
+                  th Apellidos
+                  if usuario.permisos == 2
+                    th Sucursal
+                    th Permisos
+                  th Estado
+                  th Acción
+              tbody
+                if usuario.permisos == 2
+                  for user in usuarios
+                    tr.odd.gradeX
+                      td #{user.username}
+                      td #{user.password}
+                      td #{user.nombre}
+                      td #{user.apellido}
+                      td #{user.sucursal.plaza}
+                      if user.permisos == 1
+                        td Administrador
+                      else
+
+                        td Recepcionista
+                      if user.status
+                        td Activo
+                      else
+
+                        td Inactivo
+                      td
+                        a(class="btn btn btn-primary btn-circle" href="/users/"+user._id)
+                          i.fa.fa-list(title="Editar")
+
+                else
+
+                  for user in usuarios
+                    tr.odd.gradeX
+                      td #{user.username}
+                      td #{user.password}
+                      td #{user.nombre}
+                      td #{user.apellido}
+                      if user.status
+                        td Activo
+                      else
+
+                        td Inactivo
+                      td
+                        a(class="btn btn btn-primary btn-circle" href="/users/"+user._id)
+                          i.fa.fa-list(title="Editar")
+            // /.panel-body
+        // /.panel
+      // /.col-lg-12
+    // /.row
+    // jQuery
+    script(src='/public/vendor/jquery/jquery.min.js')
+    // Bootstrap Core JavaScript
+    script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='/public/vendor/metisMenu/metisMenu.min.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // DataTables JavaScript
+    script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
+    script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
+    script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
+    // Custom Theme JavaScript
+    script(src='/public/dist/js/sb-admin-2.js')
+    // Page-Level Demo Scripts - Tables - Use for reference
+    script.
+      $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+          responsive: true
+        });
+      });
