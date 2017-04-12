@@ -42,6 +42,14 @@ function usersNewPost(req, res) {
 
 }
 
+function usersIdUsuarioGet() {
+    
+}
+
+function usersIdUsuarioPut() {
+
+}
+
 // para logearte
 function loginPost(req, res) {
     // obtengo el username y password
@@ -75,5 +83,7 @@ module.exports = {
     usersGet,
     usersNewGet,
     usersNewPost,
+    usersIdUsuarioGet,
+    usersIdUsuarioPut,
     loginPost
 }
