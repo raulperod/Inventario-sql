@@ -17,13 +17,13 @@ function getUserByUsername(idUsername,render,printError) {
     });
 }
 
-function getAllUsers(render,printError) {
+function getUsers(render,printError) {
     UserModel.query('SELECT * FROM usuarios', (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
 }
 
-function getAllUserBySucursal(idSucursal, render, printError) {
+function getUsersBySucursal(idSucursal, render, printError) {
     UserModel.query('SELECT * FROM usuarios WHERE idSucursal = ?', idSucursal ,(error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
@@ -45,8 +45,8 @@ function updateUser(user, render, printError) {
 module.exports = {
     getUserById,
     getUserByUsername,
-    getAllUsers,
-    getAllUserBySucursal,
+    getUsers,
+    getUsersBySucursal,
     createUser,
     updateUser
 }
