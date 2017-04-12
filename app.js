@@ -11,6 +11,7 @@ const express = require('express'),
     Index = require('./controllers/index'),
     User_router = require('./routes/user'),
     Sucursal_router = require('./routes/sucursal'),
+    Tecnica_router = require('./routes/tecnica'),
     publicDir = express.static( __dirname + '/public' ),
     viewDir = __dirname + '/views',
     cookieSession = require("cookie-session"),
@@ -43,7 +44,9 @@ app
     // para ruta de usuarios
     .use("/users", session_admin )
     .use('/users', User_router )
-    .use("/sucursales", session_general_admin() )
+    .use("/tecnicas", session_admin )
+    .use('/tecnicas', Tecnica_router )
+    .use("/sucursales", session_general_admin )
     .use('/sucursales', Sucursal_router )
     // para error 404
     .use( Index.error404 )
