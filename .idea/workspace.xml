@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="00a9e2d1-8ad0-4107-9088-54414d2e01c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/user.js" afterPath="$PROJECT_DIR$/controllers/user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/users/update.pug" afterPath="$PROJECT_DIR$/views/users/update.pug" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,17 +33,23 @@
       <file leaf-file-name="user.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="135" column="0" lean-forward="true" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state relative-caret-position="-1289">
+              <caret line="89" column="35" lean-forward="false" selection-start-line="89" selection-start-column="35" selection-end-line="89" selection-end-column="35" />
               <folding>
                 <element signature="e#0#47#0" expanded="false" />
-                <element signature="n#!!block;n#usersGet#0" expanded="false" />
-                <element signature="n#!!block;n#usersNewGet#0" expanded="false" />
-                <element signature="n#!!block;n#usersNewPost#0" expanded="false" />
-                <element signature="e#2295#2590#0" expanded="false" />
-                <element signature="e#3246#3508#0" expanded="false" />
-                <element signature="n#!!block;n#usersIdUsuarioGet#0" expanded="false" />
+                <element signature="e#2306#2601#0" expanded="false" />
+                <element signature="e#3244#3506#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="update.pug" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/users/update.pug">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="39" column="50" lean-forward="false" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,7 +121,6 @@
         <option value="$PROJECT_DIR$/views/sucursales/manager.pug" />
         <option value="$PROJECT_DIR$/views/products/manager.pug" />
         <option value="$PROJECT_DIR$/views/users/new.pug" />
-        <option value="$PROJECT_DIR$/views/users/update.pug" />
         <option value="$PROJECT_DIR$/views/sucursales/new.pug" />
         <option value="$PROJECT_DIR$/views/sucursales/update.pug" />
         <option value="$PROJECT_DIR$/views/products/excel.pug" />
@@ -139,6 +145,7 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/models/sucursal.js" />
         <option value="$PROJECT_DIR$/controllers/index.js" />
+        <option value="$PROJECT_DIR$/views/users/update.pug" />
         <option value="$PROJECT_DIR$/controllers/user.js" />
       </list>
     </option>
@@ -390,12 +397,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1491944894470</updated>
-      <workItem from="1491944897356" duration="26520000" />
+      <workItem from="1491944897356" duration="32909000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26520000" />
+    <option name="totallyTimeSpent" value="32909000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -435,7 +442,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -794,14 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/users/update.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="42" column="27" lean-forward="true" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/sucursal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -810,18 +809,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/users/update.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="39" column="50" lean-forward="false" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="135" column="0" lean-forward="true" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+        <state relative-caret-position="-1289">
+          <caret line="89" column="35" lean-forward="false" selection-start-line="89" selection-start-column="35" selection-end-line="89" selection-end-column="35" />
           <folding>
             <element signature="e#0#47#0" expanded="false" />
-            <element signature="n#!!block;n#usersGet#0" expanded="false" />
-            <element signature="n#!!block;n#usersNewGet#0" expanded="false" />
-            <element signature="n#!!block;n#usersNewPost#0" expanded="false" />
-            <element signature="e#2295#2590#0" expanded="false" />
-            <element signature="e#3246#3508#0" expanded="false" />
-            <element signature="n#!!block;n#usersIdUsuarioGet#0" expanded="false" />
+            <element signature="e#2306#2601#0" expanded="false" />
+            <element signature="e#3244#3506#0" expanded="false" />
           </folding>
         </state>
       </provider>
