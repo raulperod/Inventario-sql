@@ -6,7 +6,6 @@
 const UserModel = require('../models/user'),
       SucursalModel = require('../models/sucursal')
 
-
 function usersGet(req, res) {
     let usuario = req.session.user
     // verifica que tipo de usuario es

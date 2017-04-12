@@ -7,13 +7,16 @@ const express = require('express'),
     UserController = require('../controllers/user'),
     user = express.Router()
 
-user.get('/', UserController.usersGet )
+user
+    .get('/', UserController.usersGet )
 
-user.route('/new')
+user
+    .route('/new')
     .get( UserController.usersNewGet )
     .post( UserController.usersNewPost )
 
-user.route('/:idUsuario')
+user
+    .route('/:idUsuario')
     .get( UserController.usersIdUsuarioGet() )
     .put( UserController.usersIdUsuarioPut() )
 
