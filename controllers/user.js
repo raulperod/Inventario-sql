@@ -57,7 +57,7 @@ function usersNewPost(req, res) {
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
-                sucursal: sucursal.idSucursal,
+                sucursal: sucursal[0].idSucursal,
                 permisos: 1,
                 status: true
             }
@@ -108,7 +108,7 @@ function usersIdUsuarioGet(req, res) {
             let seleccionU = ['*']  // se tomara todos los campos
             // busca al usuario a editar
             UserModel.getUserById(idUsuario, seleccionU, usuarioUpdate => { // si no hubo error
-                res.render('./users/update', { sucursales, usuarioUpdate, usuario })
+                res.render('./users/update', { sucursales, usuarioUpdate: usuarioUpdate[0], usuario })
             }, error => { // si hubo error
                 console.log(`Error al obtener el usuario: ${error}`)
                 res.redirect('/almacen')
@@ -122,7 +122,7 @@ function usersIdUsuarioGet(req, res) {
         let seleccionU = ['idUsuario','username','password','nombre','apellido','permisos','status'] // se tomara todos los campos
         // obtengo al usuario a editar
         UserModel.getUserById(idUsuario, seleccionU, usuarioUpdate => { // si no hubo error
-            res.render('./users/update', { usuarioUpdate, usuario })
+            res.render('./users/update', { usuarioUpdate: usuarioUpdate[0], usuario })
         }, error => { // si hubo error
             console.log(`Error al obtener el usuario: ${error}`)
             res.redirect('/almacen')
@@ -145,7 +145,7 @@ function usersIdUsuarioPut(req ,res) {
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
-                sucursal: sucursal.idSucursal,
+                sucursal: sucursal[0].idSucursal,
                 permisos:  req.body.permisos === "Administrador" ? 1 : 0,
                 status: req.body.status === "Activo"
             }
