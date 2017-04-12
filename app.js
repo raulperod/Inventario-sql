@@ -36,7 +36,7 @@ app
     // ejecuto el middleware enrutador
     .get('/', Index.index )
     .get('/login', Index.loginGet )
-    //.post('/login', Index.loginPost )
+    .post('/login', Index.loginPost )
     .get('/logout', Index.logout )
     // para ruta de usuarios
     .use("/users", session_admin )
