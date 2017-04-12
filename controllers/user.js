@@ -58,7 +58,8 @@ function usersNewPost(req, res) {
                 apellido: req.body.last_name,
                 password: req.body.password,
                 sucursal: sucursal.idSucursal,
-                permisos: 1
+                permisos: 1,
+                status: true
             }
             // agrego al nuevo usuario
             UserModel.createUser(nuevoUsuario, () => {  // si se agrego correctamente
@@ -80,7 +81,8 @@ function usersNewPost(req, res) {
             apellido: req.body.last_name,
             password: req.body.password,
             sucursal: usuario.idSucursal,
-            permisos: 0
+            permisos: 0,
+            status: true
         }
         // agrego al nuevo usuario
         UserModel.createUser(nuevoUsuario, () => {  // si se agrego correctamente
@@ -93,12 +95,48 @@ function usersNewPost(req, res) {
     }
 }
 
-function usersIdUsuarioGet() {
-    
+function usersIdUsuarioGet(req, res) {
+    // declarar variables necesarias
+    let usuario = req.session.user, // obtengo al usuario logeado
+        idUsuario = req.params.idUsuario // obtengo el id del usuario a editar
+    if( usuario.permisos === 2 ){ //  si es administrador general
+        // defino la seleccion
+        let seleccionS = ['plaza'] // se tomara la plaza
+        // busca las sucursales
+        SucursalModel.getSucursales(seleccionS, sucursales => { // si no hubo error
+            // defino la seleccion
+            let seleccionU = ['*']  // se tomara todos los campos
+            // busca al usuario a editar
+            UserModel.getUserById(idUsuario, seleccionU, usuarioUpdate => { // si no hubo error
+                res.render('./users/update', { sucursales, usuarioUpdate, usuario })
+            }, error => { // si hubo error
+                console.log(`Error al obtener el usuario: ${error}`)
+                res.redirect('/almacen')
+            })
+        }, error => { // si hubo error
+            console.log(`Error al obtener la sucursal: ${error}`)
+            res.redirect('/almacen')
+        })
+    } else { // si es administrador de sucursal
+        // defino la seleccion
+        let seleccion = ['*'] // se tomara todos los campos
+        // obtengo al usuario a editar
+        UserModel.getUserById(idUsuario, seleccion, usuarioUpdate => { // si no hubo error
+            res.render('./users/update', { usuarioUpdate, usuario })
+        }, error => { // si hubo error
+            console.log(`Error al obtener el usuario: ${error}`)
+            res.redirect('/almacen')
+        })
+    }
 }
 
-function usersIdUsuarioPut() {
+function usersIdUsuarioPut(req ,res) {
+    let usuario = req.session.user // obtenemos el usuario logeado
+    if( usuario.permisos === 2 ){ // si es administrado general
 
+    } else { // si es administrador de sucursal
+
+    }
 }
 
 module.exports = {
