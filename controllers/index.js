@@ -30,8 +30,13 @@ function logout(req, res) {
     res.redirect("/login");
 }
 
+function error404(req, res) {
+    res.render('error')
+}
+
 module.exports = {
     index,
     loginGet,
-    logout
+    logout,
+    error404
 }

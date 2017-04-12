@@ -5,8 +5,14 @@
 
 const UserModel = require('./coneccion')
 
-function getUser(idUser,render,printError) {
+function getUserById(idUser,render,printError) {
     UserModel.query('SELECT * FROM usuarios WHERE idUsuario = ?', idUser, (error, resultado, fields) => {
+        return(error) ? printError(error): render(resultado)
+    });
+}
+
+function getUserByUsername(idUsername,render,printError) {
+    UserModel.query('SELECT * FROM usuarios WHERE username = ?', idUsername, (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
 }
@@ -37,7 +43,8 @@ function updateUser(user, render, printError) {
 
 
 module.exports = {
-    getUser,
+    getUserById,
+    getUserByUsername,
     getAllUsers,
     getAllUserBySucursal,
     createUser,

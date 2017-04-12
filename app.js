@@ -13,10 +13,11 @@ const express = require('express'),
     publicDir = express.static( __dirname + '/public' ),
     viewDir = __dirname + '/views',
     cookieSession = require("cookie-session"),
+    session_admin = require('./middleware/session-admin'),
     app = express()
 
 app
-// configuracion app
+    // configuracion app
     .set('views', viewDir)
     .set('view engine', 'pug')
     .set('port',config.PORT)
@@ -36,7 +37,11 @@ app
     .get('/', Index.index )
     .get('/login', Index.loginGet )
     //.post('/login', Index.loginPost )
-    .get('/logout', Index.logout)
-    .use('/users',User_router)
+    .get('/logout', Index.logout )
+    // para ruta de usuarios
+    .use("/users", session_admin )
+    .use('/users', User_router )
+    // para error 404
+    .use( Index.error404 )
 
 module.exports = app
