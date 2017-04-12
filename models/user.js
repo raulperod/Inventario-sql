@@ -5,26 +5,26 @@
 
 const UserModel = require('./coneccion')
 
-function getUserById(idUser, seleccion,render,printError) {
+function getUserById(idUser, seleccion, render, printError) {
     UserModel.query('SELECT ?? FROM usuarios WHERE idUsuario = ?', [seleccion, idUser], (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
 }
 
-function getUserByUsername(idUsername,seleccion,render,printError) {
+function getUserByUsername(idUsername, seleccion, render, printError) {
     UserModel.query('SELECT ?? FROM usuarios WHERE username = ?', [seleccion, idUsername], (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
 }
 
-function getUsers(seleccion, render,printError) {
-    UserModel.query('SELECT ?? FROM usuarios', seleccion ,(error, resultado, fields) => {
+function getUsers(seleccion, render, printError) {
+    UserModel.query('SELECT ?? FROM usuarios', seleccion , (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
 }
 
-function getUsersBySucursal(idSucursal, seleccion ,render, printError) {
-    UserModel.query('SELECT ?? FROM usuarios WHERE idSucursal = ?', [seleccion, idSucursal] ,(error, resultado, fields) => {
+function getUsersBySucursal(idSucursal, seleccion , render, printError) {
+    UserModel.query('SELECT ?? FROM usuarios WHERE idSucursal = ?', [seleccion, idSucursal] , (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     });
 }
@@ -36,7 +36,7 @@ function createUser(user, render, printError) {
 }
 
 function updateUser(user, render, printError) {
-    UserModel.query('UPDATE usuario SET ? WHERE movie_id = ?', [user,user.idUsuario], (error, resultado, fields) => {
+    UserModel.query('UPDATE usuario SET ? WHERE idUsuario = ?', [user,user.idUsuario], (error, resultado, fields) => {
         return(error) ? printError(error): render();
     });
 }

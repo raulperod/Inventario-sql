@@ -19,5 +19,5 @@ sucursal
     .route('/:idSucursal')
     .get( SucursalController.sucursalesIdSucursalGet )
     .put( SucursalController.sucursalesIdSucursalPut )
-
+    .delete( SucursalController.sucursalesIdSucursalDelete )
 sucursal.exports = user

@@ -15,7 +15,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.redirect('/almacen')
+            res.redirect('/error')
         })
     } else { // si es admin de sucursal
         let idSucursal = req.session.user.idSucursal, // obtienes el id de la sucursal del usuario
@@ -24,7 +24,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.redirect('/almacen')
+            res.redirect('/error')
         })
     }
 }
@@ -37,6 +37,7 @@ function usersNewGet(req, res) {
             res.render('./users/new', { sucursales, usuario })
         }, error => { // si ocurrio un error
             console.log(`Error no se pudieron obtener las sucursales: ${error}`)
+            res.redirect('/error')
         })
     } else { // si es admin general
         res.render('./users/new',{ usuario })
@@ -63,7 +64,7 @@ function usersNewPost(req, res) {
             }
             // agrego al nuevo usuario
             UserModel.createUser(nuevoUsuario, () => {  // si se agrego correctamente
-                res.redirect('/almacen')
+                res.redirect('/users')
             }, error => { // si hubo error
                 console.log(`Error al agregar en nuevo usuario: ${error}`)
                 // mando una alerta que el username esta repetido
@@ -71,7 +72,7 @@ function usersNewPost(req, res) {
             })
         }, error => {
             console.log(`Error al obtener la sucural: ${error}`)
-            res.redirect('/almacen')
+            res.redirect('/error')
         })
     } else { // si es administrador de sucursales
         // genero el nuevo usuario
@@ -86,7 +87,7 @@ function usersNewPost(req, res) {
         }
         // agrego al nuevo usuario
         UserModel.createUser(nuevoUsuario, () => {  // si se agrego correctamente
-            res.redirect('/almacen')
+            res.redirect('/users')
         }, error => { // si hubo error
             console.log(`Error al agregar en nuevo usuario: ${error}`)
             // mando una alerta que el username esta repetido
@@ -111,11 +112,11 @@ function usersIdUsuarioGet(req, res) {
                 res.render('./users/update', { sucursales, usuarioUpdate: usuarioUpdate[0], usuario })
             }, error => { // si hubo error
                 console.log(`Error al obtener el usuario: ${error}`)
-                res.redirect('/almacen')
+                res.redirect('/error')
             })
         }, error => { // si hubo error
             console.log(`Error al obtener la sucursal: ${error}`)
-            res.redirect('/almacen')
+            res.redirect('/error')
         })
     } else { // si es administrador de sucursal
         // defino la seleccion
@@ -125,7 +126,7 @@ function usersIdUsuarioGet(req, res) {
             res.render('./users/update', { usuarioUpdate: usuarioUpdate[0], usuario })
         }, error => { // si hubo error
             console.log(`Error al obtener el usuario: ${error}`)
-            res.redirect('/almacen')
+            res.redirect('/error')
         })
     }
 }
@@ -161,7 +162,7 @@ function usersIdUsuarioPut(req ,res) {
 
         }, error => { // si hubo error al buscar la sucursal
             console.log(`Error al buscar la nueva sucursal: ${error}`)
-            res.redirect('/almacen')
+            res.redirect('/error')
         })
 
     } else { // si es administrador de sucursal
