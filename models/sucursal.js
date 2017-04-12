@@ -11,6 +11,13 @@ function getSucursales(seleccion, render, printError) {
     });
 }
 
+function getSucursalByPlaza(plaza , seleccion, render, printError) {
+    SucursalModel.query('SELECT ?? FROM sucursales WHERE plaza = ?', [seleccion, plaza] ,(error, resultado, fields) => {
+        return(error) ? printError(error): render(resultado)
+    });
+}
+
 module.exports = {
-    getSucursales
+    getSucursales,
+    getSucursalByPlaza
 }

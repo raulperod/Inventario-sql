@@ -28,13 +28,13 @@ function loginGet(req, res) {
 // para logearte
 function loginPost(req, res) {
     // obtengo el username y password
-    const username = req.body.username,
+    let username = req.body.username,
         password = req.body.password,
-        seleccion = ['username','password','permisos','status']
+        seleccion = ['username','password','permisos','status','idSucursal']
     // se busca al usuario con el username
     UserModel.getUserByUsername( username, seleccion , resultado => { // si se obtubo al usuario
         // obtengo el usuario
-        const usuario =  resultado[0]
+        let usuario =  resultado[0]
         // verifica si el usuario esta activo
         if( usuario.status ) {
             // verifica si la contraseña coincide
