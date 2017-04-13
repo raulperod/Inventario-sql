@@ -15,10 +15,8 @@
     "Express",
     "Mysql"
   ],
-  "author": [
-    "Raul Perez",
-    "Cesar Salazar"
-  ],
+  "author": "Raul Perez, Cesar Salazar"
+  ,
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rauperod/Inventario-sql/issues"
