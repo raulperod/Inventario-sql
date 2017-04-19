@@ -20,8 +20,8 @@ const express = require('express'),
 
 app
     // configuracion app
-    .set('view engine', 'pug')
-    .set('views', config.VIEWS )
+    .set("view engine","pug")
+    .set('views', config.VIEWS)
     .set('port',config.PORT)
     // ejecutando middleware
     .use( config.PUBLIC, express.static('public') )
