@@ -13,8 +13,6 @@ const express = require('express'),
     Sucursal_router = require('./routes/sucursal'),
     Tecnica_router = require('./routes/tecnica'),
     Category_router = require('./routes/category'),
-    publicDir = express.static( __dirname + '/public' ),
-    viewDir = __dirname + '/views',
     cookieSession = require("cookie-session"),
     session_admin = require('./middleware/session-admin'),
     session_general_admin = require('./middleware/session-general-admin'),
@@ -22,11 +20,11 @@ const express = require('express'),
 
 app
     // configuracion app
-    .set('views', viewDir)
     .set('view engine', 'pug')
+    .set('views', config.VIEWS )
     .set('port',config.PORT)
     // ejecutando middleware
-    .use( publicDir)
+    .use( config.PUBLIC, express.static('public') )
     // parse application/json
     .use( bodyParser.json())
     // parse applicaction/x-www-form-urlencoded
