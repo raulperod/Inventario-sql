@@ -12,7 +12,7 @@ function categoriesGet(req, res) {
         res.render('./categories/manager', { categorias, usuario: req.session.user })
     }, error => { // si ocurrio un error
         console.log(`Error al obtener las categorias: ${error}`)
-        res.redirect('/error')
+        res.redirect('/almacen')
     })
 }
 
@@ -44,7 +44,7 @@ function categoriesIdCategoryGet(req, res) {
         res.render('./categories/update', { usuario: req.session.user, categoriaUpdate: categoriaUpdate[0] })
     }, error => { // si hubo un error
         console.log(`Error al obtener la categoria: ${error}`)
-        res.redirect('/error')
+        res.redirect('/almacen')
     })
 }
 

@@ -28,7 +28,7 @@ function loginGet(req, res) {
 // para logearte
 function loginPost(req, res) {
     // obtengo el username y password
-    let username = req.body.username,
+    let username = req.body.username.toLowerCase(),
         password = req.body.password,
         seleccion = ['username','password','permisos','status','idSucursal']
     // se busca al usuario con el username
@@ -57,13 +57,13 @@ function loginPost(req, res) {
 
 function logout(req, res) {
     // cierra la sesion del usuario
-    req.session = null;
+    req.session = null
     // te redirecciona al inicio
-    res.redirect("/login");
+    res.redirect("/login")
 }
 
 function error404(req, res) {
-    res.render('error')
+    res.render('/almacen')
 }
 
 module.exports = {

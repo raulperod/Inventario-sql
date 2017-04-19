@@ -14,7 +14,7 @@ function sucursalesGet(req, res) {
         res.render('./sucursales/manager', { sucursales, usuario })
     }, error => { // si hubo error
         console.log(`Error al obtener las sucursales: ${error}`)
-        res.redirect('/error')
+        res.redirect('/almacen')
     })
 }
 
@@ -48,7 +48,7 @@ function sucursalesIdSucursalGet(req, res) {
         res.render('./sucursales/update', {  usuario, sucursalUpdate: sucursalUpdate[0] })
     }, error => { // si hubo error
         console.log(`Error al obtener la sucursal: ${error}`)
-        res.redirect('/error')
+        res.redirect('/almacen')
     })
 }
 

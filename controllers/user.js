@@ -15,7 +15,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es admin de sucursal
         let idSucursal = req.session.user.idSucursal, // obtienes el id de la sucursal del usuario
@@ -24,7 +24,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     }
 }
@@ -37,7 +37,7 @@ function usersNewGet(req, res) {
             res.render('./users/new', { sucursales, usuario })
         }, error => { // si ocurrio un error
             console.log(`Error no se pudieron obtener las sucursales: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es admin general
         res.render('./users/new',{ usuario })
@@ -72,7 +72,7 @@ function usersNewPost(req, res) {
             })
         }, error => {
             console.log(`Error al obtener la sucural: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursales
         // genero el nuevo usuario
@@ -112,11 +112,11 @@ function usersIdUsuarioGet(req, res) {
                 res.render('./users/update', { sucursales, usuarioUpdate: usuarioUpdate[0], usuario })
             }, error => { // si hubo error
                 console.log(`Error al obtener el usuario: ${error}`)
-                res.redirect('/error')
+                res.redirect('/almacen')
             })
         }, error => { // si hubo error
             console.log(`Error al obtener la sucursal: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursal
         // defino la seleccion
@@ -126,7 +126,7 @@ function usersIdUsuarioGet(req, res) {
             res.render('./users/update', { usuarioUpdate: usuarioUpdate[0], usuario })
         }, error => { // si hubo error
             console.log(`Error al obtener el usuario: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     }
 }

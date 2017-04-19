@@ -15,7 +15,7 @@ function tecnicasGet(req, res) {
             res.render('./tecnicas/manager', { usuario, tecnicas } )
         }, error => { // si hubo error
             console.log(`Error al obtener las tecnicas: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursal
         let seleccion = ['idTecnica','nombre','apellido']
@@ -24,7 +24,7 @@ function tecnicasGet(req, res) {
             res.render('./tecnicas/manager', { usuario, tecnicas } )
         }, error => { // si hubo error
             console.log(`Error al obtener las tecnicas: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     }
 }
@@ -38,7 +38,7 @@ function tecnicasNewGet(req, res) {
             res.render('./tecnicas/new', { usuario, sucursales })
         }, error => { // si hubo error
             console.log(`Error al buscar las sucursales: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursal
         res.render('./tecnicas/new', { usuario })
@@ -64,11 +64,11 @@ function tecnicasNewPost(req, res) {
                 res.redirect('/tecnicas')
             }, error => {
                 console.log(`Error al guardar la nueva tecnica: ${error}`)
-                res.redirect('/error')
+                res.redirect('/almacen')
             })
         }, error => { // si hubo error
             console.log(`Error al buscar la sucursal: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursal
         // creamos la nueva tecnica
@@ -83,7 +83,7 @@ function tecnicasNewPost(req, res) {
             res.redirect('/tecnicas')
         }, error => {
             console.log(`Error al guardar la nueva tecnica: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     }
 }
@@ -102,11 +102,11 @@ function tecnicasIdTecnicaGet(req, res) {
                 res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate: tecnicaUpdate[0] })
             }, error => { // si ocurrio un error
                 console.log(`Error al obtener la tecnica: ${error}`)
-                res.redirect('/error')
+                res.redirect('/almacen')
             })
         }, error => { // si hubo error
             console.log(`Error al obtener las sucursales: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursal
         // busco la tecnica a editar
@@ -114,7 +114,7 @@ function tecnicasIdTecnicaGet(req, res) {
             res.render('./tecnicas/update', { usuario, tecnicaUpdate: tecnicaUpdate[0] })
         }, error => { // si ocurrio un error
             console.log(`Error al obtener la tecnica: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     }
 }
@@ -141,11 +141,11 @@ function tecnicasIdTecnicaPut(req, res) {
                 res.redirect('/tecnicas')
             }, error => { // si hubo error
                 console.log(`Error al actualizar tecnica: ${error}`)
-                res.redirect('/error')
+                res.redirect('/almacen')
             })
         }, error => { // si hubo error
             console.log(`Error al obtener las sucursales: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     } else { // si es administrador de sucursal
         // edito la tecnica
@@ -161,7 +161,7 @@ function tecnicasIdTecnicaPut(req, res) {
             res.redirect('/tecnicas')
         }, error => { // si hubo error
             console.log(`Error al actualizar tecnica: ${error}`)
-            res.redirect('/error')
+            res.redirect('/almacen')
         })
     }
 }

@@ -37,18 +37,23 @@ app
         name: "session",
         keys: ["gelish","time"]
     }))
-    // ejecuto el middleware enrutador
+// indice
+app
     .get('/', Index.index )
     .get('/login', Index.loginGet )
     .post('/login', Index.loginPost )
     .get('/logout', Index.logout )
     // para ruta de usuarios
+app
     .use("/users", session_admin )
     .use('/users', User_router )
+app
     .use("/tecnicas", session_admin )
     .use('/tecnicas', Tecnica_router )
+app
     .use("/sucursales", session_general_admin )
     .use('/sucursales', Sucursal_router )
+app
     .use("/categories", session_general_admin )
     .use('/categories', Category_router )
     // para error 404
