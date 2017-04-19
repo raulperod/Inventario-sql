@@ -50,7 +50,7 @@ html(lang="es")
             .navbar-default.sidebar(role='navigation')
               .sidebar-nav.navbar-collapse
                 ul#side-menu.nav
-                  if usuario.permisos == 0
+                  if usuario.permisos === 0
 
                     li
                       a(href='#')
@@ -75,7 +75,7 @@ html(lang="es")
                         i.fa.fa-archive.fa-fw
                         |  Basico    
                         
-                  else if  usuario.permisos == 1
+                  else if  usuario.permisos === 1
 
                     li
                       a(href='#')
