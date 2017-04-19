@@ -17,7 +17,7 @@ user
 
 user
     .route('/:idUsuario')
-    .get( UserController.usersIdUsuarioGet() )
-    .put( UserController.usersIdUsuarioPut() )
+    .get( UserController.usersIdUsuarioGet )
+    .put( UserController.usersIdUsuarioPut )
 
 module.exports = user

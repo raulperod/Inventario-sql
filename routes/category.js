@@ -17,8 +17,8 @@ category
 
 category
     .route('/:idCategory')
-    .get( CategoryController.categoriesIdCategoryGet() )
-    .put( CategoryController.categoriesIdCategoryPut() )
-    .delete( CategoryController.categoriesIdCategoryDelete() )
+    .get( CategoryController.categoriesIdCategoryGet )
+    .put( CategoryController.categoriesIdCategoryPut )
+    .delete( CategoryController.categoriesIdCategoryDelete )
 
 module.exports = category

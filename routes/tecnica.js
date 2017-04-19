@@ -17,7 +17,7 @@ tecnica
 
 tecnica
     .route('/:idTecnica')
-    .get( TecnicaController.tecnicasIdTecnicaGet() )
-    .put( TecnicaController.tecnicasIdTecnicaPut() )
+    .get( TecnicaController.tecnicasIdTecnicaGet )
+    .put( TecnicaController.tecnicasIdTecnicaPut )
 
 module.exports = tecnica
