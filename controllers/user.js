@@ -14,7 +14,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.redirect('/almacen')
+            res.json({ msg : `Error al obtener los usuarios: ${error}` })
         })
     } else { // si es admin de sucursal
         let idSucursal = req.session.user.idSucursal // obtienes el id de la sucursal del usuario
@@ -22,7 +22,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.redirect('/almacen')
+            res.json({ msg: `Error al obtener los usuarios: ${error}`})
         })
     }
 }
@@ -35,9 +35,9 @@ function usersNewGet(req, res) {
             res.render('./users/new', { sucursales, usuario })
         }, error => { // si ocurrio un error
             console.log(`Error no se pudieron obtener las sucursales: ${error}`)
-            res.redirect('/almacen')
+            res.json({ msg:`Error no se pudieron obtener las sucursales: ${error}`})
         })
-    } else { // si es admin general
+    } else { // si es admin de sucursal
         res.render('./users/new',{ usuario })
     }
 }
@@ -52,7 +52,7 @@ function usersNewPost(req, res) {
         SucursalModel.getSucursalByPlaza(plaza, seleccion, sucursal => {
             // genero el nuevo usuario
             let nuevoUsuario = {
-                username: req.body.username,
+                username: req.body.username.toLowerCase(),
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
@@ -66,16 +66,16 @@ function usersNewPost(req, res) {
             }, error => { // si hubo error
                 console.log(`Error al agregar en nuevo usuario: ${error}`)
                 // mando una alerta que el username esta repetido
-                res.send('0')
+                res.json({ msg: `Error al agregar en nuevo usuario: ${error}`, tipo: 1 })
             })
         }, error => {
-            console.log(`Error al obtener la sucural: ${error}`)
-            res.redirect('/almacen')
+            console.log(`Error al obtener la sucursal: ${error}`)
+            res.json({ msg: `Error al obtener la sucursal: ${error}`})
         })
     } else { // si es administrador de sucursales
         // genero el nuevo usuario
         let nuevoUsuario = {
-            username: req.body.username,
+            username: req.body.username.toLowerCase(),
             nombre: req.body.name,
             apellido: req.body.last_name,
             password: req.body.password,
@@ -89,7 +89,7 @@ function usersNewPost(req, res) {
         }, error => { // si hubo error
             console.log(`Error al agregar en nuevo usuario: ${error}`)
             // mando una alerta que el username esta repetido
-            res.send('0')
+            res.json({ msg: `Error al agregar en nuevo usuario: ${error}`, tipo: 1 })
         })
     }
 }

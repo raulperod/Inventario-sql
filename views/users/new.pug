@@ -24,7 +24,7 @@ block contenido
                 .form-group
                   h5  Confirmación de contraseña:
                   input.form-control(type="password", name="password_confirmation", placeholder="Confirmar contraseña",pattern="^([a-zA-Z0-9]{8,20})$", title="La contraseña debe tener como minimo 8 caracteres y maximo 20" required)
-                if usuario.permisos == 2
+                if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
                     select.form-control.selectpicker(name="plaza", data-live-search="true")

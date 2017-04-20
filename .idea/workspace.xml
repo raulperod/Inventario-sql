@@ -4,8 +4,9 @@
     <list default="true" id="00a9e2d1-8ad0-4107-9088-54414d2e01c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/user.js" afterPath="$PROJECT_DIR$/controllers/user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/sucursal.js" afterPath="$PROJECT_DIR$/models/sucursal.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/user.js" afterPath="$PROJECT_DIR$/models/user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/users/manager.pug" afterPath="$PROJECT_DIR$/views/users/manager.pug" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/users/new.pug" afterPath="$PROJECT_DIR$/views/users/new.pug" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,8 +24,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="58" column="40" lean-forward="false" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
+            <state relative-caret-position="76">
+              <caret line="52" column="135" lean-forward="false" selection-start-line="52" selection-start-column="88" selection-end-line="52" selection-end-column="135" />
               <folding />
             </state>
           </provider>
@@ -33,9 +34,14 @@
       <file leaf-file-name="user.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="53" column="32" lean-forward="true" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
-              <folding />
+            <state relative-caret-position="604">
+              <caret line="91" column="85" lean-forward="false" selection-start-line="91" selection-start-column="85" selection-end-line="91" selection-end-column="85" />
+              <folding>
+                <element signature="n#!!block;n#usersGet#0" expanded="false" />
+                <element signature="n#!!block;n#usersNewGet#0" expanded="false" />
+                <element signature="e#2251#2563#0" expanded="false" />
+                <element signature="e#3299#3575#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,8 +49,18 @@
       <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="27" column="21" lean-forward="false" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="69" />
+            <state relative-caret-position="-86">
+              <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sucursal.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/sucursal.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="17" column="1" lean-forward="false" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -77,7 +93,6 @@
         <option value="$PROJECT_DIR$/views/tecnicas/manager.pug" />
         <option value="$PROJECT_DIR$/views/sucursales/manager.pug" />
         <option value="$PROJECT_DIR$/views/products/manager.pug" />
-        <option value="$PROJECT_DIR$/views/users/new.pug" />
         <option value="$PROJECT_DIR$/views/sucursales/new.pug" />
         <option value="$PROJECT_DIR$/views/sucursales/update.pug" />
         <option value="$PROJECT_DIR$/views/products/excel.pug" />
@@ -99,7 +114,6 @@
         <option value="$PROJECT_DIR$/views/users/update.pug" />
         <option value="$PROJECT_DIR$/routes/sucursal.js" />
         <option value="$PROJECT_DIR$/models/tecnica.js" />
-        <option value="$PROJECT_DIR$/models/sucursal.js" />
         <option value="$PROJECT_DIR$/models/category.js" />
         <option value="$PROJECT_DIR$/controllers/category.js" />
         <option value="$PROJECT_DIR$/controllers/sucursal.js" />
@@ -114,8 +128,10 @@
         <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/controllers/index.js" />
-        <option value="$PROJECT_DIR$/models/user.js" />
         <option value="$PROJECT_DIR$/views/users/manager.pug" />
+        <option value="$PROJECT_DIR$/models/user.js" />
+        <option value="$PROJECT_DIR$/views/users/new.pug" />
+        <option value="$PROJECT_DIR$/models/sucursal.js" />
         <option value="$PROJECT_DIR$/controllers/user.js" />
       </list>
     </option>
@@ -367,15 +383,15 @@
       <workItem from="1492117765611" duration="71000" />
       <workItem from="1492639815448" duration="6758000" />
       <workItem from="1492711473039" duration="1727000" />
-      <workItem from="1492727297785" duration="363000" />
+      <workItem from="1492727297785" duration="2299000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60822000" />
+    <option name="totallyTimeSpent" value="62758000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -412,7 +428,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -551,13 +567,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/error.pug" />
-    <entry file="file://$PROJECT_DIR$/views/users/new.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/users/update.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
@@ -587,13 +596,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/tecnica.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="34" column="6" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/sucursal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
           <caret line="34" column="6" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
@@ -735,14 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="58" column="40" lean-forward="false" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/users/manager.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -751,19 +745,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/models/sucursal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="17" column="1" lean-forward="false" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/users/new.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="52" column="135" lean-forward="false" selection-start-line="52" selection-start-column="88" selection-end-line="52" selection-end-column="135" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="27" column="21" lean-forward="false" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="69" />
+        <state relative-caret-position="-86">
+          <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="32" lean-forward="true" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="604">
+          <caret line="91" column="85" lean-forward="false" selection-start-line="91" selection-start-column="85" selection-end-line="91" selection-end-column="85" />
+          <folding>
+            <element signature="n#!!block;n#usersGet#0" expanded="false" />
+            <element signature="n#!!block;n#usersNewGet#0" expanded="false" />
+            <element signature="e#2251#2563#0" expanded="false" />
+            <element signature="e#3299#3575#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
