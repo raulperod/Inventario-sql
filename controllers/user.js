@@ -56,9 +56,8 @@ function usersNewPost(req, res) {
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
-                sucursal: sucursal[0].idSucursal,
-                permisos: 1,
-                status: true
+                idSucursal: sucursal[0].idSucursal,
+                permisos: 1
             }
             // agrego al nuevo usuario
             UserModel.createUser(nuevoUsuario, () => {  // si se agrego correctamente
@@ -79,9 +78,8 @@ function usersNewPost(req, res) {
             nombre: req.body.name,
             apellido: req.body.last_name,
             password: req.body.password,
-            sucursal: usuario.idSucursal,
-            permisos: 0,
-            status: true
+            idSucursal: usuario.idSucursal,
+            permisos: 0
         }
         // agrego al nuevo usuario
         UserModel.createUser(nuevoUsuario, () => {  // si se agrego correctamente
