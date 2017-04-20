@@ -10,17 +10,15 @@ function usersGet(req, res) {
     let usuario = req.session.user
     // verifica que tipo de usuario es
     if( usuario.permisos === 2 ){  // si es admin general
-        let seleccion = ['*'] // pongo la seleccion que hara
-        UserModel.getUsers( seleccion ,usuarios => { // si se pudieron obtener los usuarios
+        UserModel.getUsers( usuarios => { // si se pudieron obtener los usuarios
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
             res.redirect('/almacen')
         })
     } else { // si es admin de sucursal
-        let idSucursal = req.session.user.idSucursal, // obtienes el id de la sucursal del usuario
-            seleccion = ['idUsuario','username','password','nombre','apellido','permisos','status'] // pongo la seleccion que hara
-        UserModel.getUsersBySucursal(idSucursal, seleccion ,usuarios => { // si se pudieron obtener los usuarios
+        let idSucursal = req.session.user.idSucursal // obtienes el id de la sucursal del usuario
+        UserModel.getUsersBySucursal(idSucursal, usuarios => { // si se pudieron obtener los usuarios
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)

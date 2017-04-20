@@ -18,32 +18,30 @@ block contenido
                   th Password
                   th Nombres
                   th Apellidos
-                  if usuario.permisos == 2
+                  if usuario.permisos === 2
                     th Sucursal
                     th Permisos
                   th Estado
                   th Acción
               tbody
-                if usuario.permisos == 2
+                if usuario.permisos === 2
                   for user in usuarios
                     tr.odd.gradeX
                       td #{user.username}
                       td #{user.password}
                       td #{user.nombre}
                       td #{user.apellido}
-                      td #{user.sucursal.plaza}
-                      if user.permisos == 1
+                      td #{user.plaza}
+                      if user.permisos === 1
                         td Administrador
                       else
-
                         td Recepcionista
                       if user.status
                         td Activo
                       else
-
                         td Inactivo
                       td
-                        a(class="btn btn btn-primary btn-circle" href="/users/"+user._id)
+                        a(class="btn btn btn-primary btn-circle" href="/users/"+user.idUsuario)
                           i.fa.fa-list(title="Editar")
 
                 else
@@ -57,10 +55,9 @@ block contenido
                       if user.status
                         td Activo
                       else
-
                         td Inactivo
                       td
-                        a(class="btn btn btn-primary btn-circle" href="/users/"+user._id)
+                        a(class="btn btn btn-primary btn-circle" href="/users/"+user.idUsuario)
                           i.fa.fa-list(title="Editar")
             // /.panel-body
         // /.panel

@@ -17,14 +17,15 @@ function getUserByUsername(idUsername, seleccion, render, printError) {
     })
 }
 
-function getUsers(seleccion, render, printError) {
-    UserModel.query('SELECT ?? FROM usuario', seleccion , (error, resultado, fields) => {
+function getUsers(render, printError) {
+    let seleccion = ['u.username','u.password','u.nombre','u.apellido','u.permisos','u.status','u.idUsuario','s.plaza']
+    UserModel.query('SELECT ?? FROM usuario AS u INNER JOIN sucursal AS s ON u.idSucursal = s.idSucursal', seleccion , (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
-function getUsersBySucursal(idSucursal, seleccion , render, printError) {
-    UserModel.query('SELECT ?? FROM usuario WHERE idSucursal = ?', [seleccion, idSucursal] , (error, resultado, fields) => {
+function getUsersBySucursal(idSucursal, render, printError) {
+    UserModel.query('SELECT * FROM usuario WHERE usuario.idSucursal = ?', idSucursal , (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
