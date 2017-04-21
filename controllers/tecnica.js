@@ -50,8 +50,8 @@ function tecnicasNewPost(req, res) {
         SucursalModel.getIdSucursalByPlaza(plaza, idSucursal => { // si no hubo error
             // creamos la nueva tecnica
             let nuevaTecnia = {
-                nombre: req.body.nombre,
-                apellido: req.body.apellido,
+                nombre: req.body.name,
+                apellido: req.body.last_name,
                 idSucursal
             }
             // guardamos a la nueva tecnica
@@ -68,9 +68,9 @@ function tecnicasNewPost(req, res) {
     } else { // si es administrador de sucursal
         // creamos la nueva tecnica
         let nuevaTecnia = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            sucursal: usuario.idSucursal
+            nombre: req.body.name,
+            apellido: req.body.last_name,
+            idSucursal: usuario.idSucursal
         }
         // guardamos a la nueva tecnica
         TecnicaModel.createTecnica(nuevaTecnia, () => {
@@ -122,8 +122,8 @@ function tecnicasIdTecnicaPut(req, res) {
             // edito la tecnica
             let tecnicaUpdate = {
                 idTecnica,
-                nombre: req.body.nombre,
-                apellido: req.body.apellido,
+                nombre: req.body.name,
+                apellido: req.body.last_name,
                 idSucursal
             }
             // actualizo la tecnica en la base de datos
@@ -141,8 +141,8 @@ function tecnicasIdTecnicaPut(req, res) {
         // edito la tecnica
         let tecnicaUpdate = {
             idTecnica,
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
+            nombre: req.body.name,
+            apellido: req.body.last_name,
             idSucursal: usuario.idSucursal
         }
         // actualizo la tecnica en la base de datos

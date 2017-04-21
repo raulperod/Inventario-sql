@@ -31,7 +31,7 @@ function createTecnica(tecnica, render, printError) {
 }
 
 function updateTecnica(tecnica, render, printError) {
-    TecnicaModel.query('UPDATE tecnicas SET ? WHERE idTecnica = ?', [tecnica,tecnica.idTecnica], (error, resultado, fields) => {
+    TecnicaModel.query('UPDATE tecnicas SET ? WHERE idTecnica = ?', [tecnica, tecnica.idTecnica], (error, resultado, fields) => {
         return(error) ? printError(error): render()
     })
 }

@@ -11,10 +11,10 @@ block contenido
               fieldset
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text", name="name", placeholder="Nombre",pattern="{1,40}$", title="El nombre debe tener un maximo de 40 caracteres" required)
+                  input.form-control(type="text", name="name", placeholder="Nombre" required)
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text", name="last_name", placeholder="Apellido",pattern="{1,40}$", title="El apellido debe tener un maximo de 40 caracteres" required)
+                  input.form-control(type="text", name="last_name", placeholder="Apellido" required)
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:

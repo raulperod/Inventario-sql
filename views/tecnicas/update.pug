@@ -7,14 +7,14 @@ block contenido
           .panel-heading
             h3.panel-title Editar tecnica
           .panel-body
-            form(action="/tecnicas/"+tecnicaUpdate.idTecnica+"?_method=PUT",method="POST")
+            form(action="/tecnicas/"+tecnicaUpdate.idTecnica+"?_method=PUT", method="POST")
               fieldset
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text",name="name",value=tecnicaUpdate.nombre required)
+                  input.form-control(type="text", name="name", value=tecnicaUpdate.nombre, required)
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text" ,name="last_name", value=tecnicaUpdate.apellido required)
+                  input.form-control(type="text" , name="last_name", value=tecnicaUpdate.apellido, required)
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:

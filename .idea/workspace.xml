@@ -5,7 +5,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/tecnica.js" afterPath="$PROJECT_DIR$/controllers/tecnica.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/tecnica.js" afterPath="$PROJECT_DIR$/models/tecnica.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/tecnicas/manager.pug" afterPath="$PROJECT_DIR$/views/tecnicas/manager.pug" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/tecnicas/new.pug" afterPath="$PROJECT_DIR$/views/tecnicas/new.pug" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/tecnicas/update.pug" afterPath="$PROJECT_DIR$/views/tecnicas/update.pug" />
     </list>
@@ -22,27 +21,26 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tecnica.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tecnica.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/tecnica.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="113" column="40" lean-forward="false" selection-start-line="113" selection-start-column="40" selection-end-line="113" selection-end-column="40" />
+            <state relative-caret-position="-115">
+              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#tecnicasGet#0" expanded="false" />
                 <element signature="n#!!block;n#tecnicasNewGet#0" expanded="false" />
                 <element signature="n#!!block;n#tecnicasNewPost#0" expanded="false" />
                 <element signature="n#!!block;n#tecnicasIdTecnicaGet#0" expanded="false" />
-                <element signature="n#!!block;n#tecnicasIdTecnicaPut#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tecnica.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/models/tecnica.js">
+      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="15" column="99" lean-forward="false" selection-start-line="15" selection-start-column="99" selection-end-line="15" selection-end-column="99" />
+            <state relative-caret-position="3">
+              <caret line="24" column="111" lean-forward="false" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="111" />
               <folding />
             </state>
           </provider>
@@ -95,7 +93,6 @@
         <option value="$PROJECT_DIR$/routes/tecnica.js" />
         <option value="$PROJECT_DIR$/routes/category.js" />
         <option value="$PROJECT_DIR$/models/config.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/views/users/manager.pug" />
@@ -110,8 +107,9 @@
         <option value="$PROJECT_DIR$/controllers/sucursal.js" />
         <option value="$PROJECT_DIR$/views/sucursales/update.pug" />
         <option value="$PROJECT_DIR$/controllers/user.js" />
-        <option value="$PROJECT_DIR$/controllers/tecnica.js" />
         <option value="$PROJECT_DIR$/views/tecnicas/manager.pug" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/controllers/tecnica.js" />
         <option value="$PROJECT_DIR$/views/tecnicas/new.pug" />
         <option value="$PROJECT_DIR$/views/tecnicas/update.pug" />
         <option value="$PROJECT_DIR$/models/tecnica.js" />
@@ -247,6 +245,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="middleware" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Inventario-sql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Inventario-sql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -366,12 +378,12 @@
       <workItem from="1492639815448" duration="6758000" />
       <workItem from="1492711473039" duration="1727000" />
       <workItem from="1492727297785" duration="13578000" />
-      <workItem from="1492812497586" duration="2369000" />
+      <workItem from="1492812497586" duration="3410000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76406000" />
+    <option name="totallyTimeSpent" value="77447000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -411,18 +423,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/middleware/session-admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/products/excel.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="309">
@@ -636,13 +641,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="30" lean-forward="false" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/login.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="326">
@@ -741,49 +739,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/middleware/session-admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="14" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="48" column="35" lean-forward="false" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/tecnicas/new.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="38" lean-forward="false" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+        <state relative-caret-position="272">
+          <caret line="16" column="90" lean-forward="false" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/tecnicas/update.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
+        <state relative-caret-position="122">
+          <caret line="9" column="77" lean-forward="false" selection-start-line="9" selection-start-column="77" selection-end-line="9" selection-end-column="77" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
+        <state relative-caret-position="3">
           <caret line="24" column="111" lean-forward="false" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="111" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/tecnica.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/tecnica.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="113" column="40" lean-forward="false" selection-start-line="113" selection-start-column="40" selection-end-line="113" selection-end-column="40" />
+        <state relative-caret-position="-115">
+          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#tecnicasGet#0" expanded="false" />
             <element signature="n#!!block;n#tecnicasNewGet#0" expanded="false" />
             <element signature="n#!!block;n#tecnicasNewPost#0" expanded="false" />
             <element signature="n#!!block;n#tecnicasIdTecnicaGet#0" expanded="false" />
-            <element signature="n#!!block;n#tecnicasIdTecnicaPut#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/tecnica.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="15" column="99" lean-forward="false" selection-start-line="15" selection-start-column="99" selection-end-line="15" selection-end-column="99" />
-          <folding />
         </state>
       </provider>
     </entry>
