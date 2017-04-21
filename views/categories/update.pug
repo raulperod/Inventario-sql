@@ -7,14 +7,14 @@ block contenido
           .panel-heading
             h3.panel-title Actualizar categoria
           .panel-body
-            form(action="/categories/"+categoryUpdate._id+"?_method=PUT",method="POST")
+            form(action="/categories/"+categoryUpdate.idCategoria+"?_method=PUT",method="POST")
               fieldset
                 .form-group
                   h5  Nombre:
-                  input.form-control(type="text",name="nombre",value=categoryUpdate.nombre required)
+                  input.form-control(type="text", name="nombre", value=categoryUpdate.nombre, required)
                 .form-group
                   h5  Descripcion:
-                  input.form-control(type="text",name="descripcion",value=categoryUpdate.descripcion required)
+                  input.form-control(type="text", name="descripcion", value=categoryUpdate.descripcion, required)
                 // boton para registrar
                 .form-group
                 input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
