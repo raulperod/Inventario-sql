@@ -7,15 +7,15 @@ block contenido
           .panel-heading
             h3.panel-title Editar tecnica
           .panel-body
-            form(action="/tecnicas/"+tecnicaUpdate._id+"?_method=PUT",method="POST")
+            form(action="/tecnicas/"+tecnicaUpdate.idTecnica+"?_method=PUT",method="POST")
               fieldset
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text",name="name",value=tecnicaUpdate.nombre, pattern="{3,40}$", title="El nombre  debe tener un minimo 3 caracteres y 40 como maximo" required)
+                  input.form-control(type="text",name="name",value=tecnicaUpdate.nombre required)
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text" ,name="last_name", value=tecnicaUpdate.apellido, pattern="{3,40}$", title="El apellido debe tener un minimo 3 caracteres y 40 como maximo" required)
-                if usuario.permisos == 2
+                  input.form-control(type="text" ,name="last_name", value=tecnicaUpdate.apellido required)
+                if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
                     select.form-control.selectpicker(name="plaza", data-live-search="true")

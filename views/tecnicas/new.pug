@@ -15,7 +15,7 @@ block contenido
                 .form-group
                   h5  Apellidos:
                   input.form-control(type="text", name="last_name", placeholder="Apellido",pattern="{1,40}$", title="El apellido debe tener un maximo de 40 caracteres" required)
-                if usuario.permisos == 2
+                if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
                     select.form-control.selectpicker(name="plaza", data-live-search="true")

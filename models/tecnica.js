@@ -5,20 +5,21 @@
 
 const TecnicaModel = require('./coneccion')
 
-function getTecnicaById(idTecnica, seleccion, render, printError) {
-    TecnicaModel.query('SELECT ?? FROM tecnicas WHERE idTecnica = ?', [seleccion, idTecnica], (error, resultado, fields) => {
+function getTecnicaById(idTecnica, render, printError) {
+    TecnicaModel.query('SELECT * FROM tecnicas t WHERE t.idTecnica = ?', idTecnica, (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
-function getTecnicas(seleccion, render, printError) {
-    TecnicaModel.query('SELECT ?? FROM tecnicas', seleccion , (error, resultado, fields) => {
+function getTecnicas(render, printError) {
+    let seleccion = 't.nombre, t.apellido, t.idTecnica, s.plaza'
+    TecnicaModel.query(`SELECT ${seleccion} FROM tecnicas t INNER JOIN sucursales s ON t.idSucursal = s.idSucursal`, (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
-function getTecnicasBySucursal(idSucursal, seleccion , render, printError) {
-    TecnicaModel.query('SELECT ?? FROM tecnicas WHERE idSucursal = ?', [seleccion, idSucursal] , (error, resultado, fields) => {
+function getTecnicasBySucursal(idSucursal, render, printError) {
+    TecnicaModel.query('SELECT t.idTecnica, t.nombre, t.apellido FROM tecnicas t WHERE t.idSucursal = ?', idSucursal , (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }

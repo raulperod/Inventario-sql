@@ -16,18 +16,18 @@ block contenido
                 tr
                   th Nombres
                   th Apellidos
-                  if usuario.permisos == 2
+                  if usuario.permisos === 2
                     th Sucursal
                   th Acción
               tbody
-                if usuario.permisos == 2
+                if usuario.permisos === 2
                   for tecnica in tecnicas
                     tr.odd.gradeX
                       td #{tecnica.nombre}
                       td #{tecnica.apellido}
-                      td #{tecnica.sucursal.plaza}
+                      td #{tecnica.plaza}
                       td
-                        a(class="btn btn btn-primary btn-circle" href="/tecnicas/"+tecnica._id)
+                        a(class="btn btn btn-primary btn-circle" href="/tecnicas/"+tecnica.idTecnica)
                           i.fa.fa-list(title="Editar")
 
                 else
@@ -37,7 +37,7 @@ block contenido
                       td #{tecnica.nombre}
                       td #{tecnica.apellido}
                       td
-                        a(class="btn btn btn-primary btn-circle" href="/tecnicas/"+tecnica._id)
+                        a(class="btn btn btn-primary btn-circle" href="/tecnicas/"+tecnica.idTecnica)
                           i.fa.fa-list(title="Editar")
             // /.panel-body
         // /.panel
