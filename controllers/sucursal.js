@@ -6,15 +6,12 @@
 const SucursalModel = require('../models/sucursal')
 
 function sucursalesGet(req, res) {
-    // defino la seleccion
-    let seleccion = ['*'],
-        usuario = req.session.user
     // busco las sucursales
-    SucursalModel.getSucursales(seleccion, sucursales => { // si no hubo error
-        res.render('./sucursales/manager', { sucursales, usuario })
+    SucursalModel.getSucursales( sucursales => { // si no hubo error
+        res.render('./sucursales/manager', { sucursales, usuario: req.session.user })
     }, error => { // si hubo error
         console.log(`Error al obtener las sucursales: ${error}`)
-        res.redirect('/almacen')
+        res.json({ msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
     })
 }
 
@@ -33,22 +30,20 @@ function sucursalesNewPost(req, res) {
         res.redirect('/sucursales')
     }, error => { // si hubo error
         console.log(`Error al guardar la nueva sucursal: ${error}`)
-        // mando una alerta que se repitio la plaza
-        res.send('0')
+        res.json({ msg: `Error al guardar la nueva sucursal: ${error}`, tipo: 0})
     })
 }
 
 function sucursalesIdSucursalGet(req, res) {
     // declaro variables necesarias
     let idSucursal = req.params.idSucursal,
-        usuario = req.session.user,
-        seleccion = ['*']
+        usuario = req.session.user
     // busco la sucursal a editar
-    SucursalModel.getSucursalById(idSucursal, seleccion, sucursalUpdate => { // si no hubo error
+    SucursalModel.getSucursalById(idSucursal, sucursalUpdate => { // si no hubo error
         res.render('./sucursales/update', {  usuario, sucursalUpdate: sucursalUpdate[0] })
     }, error => { // si hubo error
         console.log(`Error al obtener la sucursal: ${error}`)
-        res.redirect('/almacen')
+        res.json({ msg: `Error al obtener la sucursal: ${error}`, tipo: 0 })
     })
 }
 
@@ -64,8 +59,7 @@ function sucursalesIdSucursalPut(req, res) {
         res.redirect('/sucursales')
     }, error => { // si hubo un error
         console.log(`Error al actualizar sucursal: ${error}`)
-        // mando una alerta que se repitio la plaza
-        res.send('0')
+        res.json({ msg: `Error al actualizar sucursal: ${error}`, tipo: 0 })
     })
 }
 

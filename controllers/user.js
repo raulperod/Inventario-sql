@@ -14,7 +14,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.json({ msg : `Error al obtener los usuarios: ${error}` })
+            res.json({ msg : `Error al obtener los usuarios: ${error}` , tipo:0 })
         })
     } else { // si es admin de sucursal
         let idSucursal = req.session.user.idSucursal // obtienes el id de la sucursal del usuario
@@ -22,7 +22,7 @@ function usersGet(req, res) {
             res.render('./users/manager', { usuarios, usuario } )
         }, error => { // si hubo un error
             console.log(`Error al obtener los usuarios: ${error}`)
-            res.json({ msg: `Error al obtener los usuarios: ${error}`})
+            res.json({ msg: `Error al obtener los usuarios: ${error}`, tipo:0})
         })
     }
 }
@@ -34,7 +34,7 @@ function usersNewGet(req, res) {
             res.render('./users/new', { sucursales, usuario })
         }, error => { // si ocurrio un error
             console.log(`Error no se pudieron obtener las sucursales: ${error}`)
-            res.json({ msg:`Error no se pudieron obtener las sucursales: ${error}`})
+            res.json({ msg:`Error no se pudieron obtener las sucursales: ${error}`, tipo:0})
         })
     } else { // si es admin de sucursal
         res.render('./users/new',{ usuario })
@@ -67,7 +67,7 @@ function usersNewPost(req, res) {
             })
         }, error => {
             console.log(`Error al obtener la sucursal: ${error}`)
-            res.json({ msg: `Error al obtener la sucursal: ${error}`})
+            res.json({ msg: `Error al obtener la sucursal: ${error}`, tipo:0})
         })
     } else { // si es administrador de sucursales
         // genero el nuevo usuario
@@ -102,11 +102,11 @@ function usersIdUsuarioGet(req, res) {
                 res.render('./users/update', { sucursales, usuarioUpdate: usuarioUpdate[0], usuario })
             }, error => { // si hubo error
                 console.log(`Error al obtener el usuario: ${error}`)
-                res.json({ msg: `Error al obtener el usuario: ${error}`})
+                res.json({ msg: `Error al obtener el usuario: ${error}`, tipo:0})
             })
         }, error => { // si hubo error
             console.log(`Error al obtener la sucursal: ${error}`)
-            res.json({ msg: `Error al obtener la sucursal: ${error}`})
+            res.json({ msg: `Error al obtener la sucursal: ${error}`, tipo:0})
         })
     } else { // si es administrador de sucursal
         // obtengo al usuario a editar
@@ -114,7 +114,7 @@ function usersIdUsuarioGet(req, res) {
             res.render('./users/update', { usuarioUpdate: usuarioUpdate[0], usuario })
         }, error => { // si hubo error
             console.log(`Error al obtener el usuario: ${error}`)
-            res.json({ msg: `Error al obtener el usuario: ${error}`})
+            res.json({ msg: `Error al obtener el usuario: ${error}`, tipo:0})
         })
     }
 }

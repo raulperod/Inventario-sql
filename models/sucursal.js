@@ -23,6 +23,12 @@ function getPlazasOfSucursales( render, printError) {
     })
 }
 
+function getSucursales( render, printError) {
+    SucursalModel.query('SELECT * FROM sucursales', (error, resultado, fields) => {
+        return(error) ? printError(error): render(resultado)
+    })
+}
+
 function createSucursal(sucursal, render, printError) {
     SucursalModel.query('INSERT INTO sucursales SET ?', sucursal, (error, resultado, fields) => {
         return(error) ? printError(error): render()
@@ -39,6 +45,7 @@ module.exports = {
     getSucursalById,
     getPlazasOfSucursales,
     getIdSucursalByPlaza,
+    getSucursales,
     createSucursal,
     updateSucursal
 }

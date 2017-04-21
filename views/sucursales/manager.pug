@@ -23,10 +23,10 @@ block contenido
                     td #{sucursal.plaza}
                     td #{sucursal.ciudad}
                     td
-                      a(class="btn btn btn-primary btn-circle" href="/sucursales/"+sucursal._id)
+                      a(class="btn btn btn-primary btn-circle" href="/sucursales/"+sucursal.idSucursal)
                         i.fa.fa-list(title="Editar")
                       b &nbsp &nbsp &nbsp
-                      form(id="eliminar"  style="display:inline" action="/sucursales/"+sucursal._id+"?_method=DELETE",method="POST" onsubmit="return confirm('¿Continuar con la eliminación?')")
+                      form(id="eliminar"  style="display:inline" action="/sucursales/"+sucursal.idSucursal+"?_method=DELETE",method="POST" onsubmit="return confirm('¿Continuar con la eliminación?')")
                         button(type="submit/image" alt="text" value="" class="btn btn-danger btn-circle")
                           i.fa.fa-times(title="Eliminar")
             // /.panel-body

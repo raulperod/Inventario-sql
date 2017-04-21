@@ -7,14 +7,14 @@ block contenido
           .panel-heading
             h3.panel-title Editar sucursal
           .panel-body
-            form(action="/sucursales/"+sucursalUpdate.id+"?_method=PUT",method="POST")
+            form(action="/sucursales/"+sucursalUpdate.idSucursal+"?_method=PUT",method="POST")
               fieldset
               .form-group
                 h5  Plaza:
-                input.form-control(type="text",name="plaza",required="required",value=sucursalUpdate.plaza, pattern="{3,40}$",title="El nombre de la plaza debe tener un minimo 3 caracteres y 40 como maximo")
+                input.form-control(type="text",name="plaza", value=sucursalUpdate.plaza required)
               .form-group
                 h5  Ciudad:
-                input.form-control(type="text",name="ciudad",required="required",value=sucursalUpdate.ciudad, pattern="{3,40}$",title="El nombre de la ciudad debe tener un minimo 3 caracteres y 40 como maximo")
+                input.form-control(type="text",name="ciudad", value=sucursalUpdate.ciudad required)
               // boton para registrar
               .form-group
               input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
