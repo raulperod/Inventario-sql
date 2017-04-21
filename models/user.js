@@ -5,27 +5,31 @@
 
 const UserModel = require('./coneccion')
 
-function getUserById(idUser, seleccion, render, printError) {
-    UserModel.query('SELECT ?? FROM usuarios WHERE idUsuario = ?', [seleccion, idUser], (error, resultado, fields) => {
+
+function getUserById(idUser, render, printError) {
+    UserModel.query(`SELECT * FROM usuarios u WHERE u.idUsuario = ?`, idUser ,(error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
-function getUserByUsername(idUsername, seleccion, render, printError) {
-    UserModel.query('SELECT ?? FROM usuarios WHERE username = ?', [seleccion, idUsername], (error, resultado, fields) => {
+
+function getUserByUsername(username, render, printError) {
+    let seleccion = 'u.username, u.password, u.status, u.permisos, u.idSucursal'
+    UserModel.query(`SELECT ${seleccion} FROM usuarios u WHERE u.username = ? `, username ,(error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
 function getUsers(render, printError) {
     let seleccion = 'u.username, u.password, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario, s.plaza'
-    UserModel.query(`SELECT ${seleccion} FROM usuarios u INNER JOIN sucursales s ON u.idSucursal = s.idSucursal AND NOT u.permisos = 2`, seleccion , (error, resultado, fields) => {
+    UserModel.query(`SELECT ${seleccion} FROM usuarios u INNER JOIN sucursales s ON u.idSucursal = s.idSucursal AND NOT u.permisos = 2` , (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
 function getUsersBySucursal(idSucursal, render, printError) {
-    UserModel.query('SELECT * FROM usuarios u WHERE u.idSucursal = ? AND u.permisos = 0', idSucursal , (error, resultado, fields) => {
+    let seleccion = 'u.username, u.password, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario'
+    UserModel.query(`SELECT ${seleccion} FROM usuarios u WHERE u.idSucursal = ? AND u.permisos = 0`, idSucursal ,(error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }

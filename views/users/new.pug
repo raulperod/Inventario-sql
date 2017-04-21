@@ -11,19 +11,19 @@ block contenido
               fieldset
                 .form-group
                   h5  Usuario:
-                  input.form-control(type="text", name="username", placeholder="Usuario",pattern="^([a-zA-Z0-9]{4,20})$", title="El usuario debe tener unicamente letras y numeros, minimo 4 caracteres y 20 como maximo" required)
+                  input.form-control(type="text", name="username", placeholder="Usuario", required)
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text", name="name", placeholder="Nombre",pattern="{1,40}$", title="El nombre debe tener un maximo de 40 caracteres" required)
+                  input.form-control(type="text", name="name", placeholder="Nombre", required)
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text", name="last_name", placeholder="Apellido",pattern="{1,40}$", title="El apellido debe tener un maximo de 40 caracteres" required)
+                  input.form-control(type="text", name="last_name", placeholder="Apellido", required)
                 .form-group
                   h5  Contraseña:
-                  input.form-control(type="password", name="password", placeholder="Contraseña",pattern="^([a-zA-Z0-9]{8,20})$", title="La contraseña debe tener como minimo 8 caracteres y maximo 20" required)
+                  input.form-control(type="password", name="password", placeholder="Contraseña", required)
                 .form-group
                   h5  Confirmación de contraseña:
-                  input.form-control(type="password", name="password_confirmation", placeholder="Confirmar contraseña",pattern="^([a-zA-Z0-9]{8,20})$", title="La contraseña debe tener como minimo 8 caracteres y maximo 20" required)
+                  input.form-control(type="password", name="password_confirmation", placeholder="Confirmar contraseña" required)
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:

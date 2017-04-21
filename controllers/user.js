@@ -30,8 +30,7 @@ function usersGet(req, res) {
 function usersNewGet(req, res) {
     let usuario = req.session.user
     if( usuario.permisos === 2 ){ // si es admin general
-        let seleccion = ['plaza']
-        SucursalModel.getSucursales(seleccion, sucursales => { // si se pudo obtener las sucursales
+        SucursalModel.getPlazasOfSucursales( sucursales => { // si se pudo obtener las sucursales
             res.render('./users/new', { sucursales, usuario })
         }, error => { // si ocurrio un error
             console.log(`Error no se pudieron obtener las sucursales: ${error}`)
@@ -46,17 +45,16 @@ function usersNewPost(req, res) {
     const usuario = req.session.user
     if( usuario.permisos === 2 ){ // si es administrador general
         // declaro constantes necesarias
-        let plaza = req.body.plaza,
-            seleccion = ['idSucursal']
+        let plaza = req.body.plaza
         // busco la sucursal del nuevo usuario
-        SucursalModel.getSucursalByPlaza(plaza, seleccion, sucursal => {
+        SucursalModel.getIdSucursalByPlaza(plaza, idSucursal => {
             // genero el nuevo usuario
             let nuevoUsuario = {
                 username: req.body.username.toLowerCase(),
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
-                idSucursal: sucursal[0].idSucursal,
+                idSucursal: idSucursal,
                 permisos: 1
             }
             // agrego al nuevo usuario
@@ -97,32 +95,26 @@ function usersIdUsuarioGet(req, res) {
     let usuario = req.session.user, // obtengo al usuario logeado
         idUsuario = req.params.idUsuario // obtengo el id del usuario a editar
     if( usuario.permisos === 2 ){ //  si es administrador general
-        // defino la seleccion
-        let seleccionS = ['plaza'] // se tomara la plaza
         // busca las sucursales
-        SucursalModel.getSucursales(seleccionS, sucursales => { // si no hubo error
-            // defino la seleccion
-            let seleccionU = ['*']  // se tomara todos los campos
+        SucursalModel.getPlazasOfSucursales( sucursales => { // si no hubo error
             // busca al usuario a editar
-            UserModel.getUserById(idUsuario, seleccionU, usuarioUpdate => { // si no hubo error
+            UserModel.getUserById(idUsuario, usuarioUpdate => { // si no hubo error
                 res.render('./users/update', { sucursales, usuarioUpdate: usuarioUpdate[0], usuario })
             }, error => { // si hubo error
                 console.log(`Error al obtener el usuario: ${error}`)
-                res.redirect('/almacen')
+                res.json({ msg: `Error al obtener el usuario: ${error}`})
             })
         }, error => { // si hubo error
             console.log(`Error al obtener la sucursal: ${error}`)
-            res.redirect('/almacen')
+            res.json({ msg: `Error al obtener la sucursal: ${error}`})
         })
     } else { // si es administrador de sucursal
-        // defino la seleccion
-        let seleccionU = ['idUsuario','username','password','nombre','apellido','permisos','status'] // se tomara todos los campos
         // obtengo al usuario a editar
-        UserModel.getUserById(idUsuario, seleccionU, usuarioUpdate => { // si no hubo error
+        UserModel.getUserById(idUsuario, usuarioUpdate => { // si no hubo error
             res.render('./users/update', { usuarioUpdate: usuarioUpdate[0], usuario })
         }, error => { // si hubo error
             console.log(`Error al obtener el usuario: ${error}`)
-            res.redirect('/almacen')
+            res.json({ msg: `Error al obtener el usuario: ${error}`})
         })
     }
 }
@@ -131,58 +123,52 @@ function usersIdUsuarioPut(req ,res) {
     let usuario = req.session.user, // obtenemos el usuario logeado
         idUsuario = req.params.idUsuario // obtengo el id del usuario
     if( usuario.permisos === 2 ){ // si es administrado general
-        let selectionS = ['idSucursal'], // selecciono el id de la sucursal
-            plaza = req.body.plaza  // obtengo la nueva sucursal del usuario
+        let plaza = req.body.plaza  // obtengo la nueva sucursal del usuario
         // busco la nueva sucursal
-        SucursalModel.getSucursalByPlaza(plaza, selectionS, sucursal => { // si no hubo error
+        SucursalModel.getIdSucursalByPlaza(plaza, idSucursal => { // si no hubo error
             // creo al usuario con los cambios realizados
-            let nuevoUsuario = {
+            let usuarioUpdate = {
                 idUsuario,
                 username: req.body.username,
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
-                sucursal: sucursal[0].idSucursal,
+                idSucursal,
                 permisos:  req.body.permisos === "Administrador" ? 1 : 0,
                 status: req.body.status === "Activo"
             }
             // guardo los cambios del usuario en la base de datos
-            UserModel.updateUser(nuevoUsuario, () => { // si no hubo error al actualizar el usuario
-                res.redirect('/users')
-            }, error => { // si hubo error al actualizar
-                // se repitio el username
-                console.log(`Error al actualizar el usuario: ${error}`)
-                // mando una alerta que se repitio el username
-                res.send('0')
-            })
+            updateUser(res, usuarioUpdate)
 
         }, error => { // si hubo error al buscar la sucursal
             console.log(`Error al buscar la nueva sucursal: ${error}`)
-            res.redirect('/error')
+            res.json({ msg : `Error al buscar la nueva sucursal: ${error}` , tipo : 0})
         })
 
     } else { // si es administrador de sucursal
         // creo al usuario con los cambios realizados
-        let nuevoUsuario = {
+        let usuarioUpdate = {
             idUsuario,
             username: req.body.username,
             nombre: req.body.name,
             apellido: req.body.last_name,
             password: req.body.password,
-            sucursal: usuario.idSucursal,
-            permisos: 0,
             status: req.body.status === "Activo"
         }
         // guardo los cambios del usuario en la base de datos
-        UserModel.updateUser(nuevoUsuario, () => { // si no hubo error al actualizar el usuario
-            res.redirect('/users')
-        }, error => { // si hubo error al actualizar
-            // se repitio el username
-            console.log(`Error al actualizar el usuario: ${error}`)
-            // mando una alerta que se repitio el username
-            res.send('0')
-        })
+        updateUser(res, usuarioUpdate)
     }
+}
+
+function updateUser(res, user) {
+    UserModel.updateUser(user, () => { // si no hubo error al actualizar el usuario
+        res.redirect('/users')
+    }, error => { // si hubo error al actualizar
+        // se repitio el username
+        console.log(`Error al actualizar el usuario: ${error}`)
+        // mando una alerta que se repitio el username
+        res.json({ msg: `Error al actualizar el usuario: ${error}` , tipo: 1})
+    })
 }
 
 module.exports = {

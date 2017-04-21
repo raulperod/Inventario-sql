@@ -5,20 +5,20 @@
 
 const SucursalModel = require('./coneccion')
 
-function getSucursalById(idSucursal, seleccion, render, printError) {
-    SucursalModel.query('SELECT ?? FROM sucursales s WHERE s.idSucursal = ?', [seleccion, idSucursal], (error, resultado, fields) => {
+function getSucursalById(idSucursal, render, printError) {
+    SucursalModel.query('SELECT * FROM sucursales s WHERE s.idSucursal = ?', idSucursal, (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
 
-function getSucursalByPlaza(plaza , seleccion, render, printError) {
-    SucursalModel.query('SELECT ?? FROM sucursales s WHERE s.plaza = ?', [seleccion, plaza] , (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+function getIdSucursalByPlaza(plaza, render, printError) {
+    SucursalModel.query('SELECT s.idSucursal FROM sucursales s WHERE s.plaza = ?',  plaza , (error, resultado, fields) => {
+        return(error) ? printError(error): render(resultado[0].idSucursal)
     })
 }
 
-function getSucursales(seleccion, render, printError) {
-    SucursalModel.query('SELECT ?? FROM sucursales ', seleccion , (error, resultado, fields) => {
+function getPlazasOfSucursales( render, printError) {
+    SucursalModel.query('SELECT s.plaza FROM sucursales s', (error, resultado, fields) => {
         return(error) ? printError(error): render(resultado)
     })
 }
@@ -37,8 +37,8 @@ function updateSucursal(sucursal, render, printError) {
 
 module.exports = {
     getSucursalById,
-    getSucursales,
-    getSucursalByPlaza,
+    getPlazasOfSucursales,
+    getIdSucursalByPlaza,
     createSucursal,
     updateSucursal
 }

@@ -7,7 +7,7 @@ block contenido
           .panel-heading
             h3.panel-title Editar usuario
           .panel-body
-            form(action="/users/"+usuarioUpdate._id+"?_method=PUT",method="POST")
+            form(action="/users/"+usuarioUpdate.idUsuario+"?_method=PUT",method="POST")
               fieldset
                 .form-group
                   h5  Usuario:
@@ -24,7 +24,7 @@ block contenido
                 .form-group
                   h5  Confirmación de contraseña:
                   input.form-control(type="text" ,name="password_confirmation" ,value=usuarioUpdate.password, pattern="^([a-zA-Z0-9]{4,20})$",title="La contraseña debe tener unicamente letras y numeros, minimo 4 caracteres y 20 como maximo" required)
-                if usuario.permisos == 2
+                if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
                     select.form-control.selectpicker(name="plaza", data-live-search="true")

@@ -29,10 +29,9 @@ function loginGet(req, res) {
 function loginPost(req, res) {
     // obtengo el username y password
     let username = req.body.username.toLowerCase(),
-        password = req.body.password,
-        seleccion = ['username','password','permisos','status','idSucursal']
+        password = req.body.password
     // se busca al usuario con el username
-    UserModel.getUserByUsername( username, seleccion , resultado => { // si se obtubo al usuario
+    UserModel.getUserByUsername( username, resultado => { // si se obtubo al usuario
         // obtengo el usuario
         let usuario =  resultado[0],
             promesa = new Promise( (resolve, reject) => {
