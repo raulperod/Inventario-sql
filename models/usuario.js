@@ -6,9 +6,9 @@
 const UserModel = require('./coneccion')
 
 
-function getUserById(idUser, render, printError) {
+function getUserById(idUser, next) {
     UserModel.query(`SELECT * FROM usuarios u WHERE u.idUsuario = ?`, idUser ,(error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado[0])
+        next(error, resultado[0])
     })
 }
 
@@ -39,9 +39,9 @@ function createUser(user, next) {
     })
 }
 
-function updateUser(user, render, printError) {
+function updateUser(user, next) {
     UserModel.query('UPDATE usuarios SET ? WHERE idUsuario = ?', [user,user.idUsuario], (error, resultado, fields) => {
-        return(error) ? printError(error): render()
+        next(error)
     })
 }
 
