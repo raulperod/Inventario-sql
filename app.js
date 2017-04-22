@@ -36,22 +36,25 @@ app
         name: "session",
         keys: ["gelish","time"]
     }))
-// indice
+// gelishtime/
 app
     .get('/', Index.index )
     .get('/login', Index.loginGet )
     .post('/login', Index.loginPost )
     .get('/logout', Index.logout )
-    // para ruta de usuarios
+// gelishtime/users
 app
     .use("/users", session_admin )
     .use('/users', User_router )
+// gelishtime/tecnicas
 app
     .use("/tecnicas", session_admin )
     .use('/tecnicas', Tecnica_router )
+// gelishtime/sucursales
 app
     .use("/sucursales", session_general_admin )
     .use('/sucursales', Sucursal_router )
+// gelishtime/categories
 app
     .use("/categories", session_general_admin )
     .use('/categories', Category_router )

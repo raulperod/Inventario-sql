@@ -25,7 +25,7 @@ block contenido
                   h5  Categoria:
                   select.form-control.selectpicker(name="categoria", data-live-search="true")
                     for categoria in categorias
-                      option(name="1") #{categoria.nombre}
+                      option #{categoria.nombre}
                 //esto todavia hay que ver los estilos para poner un select en vez de un input
                 // boton para registrar
                 .form-group

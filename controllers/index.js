@@ -76,7 +76,7 @@ function logout(req, res) {
 }
 
 function error404(req, res) {
-    res.redirect('/almacen')
+    res.redirect('/users')
 }
 
 module.exports = {
