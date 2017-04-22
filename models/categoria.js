@@ -13,7 +13,9 @@ function getCategoryById(idCategory, render, printError) {
 
 function getIdCategoryByName(name, render, printError) {
     CategoryModel.query('SELECT c.idCategoria FROM categorias c WHERE c.nombre = ?', name, (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado[0].idCategoria)
+        if(error) printError(error)
+        else if(typeof resultado[0] === 'undefined') printError('no se encuentra')
+        else render(resultado[0].idCategoria)
     })
 }
 

@@ -140,7 +140,7 @@ function excelPost(req, res) {
 
         exceltojson({ input: req.file.path,  output: null, lowerCaseHeaders :true }, (err, productos) => {
             if( !err ){ // si no hubo error
-                productos.forEach(producto => {
+                for (let producto of productos) {
                     // variables necesarias
                     let nombreCategoria = producto.categoria
                     // busca la categoria elegida
@@ -158,17 +158,15 @@ function excelPost(req, res) {
                         ProductModel.createProduct(nuevoProducto, () => { // si no hubo error al guardarlo
                             // se agrego correctametne y continua agregando productos
                         }, error => { // si hubo un error
-                            console.log(`Error al guardar el nuevo producto: ${error}`)
-                            // manda una alerta que se repite el nombre o codigo
-                            res.json({ msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2})
+                            // e  = {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2}
                         })
 
                     }, error => { // si hubo error
-                        console.log(`Error al buscar el id de la categoria: ${error}`)
-                        res.json({ msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
+                        // {msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0}
                     })
-                })
+                }
                 res.json({ msg: 'Productos agregados correctamente', tipo: 3})
+
             }else{ // hubo un erro
                 console.log(err)
                 res.json({ msg: err, tipo: 1})
