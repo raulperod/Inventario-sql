@@ -5,21 +5,21 @@
 
 const SucursalModel = require('./coneccion')
 
-function getSucursalById(idSucursal, render, printError) {
+function getSucursalById(idSucursal, next) {
     SucursalModel.query('SELECT * FROM sucursales s WHERE s.idSucursal = ?', idSucursal, (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 
-function getIdSucursalByPlaza(plaza, render, printError) {
+function getIdSucursalByPlaza(plaza, next) {
     SucursalModel.query('SELECT s.idSucursal FROM sucursales s WHERE s.plaza = ?',  plaza , (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado[0].idSucursal)
+        next(error, resultado[0].idSucursal)
     })
 }
 
-function getPlazasOfSucursales( render, printError) {
+function getPlazasOfSucursales(next) {
     SucursalModel.query('SELECT s.plaza FROM sucursales s', (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 

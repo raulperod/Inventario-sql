@@ -8,7 +8,7 @@ const UserModel = require('./coneccion')
 
 function getUserById(idUser, render, printError) {
     UserModel.query(`SELECT * FROM usuarios u WHERE u.idUsuario = ?`, idUser ,(error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        return(error) ? printError(error): render(resultado[0])
     })
 }
 
@@ -33,9 +33,9 @@ function getUsersBySucursal(idSucursal, next) {
     })
 }
 
-function createUser(user, render, printError) {
+function createUser(user, next) {
     UserModel.query('INSERT INTO usuarios SET ?', user, (error, resultado, fields) => {
-        return(error) ? printError(error): render()
+        next(error)
     })
 }
 
