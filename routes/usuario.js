@@ -4,7 +4,7 @@
 'use strict'
 
 const express = require('express'),
-    UserController = require('../controllers/user'),
+    UserController = require('../controllers/usuario'),
     user = express.Router()
 
 user

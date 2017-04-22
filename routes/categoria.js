@@ -4,7 +4,7 @@
 'use strict'
 
 const express = require('express'),
-    CategoryController = require('../controllers/category'),
+    CategoryController = require('../controllers/categoria'),
     category = express.Router()
 
 category

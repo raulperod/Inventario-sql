@@ -3,7 +3,7 @@
  */
 'use strict'
 
-const UserModel = require('../models/user')
+const UserModel = require('../models/usuario')
 
 function index(req, res) {
     // verifica si existe un usuario logeado

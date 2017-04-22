@@ -3,7 +3,7 @@
  */
 'use strict'
 
-const UserModel = require('../models/user'),
+const UserModel = require('../models/usuario'),
       SucursalModel = require('../models/sucursal')
 
 function usersGet(req, res) {

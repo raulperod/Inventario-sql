@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00a9e2d1-8ad0-4107-9088-54414d2e01c4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/category.js" afterPath="$PROJECT_DIR$/controllers/category.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/category.js" afterPath="$PROJECT_DIR$/models/category.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/categories/manager.pug" afterPath="$PROJECT_DIR$/views/categories/manager.pug" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/categories/update.pug" afterPath="$PROJECT_DIR$/views/categories/update.pug" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/almacen.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/basico.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/consumo.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/historial.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/producto.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/producto.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/user.js" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/category.js" afterPath="$PROJECT_DIR$/controllers/categoria.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/controllers/user.js" afterPath="$PROJECT_DIR$/controllers/usuario.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/models/category.js" afterPath="$PROJECT_DIR$/models/categoria.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/models/user.js" afterPath="$PROJECT_DIR$/models/usuario.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/routes/category.js" afterPath="$PROJECT_DIR$/routes/categoria.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/routes/user.js" afterPath="$PROJECT_DIR$/routes/usuario.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/index.js" afterPath="$PROJECT_DIR$/controllers/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,35 +32,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="44" column="3" lean-forward="true" selection-start-line="44" selection-start-column="3" selection-end-line="44" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="category.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/category.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="51" column="32" lean-forward="true" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
-              <folding>
-                <element signature="n#!!block;n#categoriesGet#0" expanded="false" />
-                <element signature="n#!!block;n#categoriesNewGet#0" expanded="false" />
-                <element signature="n#!!block;n#categoriesNewPost#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="category.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/models/category.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="32" column="103" lean-forward="false" selection-start-line="32" selection-start-column="103" selection-end-line="32" selection-end-column="103" />
+            <state relative-caret-position="-124">
+              <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -70,12 +58,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/models/coneccion.js" />
-        <option value="$PROJECT_DIR$/middleware/session-active.js" />
-        <option value="$PROJECT_DIR$/middleware/session-active-sucursal.js" />
-        <option value="$PROJECT_DIR$/middleware/session-admin.js" />
-        <option value="$PROJECT_DIR$/middleware/session-general-admin.js" />
         <option value="$PROJECT_DIR$/views/products/manager.pug" />
         <option value="$PROJECT_DIR$/views/products/excel.pug" />
         <option value="$PROJECT_DIR$/views/products/new.pug" />
@@ -112,7 +94,6 @@
         <option value="$PROJECT_DIR$/views/sucursales/update.pug" />
         <option value="$PROJECT_DIR$/controllers/user.js" />
         <option value="$PROJECT_DIR$/views/tecnicas/manager.pug" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/controllers/tecnica.js" />
         <option value="$PROJECT_DIR$/views/tecnicas/new.pug" />
         <option value="$PROJECT_DIR$/views/tecnicas/update.pug" />
@@ -121,6 +102,13 @@
         <option value="$PROJECT_DIR$/views/categories/update.pug" />
         <option value="$PROJECT_DIR$/controllers/category.js" />
         <option value="$PROJECT_DIR$/models/category.js" />
+        <option value="$PROJECT_DIR$/controllers/almacen.js" />
+        <option value="$PROJECT_DIR$/controllers/basico.js" />
+        <option value="$PROJECT_DIR$/controllers/consumo.js" />
+        <option value="$PROJECT_DIR$/controllers/historial.js" />
+        <option value="$PROJECT_DIR$/controllers/producto.js" />
+        <option value="$PROJECT_DIR$/models/producto.js" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -386,12 +374,12 @@
       <workItem from="1492639815448" duration="6758000" />
       <workItem from="1492711473039" duration="1727000" />
       <workItem from="1492727297785" duration="13578000" />
-      <workItem from="1492812497586" duration="5241000" />
+      <workItem from="1492812497586" duration="7715000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79278000" />
+    <option name="totallyTimeSpent" value="81752000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -436,48 +424,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/products/excel.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="51" column="32" lean-forward="false" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/products/manager.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="60" column="23" lean-forward="false" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/products/update.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="53" column="28" lean-forward="true" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/products/new.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
-          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/historial/bajas.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="132" column="23" lean-forward="false" selection-start-line="132" selection-start-column="23" selection-end-line="132" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/historial/general.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="75" column="21" lean-forward="false" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/historial/movimientos.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="516">
@@ -565,7 +511,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/npm-debug.log" />
-    <entry file="file://$PROJECT_DIR$/routes/user.js">
+    <entry file="file://$PROJECT_DIR$/routes/usuario.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
@@ -611,6 +557,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="326">
           <caret line="45" column="98" lean-forward="false" selection-start-line="45" selection-start-column="98" selection-end-line="45" selection-end-column="98" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -618,6 +565,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-69">
           <caret line="36" column="26" lean-forward="false" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -625,6 +573,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -632,6 +581,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="367">
           <caret line="25" column="118" lean-forward="false" selection-start-line="25" selection-start-column="118" selection-end-line="25" selection-end-column="118" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -639,6 +589,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="39">
           <caret line="31" column="36" lean-forward="true" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -646,6 +597,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
           <caret line="28" column="198" lean-forward="true" selection-start-line="28" selection-start-column="198" selection-end-line="28" selection-end-column="198" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -653,6 +605,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="84" lean-forward="false" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -660,6 +613,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -671,14 +625,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/user.js">
+    <entry file="file://$PROJECT_DIR$/controllers/usuario.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="116" column="75" lean-forward="false" selection-start-line="116" selection-start-column="75" selection-end-line="116" selection-end-column="75" />
           <folding>
-            <element signature="e#2193#2465#0" expanded="false" />
-            <element signature="e#3209#3461#0" expanded="false" />
-            <element signature="e#5909#6281#0" expanded="false" />
+            <element signature="e#2196#2468#0" expanded="false" />
+            <element signature="e#3212#3464#0" expanded="false" />
+            <element signature="e#5912#6284#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -750,7 +704,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/user.js">
+    <entry file="file://$PROJECT_DIR$/models/usuario.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3">
           <caret line="24" column="111" lean-forward="false" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="111" />
@@ -774,15 +728,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="44" column="3" lean-forward="true" selection-start-line="44" selection-start-column="3" selection-end-line="44" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/category.js">
+    <entry file="file://$PROJECT_DIR$/routes/categoria.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="24" lean-forward="false" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="24" />
@@ -798,7 +744,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/category.js">
+    <entry file="file://$PROJECT_DIR$/models/categoria.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="32" column="103" lean-forward="false" selection-start-line="32" selection-start-column="103" selection-end-line="32" selection-end-column="103" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/categoria.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
           <caret line="51" column="32" lean-forward="true" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
@@ -810,10 +764,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/category.js">
+    <entry file="file://$PROJECT_DIR$/controllers/almacen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="32" column="103" lean-forward="false" selection-start-line="32" selection-start-column="103" selection-end-line="32" selection-end-column="103" />
+        <state relative-caret-position="51">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/basico.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/consumo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/historial.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/producto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/producto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-124">
+          <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
           <folding />
         </state>
       </provider>

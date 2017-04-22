@@ -3,7 +3,7 @@
  */
 'use strict'
 
-const CategoryModel = require('../models/category')
+const CategoryModel = require('../models/categoria')
 
 function categoriesGet(req, res) {
     // busco todas las categorias
