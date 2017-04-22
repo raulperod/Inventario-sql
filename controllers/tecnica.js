@@ -4,25 +4,28 @@
 'use strict'
 
 const TecnicaModel = require('../models/tecnica'),
-      SucursalModel = require('../models/sucursal')
+      SucursalModel = require('../models/sucursal'),
+      Utilidad = require('../ayuda/utilidad')
 
 function tecnicasGet(req, res) {
     let usuario = req.session.user
     if( usuario.permisos === 2 ){ // si es administrador general
         // busco todas las tecnicas
-        TecnicaModel.getTecnicas( tecnicas => { // si no hubo error
-            res.render('./tecnicas/manager', { usuario, tecnicas } )
-        }, error => { // si hubo error
-            console.log(`Error al obtener las tecnicas: ${error}`)
-            res.json({ msg: `Error al obtener las tecnicas: ${error}`, tipo: 0 })
+        TecnicaModel.getTecnicas( (error, tecnicas) => {
+            (error) ? ( // si hubo error
+                Utilidad.printError(res, { msg: `Error al obtener las tecnicas: ${error}`, tipo: 0 })
+            ) : ( // si no hubo error
+                res.render('./tecnicas/manager', { usuario, tecnicas } )
+            )
         })
     } else { // si es administrador de sucursal
         // busco todas las tecnicas
-        TecnicaModel.getTecnicasBySucursal(usuario.idSucursal, tecnicas => { // si no hubo error
-            res.render('./tecnicas/manager', { usuario, tecnicas } )
-        }, error => { // si hubo error
-            console.log(`Error al obtener las tecnicas: ${error}`)
-            res.json({ msg: `Error al obtener las tecnicas: ${error}`, tipo: 0 })
+        TecnicaModel.getTecnicasBySucursal(usuario.idSucursal, (error, tecnicas) => {
+            (error) ? ( // si hubo error
+                Utilidad.printError(res, { msg: `Error al obtener las tecnicas: ${error}`, tipo: 0 })
+            ) : ( // si no hubo error
+                res.render('./tecnicas/manager', { usuario, tecnicas } )
+            )
         })
     }
 }
@@ -31,11 +34,12 @@ function tecnicasNewGet(req, res) {
     let usuario = req.session.user
     if( usuario.permisos === 2 ){ // si es administrador general
         // busco las sucursales
-        SucursalModel.getPlazasOfSucursales( sucursales => { // si no hubo error
-            res.render('./tecnicas/new', { usuario, sucursales })
-        }, error => { // si hubo error
-            console.log(`Error al buscar las sucursales: ${error}`)
-            res.json({ msg: `Error al buscar las sucursales: ${error}`, tipo: 0})
+        SucursalModel.getPlazasOfSucursales( (error, sucursales) => { // si no hubo error
+            (error) ? (
+                Utilidad.printError(res, { msg: `Error al buscar las sucursales: ${error}`, tipo: 0})
+            ) : (
+                res.render('./tecnicas/new', { usuario, sucursales })
+            )
         })
     } else { // si es administrador de sucursal
         res.render('./tecnicas/new', { usuario })
@@ -47,7 +51,11 @@ function tecnicasNewPost(req, res) {
     if( usuario.permisos === 2 ){ // si es administrador general
         let plaza = req.body.plaza
         // busco la sucursal
-        SucursalModel.getIdSucursalByPlaza(plaza, idSucursal => { // si no hubo error
+        SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => { // si no hubo error
+            if(error){
+                Utilidad.printError(res, { msg: `Error al buscar la sucursal: ${error}`, tipo: 0})
+                return
+            }
             // creamos la nueva tecnica
             let nuevaTecnia = {
                 nombre: req.body.name,
@@ -55,15 +63,7 @@ function tecnicasNewPost(req, res) {
                 idSucursal
             }
             // guardamos a la nueva tecnica
-            TecnicaModel.createTecnica(nuevaTecnia, () => {
-                res.redirect('/tecnicas')
-            }, error => {
-                console.log(`Error al guardar la nueva tecnica: ${error}`)
-                res.json({ msg: `Error al guardar la nueva tecnica: ${error}`, tipo: 0})
-            })
-        }, error => { // si hubo error
-            console.log(`Error al buscar la sucursal: ${error}`)
-            res.json({ msg: `Error al buscar la sucursal: ${error}`, tipo: 0})
+            createTecnica(res, nuevaTecnia)
         })
     } else { // si es administrador de sucursal
         // creamos la nueva tecnica
@@ -72,13 +72,7 @@ function tecnicasNewPost(req, res) {
             apellido: req.body.last_name,
             idSucursal: usuario.idSucursal
         }
-        // guardamos a la nueva tecnica
-        TecnicaModel.createTecnica(nuevaTecnia, () => {
-            res.redirect('/tecnicas')
-        }, error => {
-            console.log(`Error al guardar la nueva tecnica: ${error}`)
-            res.json({ msg: `Error al guardar la nueva tecnica: ${error}`, tipo: 0})
-        })
+        createTecnica(res, nuevaTecnia)
     }
 }
 
@@ -88,25 +82,28 @@ function tecnicasIdTecnicaGet(req, res) {
 
     if( usuario.permisos === 2 ){ // si es administrador general
         // busco las sucurales
-        SucursalModel.getPlazasOfSucursales( sucursales => { // si no hubo error
+        SucursalModel.getPlazasOfSucursales( (error, sucursales) => { // si no hubo error
+            if(error){
+                Utilidad.printError(res, { msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
+                return
+            }
             // busco la tecnica a editar
-            TecnicaModel.getTecnicaById(idTecnica, tecnicaUpdate => { // si no hubo error
-                res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate: tecnicaUpdate[0] })
-            }, error => { // si ocurrio un error
-                console.log(`Error al obtener la tecnica: ${error}`)
-                res.json({ msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
+            TecnicaModel.getTecnicaById(idTecnica, (error, tecnicaUpdate) => { // si no hubo error
+                (error) ? (
+                    Utilidad.printError(res, { msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
+                ) : (
+                    res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate: tecnicaUpdate[0] })
+                )
             })
-        }, error => { // si hubo error
-            console.log(`Error al obtener las sucursales: ${error}`)
-            res.json({ msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
         })
     } else { // si es administrador de sucursal
         // busco la tecnica a editar
-        TecnicaModel.getTecnicaById(idTecnica, tecnicaUpdate => { // si no hubo error
-            res.render('./tecnicas/update', { usuario, tecnicaUpdate: tecnicaUpdate[0] })
-        }, error => { // si ocurrio un error
-            console.log(`Error al obtener la tecnica: ${error}`)
-            res.json({ msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
+        TecnicaModel.getTecnicaById(idTecnica, (error, tecnicaUpdate) => { // si no hubo error
+            (error) ? (
+                Utilidad.printError(res, { msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
+            ) : (
+                res.render('./tecnicas/update', { usuario, tecnicaUpdate })
+            )
         })
     }
 }
@@ -118,7 +115,11 @@ function tecnicasIdTecnicaPut(req, res) {
     if( usuario.permisos === 2 ){ // si es administrador general
         let plaza = req.body.plaza
         // busco las sucurales
-        SucursalModel.getIdSucursalByPlaza(plaza, idSucursal => { // si no hubo error
+        SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => { // si no hubo error
+            if(error){
+                Utilidad.printError(res, { msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
+                return
+            }
             // edito la tecnica
             let tecnicaUpdate = {
                 idTecnica,
@@ -127,15 +128,7 @@ function tecnicasIdTecnicaPut(req, res) {
                 idSucursal
             }
             // actualizo la tecnica en la base de datos
-            TecnicaModel.updateTecnica(tecnicaUpdate, () => { // si no hubo error
-                res.redirect('/tecnicas')
-            }, error => { // si hubo error
-                console.log(`Error al actualizar tecnica: ${error}`)
-                res.redirect({ msg: `Error al actualizar tecnica: ${error}`, tipo: 0})
-            })
-        }, error => { // si hubo error
-            console.log(`Error al obtener las sucursales: ${error}`)
-            res.redirect({ msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
+            updateTecnica(res, tecnicaUpdate)
         })
     } else { // si es administrador de sucursal
         // edito la tecnica
@@ -146,13 +139,29 @@ function tecnicasIdTecnicaPut(req, res) {
             idSucursal: usuario.idSucursal
         }
         // actualizo la tecnica en la base de datos
-        TecnicaModel.updateTecnica(tecnicaUpdate, () => { // si no hubo error
-            res.redirect('/tecnicas')
-        }, error => { // si hubo error
-            console.log(`Error al actualizar tecnica: ${error}`)
-            res.redirect({ msg: `Error al actualizar tecnica: ${error}`, tipo: 0})
-        })
+        updateTecnica(res, tecnicaUpdate)
     }
+}
+
+function createTecnica(res, tecnica) {
+    // guardamos a la nueva tecnica
+    TecnicaModel.createTecnica(tecnica, error => {
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al guardar la nueva tecnica: ${error}`, tipo: 0})
+        ) : (
+            res.redirect('/tecnicas')
+        )
+    })
+}
+
+function updateTecnica(res, tecnica) {
+    TecnicaModel.updateTecnica(tecnica, error => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al actualizar tecnica: ${error}`, tipo: 0})
+        ) : (
+            res.redirect('/tecnicas')
+        )
+    })
 }
 
 module.exports = {
