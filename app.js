@@ -13,6 +13,7 @@ const express = require('express'),
     Sucursal_router = require('./routes/sucursal'),
     Tecnica_router = require('./routes/tecnica'),
     Category_router = require('./routes/categoria'),
+    Router_product = require('./routes/producto'),
     cookieSession = require("cookie-session"),
     session_admin = require('./middleware/session-admin'),
     session_general_admin = require('./middleware/session-general-admin'),
@@ -54,6 +55,10 @@ app
 app
     .use("/categories", session_general_admin )
     .use('/categories', Category_router )
+// gelishtime/products
+app
+    .use("/products",session_general_admin)
+    .use("/products",Router_product)
     // para error 404
     .use( Index.error404 )
 

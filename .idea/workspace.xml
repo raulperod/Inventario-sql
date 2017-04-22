@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00a9e2d1-8ad0-4107-9088-54414d2e01c4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/almacen.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/basico.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/consumo.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/almacen.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/basico.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/consumo.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/historial.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/producto.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/producto.js" afterPath="$PROJECT_DIR$/models/producto.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,24 +20,26 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-199">
-              <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="consumo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/consumo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1003">
+              <caret line="60" column="35" lean-forward="false" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="producto.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controllers/producto.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#47#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="producto.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/producto.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
@@ -113,7 +106,6 @@
         <option value="$PROJECT_DIR$/controllers/consumo.js" />
         <option value="$PROJECT_DIR$/controllers/historial.js" />
         <option value="$PROJECT_DIR$/controllers/producto.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/models/producto.js" />
         <option value="$PROJECT_DIR$/routes/producto.js" />
         <option value="$PROJECT_DIR$/models/almacen.js" />
@@ -123,6 +115,7 @@
         <option value="$PROJECT_DIR$/routes/consumo.js" />
         <option value="$PROJECT_DIR$/routes/historial.js" />
         <option value="$PROJECT_DIR$/routes/basico.js" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -196,20 +189,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Inventario-sql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Inventario-sql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Inventario-sql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -342,12 +321,12 @@
       <workItem from="1492639815448" duration="6758000" />
       <workItem from="1492711473039" duration="1727000" />
       <workItem from="1492727297785" duration="13578000" />
-      <workItem from="1492812497586" duration="8565000" />
+      <workItem from="1492812497586" duration="8856000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82602000" />
+    <option name="totallyTimeSpent" value="82893000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -707,16 +686,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/producto.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#47#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/coneccion.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -747,14 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-199">
-          <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -815,11 +776,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="60" column="35" lean-forward="false" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/producto.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/producto.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
