@@ -5,6 +5,7 @@
 
 const ProductModel = require('../models/producto'),
       CategoryModel = require('../models/categoria'),
+      Utilidad = require('../ayuda/utilidad'),
       fs = require('fs'),
       xlstojson = require("xls-to-json-lc"),
       xlsxtojson = require("xlsx-to-json-lc"),

@@ -5,41 +5,39 @@
 
 const CategoryModel = require('./coneccion')
 
-function getCategoryById(idCategory, render, printError) {
+function getCategoryById(idCategory, next) {
     CategoryModel.query('SELECT * FROM categorias WHERE idCategoria = ?', idCategory, (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado[0])
     })
 }
 
-function getIdCategoryByName(name, render, printError) {
+function getIdCategoryByName(name, next) {
     CategoryModel.query('SELECT c.idCategoria FROM categorias c WHERE c.nombre = ?', name, (error, resultado, fields) => {
-        if(error) printError(error)
-        else if(typeof resultado[0] === 'undefined') printError('no se encuentra')
-        else render(resultado[0].idCategoria)
+        next(error, resultado[0].idCategoria)
     })
 }
 
-function getCategories( render, printError) {
+function getCategories(next) {
     CategoryModel.query('SELECT * FROM categorias' , (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 
-function getNamesOfCategories(render, printError) {
+function getNamesOfCategories(next) {
     CategoryModel.query('SELECT nombre FROM categorias' , (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 
-function createCategory(category, render, printError) {
+function createCategory(category, next) {
     CategoryModel.query('INSERT INTO categorias SET ?', category, (error, resultado, fields) => {
-        return(error) ? printError(error): render()
+        next(error)
     })
 }
 
-function updateCategory(category, render, printError) {
+function updateCategory(category, next) {
     CategoryModel.query('UPDATE categorias SET ? WHERE idCategoria = ?', [category,category.idCategoria], (error, resultado, fields) => {
-        return(error) ? printError(error): render()
+        next(error)
     })
 }
 

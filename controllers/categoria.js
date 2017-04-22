@@ -3,15 +3,17 @@
  */
 'use strict'
 
-const CategoryModel = require('../models/categoria')
+const CategoryModel = require('../models/categoria'),
+      Utilidad = require('../ayuda/utilidad')
 
 function categoriesGet(req, res) {
     // busco todas las categorias
-    CategoryModel.getCategories( categorias => { // si no hubo error
-        res.render('./categories/manager', { categorias, usuario: req.session.user })
-    }, error => { // si ocurrio un error
-        console.log(`Error al obtener las categorias: ${error}`)
-        res.json({ msg: `Error al obtener las categorias: ${error}`, tipo: 0})
+    CategoryModel.getCategories( (error, categorias) => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al obtener las categorias: ${error}`, tipo: 0})
+        ) : (
+            res.render('./categories/manager', { categorias, usuario: req.session.user })
+        )
     })
 }
 
@@ -26,23 +28,24 @@ function categoriesNewPost(req, res) {
         descripcion: req.body.descripcion
     }
     // guardo la nueva categoria
-    CategoryModel.createCategory(nuevaCategoria, () => { // si no hubo error
-        res.redirect('/categories')
-    }, error => { // si ocurrio un error
-        console.log(`Error al agregar la nueva categoria: ${error}`)
-        // mando una alerta que ya existe ese nombre
-        res.json({ msg: `Error al agregar la nueva categoria: ${error}`, tipo: 1})
+    CategoryModel.createCategory(nuevaCategoria, error => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al agregar la nueva categoria: ${error}`, tipo: 1})
+        ) : (
+            res.redirect('/categories')
+        )
     })
 }
 
 function categoriesIdCategoryGet(req, res) {
     let idCategory = req.params.idCategory
     // busco la categoria
-    CategoryModel.getCategoryById(idCategory, categoriaUpdate => { // si no hubo error
-        res.render('./categories/update', { usuario: req.session.user, categoryUpdate: categoriaUpdate[0] })
-    }, error => { // si hubo un error
-        console.log(`Error al obtener la categoria: ${error}`)
-        res.json({ msg: `Error al obtener la categoria: ${error}`, tipo: 0})
+    CategoryModel.getCategoryById(idCategory, (error, categoryUpdate) => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al obtener la categoria: ${error}`, tipo: 0})
+        ) : (
+            res.render('./categories/update', { usuario: req.session.user, categoryUpdate })
+        )
     })
 }
 
@@ -53,14 +56,13 @@ function categoriesIdCategoryPut(req, res) {
         descripcion: req.body.descripcion
     }
     // actualizo la categoria en la base de datos
-    CategoryModel.updateCategory(categoriaUpdate, () => { // si no hubo error
-        res.redirect('/categories')
-    }, error => { // si hubo error
-        console.log(`Error al actualizar la categoria: ${error}`)
-        // como se repite el nombre, se manda una alerta
-        res.json({ msg: `Error al actualizar la categoria: ${error}`, tipo: 1})
+    CategoryModel.updateCategory(categoriaUpdate, error => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al actualizar la categoria: ${error}`, tipo: 1})
+        ) : (
+            res.redirect('/categories')
+        )
     })
-
 }
 
 function categoriesIdCategoryDelete(req, res) {
