@@ -3,15 +3,17 @@
  */
 'use strict'
 
-const SucursalModel = require('../models/sucursal')
+const SucursalModel = require('../models/sucursal'),
+      Utilidad = require('../ayuda/utilidad')
 
 function sucursalesGet(req, res) {
     // busco las sucursales
-    SucursalModel.getSucursales( sucursales => { // si no hubo error
-        res.render('./sucursales/manager', { sucursales, usuario: req.session.user })
-    }, error => { // si hubo error
-        console.log(`Error al obtener las sucursales: ${error}`)
-        res.json({ msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
+    SucursalModel.getSucursales( (error, sucursales) => {
+        (error) ? ( // si hubo error
+            Utilidad.printError(res, { msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
+        ) : ( // si no hubo error
+            res.render('./sucursales/manager', { sucursales, usuario: req.session.user })
+        )
     })
 }
 
@@ -26,11 +28,12 @@ function sucursalesNewPost(req, res) {
         ciudad: req.body.ciudad
     }
     // guardo la nueva sucursal en la base de datos
-    SucursalModel.createSucursal(nuevaSucursal, () => { // si no hubo error
-        res.redirect('/sucursales')
-    }, error => { // si hubo error
-        console.log(`Error al guardar la nueva sucursal: ${error}`)
-        res.json({ msg: `Error al guardar la nueva sucursal: ${error}`, tipo: 0})
+    SucursalModel.createSucursal(nuevaSucursal, error => {
+        (error) ? ( // si hubo error
+            Utilidad.printError(res, { msg: `Error al guardar la nueva sucursal: ${error}`, tipo: 0})
+        ) : ( // si no hubo error
+            res.redirect('/sucursales')
+        )
     })
 }
 
@@ -39,11 +42,12 @@ function sucursalesIdSucursalGet(req, res) {
     let idSucursal = req.params.idSucursal,
         usuario = req.session.user
     // busco la sucursal a editar
-    SucursalModel.getSucursalById(idSucursal, sucursalUpdate => { // si no hubo error
-        res.render('./sucursales/update', {  usuario, sucursalUpdate: sucursalUpdate[0] })
-    }, error => { // si hubo error
-        console.log(`Error al obtener la sucursal: ${error}`)
-        res.json({ msg: `Error al obtener la sucursal: ${error}`, tipo: 0 })
+    SucursalModel.getSucursalById(idSucursal, (error, sucursalUpdate) => {
+        (error) ? ( // si hubo error
+            Utilidad.printError(res, { msg: `Error al obtener la sucursal: ${error}`, tipo: 0 })
+        ) : ( // si no hubo error
+            res.render('./sucursales/update', {  usuario, sucursalUpdate })
+        )
     })
 }
 
@@ -55,11 +59,12 @@ function sucursalesIdSucursalPut(req, res) {
         ciudad: req.body.ciudad
     }
     // actualizo la sucursal en la base de datos
-    SucursalModel.updateSucursal(sucursalUpdate, () => { // si no hubo error al actualizar
-        res.redirect('/sucursales')
-    }, error => { // si hubo un error
-        console.log(`Error al actualizar sucursal: ${error}`)
-        res.json({ msg: `Error al actualizar sucursal: ${error}`, tipo: 0 })
+    SucursalModel.updateSucursal(sucursalUpdate, error => {
+        (error) ? ( // si hubo error
+            Utilidad.printError({ msg: `Error al actualizar sucursal: ${error}`, tipo: 0 })
+        ) : ( // si no hubo error
+            res.redirect('/sucursales')
+        )
     })
 }
 
