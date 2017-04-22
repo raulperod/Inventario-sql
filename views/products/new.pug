@@ -11,16 +11,16 @@ block contenido
               fieldset
                 .form-group
                   h5  Nombre:
-                  input.form-control(type="text", name="nombre", placeholder="Nombre", pattern="{3,40}$",title="El nombre del producto debe tener un minimo 3 caracteres y 40 como maximo")
+                  input.form-control(type="text", name="nombre", placeholder="Nombre", required)
                 .form-group
                   h5  Codigo de barras:
-                  input.form-control(type="text", name="codigo", placeholder="Codigo de barra" required, pattern="{3,30}$",title="El nombre de la plaza debe tener un minimo 3 caracteres y 30 como maximo")
+                  input.form-control(type="text", name="codigo", placeholder="Codigo de barra", required)
                 .form-group
                   h5  Descripcion:
-                  input.form-control(type="text", name="descripcion", placeholder="Descripcion" required, pattern="{3,70}$",title="El nombre de la plaza debe tener un minimo 3 caracteres y 70 como maximo")
+                  input.form-control(type="text", name="descripcion", placeholder="Descripcion", required)
                 .form-group
                   h5  Cantidad minima:
-                  input.form-control(type="number" placeholder="Cantidad minima" name="minimo" min="0" max="10000", title="Cantidad minima del producto en el almacen" required)
+                  input.form-control(type="number" placeholder="Cantidad minima" name="minimo" min="0" max="10000" required)
                 .form-group
                   h5  Categoria:
                   select.form-control.selectpicker(name="categoria", data-live-search="true")

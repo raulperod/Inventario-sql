@@ -26,19 +26,18 @@ block contenido
                   tr.odd.gradeX
                     td #{producto.nombre}
                     td #{producto.descripcion}
-                    td #{producto.categoria.nombre}
+                    td #{producto.nombre}
                     td #{producto.codigo}
                     td #{producto.minimo}
                     if producto.esBasico
                       td Si
                     else
-                      
                       td No  
                     td
-                      a(class="btn btn btn-primary btn-circle" href="/products/"+producto._id)
+                      a(class="btn btn btn-primary btn-circle" href="/products/"+producto.idProducto)
                         i.fa.fa-list(title="Editar")
                       b &nbsp &nbsp &nbsp
-                      form(id="eliminar"  style="display:inline" action="/products/"+producto._id+"?_method=DELETE",method="POST",  onsubmit="return confirm('¿Continuar con la eliminación?')")
+                      form(id="eliminar"  style="display:inline" action="/products/"+producto.idProducto+"?_method=DELETE", method="POST", onsubmit="return confirm('¿Continuar con la eliminación?')")
                         button(type="submit/image" alt="text" value="" class="btn btn-danger btn-circle")
                           i.fa.fa-times(title="Eliminar")
             // /.panel-body

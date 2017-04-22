@@ -23,6 +23,12 @@ function getCategories( render, printError) {
     })
 }
 
+function getNamesOfCategories(render, printError) {
+    CategoryModel.query('SELECT nombre FROM categorias' , (error, resultado, fields) => {
+        return(error) ? printError(error): render(resultado)
+    })
+}
+
 function createCategory(category, render, printError) {
     CategoryModel.query('INSERT INTO categorias SET ?', category, (error, resultado, fields) => {
         return(error) ? printError(error): render()
@@ -39,6 +45,7 @@ module.exports = {
     getCategoryById,
     getCategoryByName,
     getCategories,
+    getNamesOfCategories,
     createCategory,
     updateCategory
 }
