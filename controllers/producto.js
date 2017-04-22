@@ -32,31 +32,38 @@ function productsNewGet(req, res) {
 
 function productsNewPost(req, res) {
     // variables necesarias
-    let nombreCategoria = req.body.categoria
-    // busca la categoria elegida
-    CategoryModel.getIdCategoryByName(nombreCategoria, idCategoria => { // si no hubo error
-        // crea el nuevo producto
-        let nuevoProducto = {
-            nombre: req.body.nombre,
-            descripcion: req.body.descripcion,
-            codigo: req.body.codigo,
-            minimo: req.body.minimo,
-            esbasico: req.body.basico === 'Si',
-            idCategoria
-        }
-        // guarda el nuevo producto en la base de datos
-        ProductModel.createProduct(nuevoProducto, () => { // si no hubo error al guardarlo
-            res.redirect('/products')
-        }, error => { // si hubo un error
-            console.log(`Error al guardar el nuevo producto: ${error}`)
-            // manda una alerta que se repite el nombre o codigo
-            res.json({ msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
+    let nombreCategoria = req.body.categoria,
+        promesa = new Promise((resolve, reject) => {
+            // busca la categoria elegida
+            CategoryModel.getIdCategoryByName(nombreCategoria, idCategoria => {
+                return resolve(idCategoria)
+            }, error => { // si hubo error
+                return reject({ msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
+            })
         })
 
-    }, error => { // si hubo error
-        console.log(`Error al buscar el id de la categoria: ${error}`)
-        res.json({ msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
-    })
+    promesa
+            .then( idCategoria => {
+                // crea el nuevo producto
+                let nuevoProducto = {
+                    nombre: req.body.nombre,
+                    descripcion: req.body.descripcion,
+                    codigo: req.body.codigo,
+                    minimo: req.body.minimo,
+                    esbasico: req.body.basico === 'Si',
+                    idCategoria
+                }
+                // guarda el nuevo producto en la base de datos
+                ProductModel.createProduct(nuevoProducto, () => { // si no hubo error al guardarlo
+                    res.redirect('/products')
+                }, error => { // si hubo un error
+                    // manda una alerta que se repite el nombre o codigo
+                    return reject({ msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
+                })
+            })
+            .catch( error => {
+                res.json(error)
+            })
 }
 
 function productsIdProductoGet(req, res) {

@@ -3,7 +3,8 @@
  */
 'use strict'
 
-const UserModel = require('../models/usuario')
+const UserModel = require('../models/usuario'),
+      Utilidad = require('../ayuda/utilidad')
 
 function index(req, res) {
     // verifica si existe un usuario logeado
@@ -27,44 +28,36 @@ function loginGet(req, res) {
 
 // para logearte
 function loginPost(req, res) {
-    // obtengo el username y password
-    let username = req.body.username.toLowerCase(),
+    // declaro variables necesarias
+    let username = req.body.username,
         password = req.body.password
-    // se busca al usuario con el username
-    UserModel.getUserByUsername( username, resultado => { // si se obtubo al usuario
-        // obtengo el usuario
-        let usuario =  resultado[0],
-            promesa = new Promise( (resolve, reject) => {
-                // comprueba si se pudo obtener el usuario
-                return (usuario) ? resolve(true) : reject({ msg: 'Error username incorrecto', tipo: 1 })
-            })
+
+    UserModel.getUserByUsername(username, (error, usuario) =>{
+        // declaro la promesa
+        let promesa = Utilidad.returnPromise(!error, true, { msg: `Error con la base de datos : ${error}`, tipo: 0 })
         // ejecuto la promesa
         promesa
-                .then( () => {
-                    return new Promise((resolve, reject) => {
-                        // comprueba si el usuario esta activo
-                        return (usuario.status) ? resolve(true) : reject({ msg: 'Error usuario inactivo', tipo: 2 })
-                    })
+                .then(() => {
+                    // comprueba si se pudo obtener el usuario
+                    return Utilidad.returnPromise(usuario, true, { msg: 'Error username incorrecto', tipo: 1 })
                 })
-                .then( () => {
-                    return new Promise((resolve, reject) => {
-                        // comprueba si la contraseña es correcta
-                        return (usuario.password === password) ? resolve(true) : reject({ msg: 'Error contraseña incorrecta', tipo: 3 })
-                    })
+                .then(() => {
+                    // comprueba si el usuario esta activo
+                    return Utilidad.returnPromise(usuario.status, true, { msg: 'Error usuario inactivo', tipo: 2 })
                 })
-                .then( () => {
+                .then(() => {
+                    // comprueba si la contraseña es correcta
+                    return Utilidad.returnPromise(usuario.password === password, true, { msg: 'Error contraseña incorrecta', tipo: 3 })
+                })
+                .then(() => {
                     // inicia al usuario
                     req.session.user = usuario
                     res.redirect('/users')
                 })
                 .catch( error => {
                     // si hubo erro lo manda
-                    res.json({error})
+                    Utilidad.printError(res, error)
                 })
-
-    }, error => { // si ocurrio un error con la base de datos
-        // se manda una alerta como respuesta
-        res.json({ msg: `Error con la base de datos : ${error}` , tipo: 0 })
     })
 }
 

@@ -12,24 +12,24 @@ function getUserById(idUser, render, printError) {
     })
 }
 
-function getUserByUsername(username, render, printError) {
+function getUserByUsername(username, next) {
     let seleccion = 'u.username, u.password, u.status, u.permisos, u.idSucursal'
     UserModel.query(`SELECT ${seleccion} FROM usuarios u WHERE u.username = ? `, username ,(error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado[0])
     })
 }
 
-function getUsers(render, printError) {
+function getUsers(next) {
     let seleccion = 'u.username, u.password, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario, s.plaza'
     UserModel.query(`SELECT ${seleccion} FROM usuarios u INNER JOIN sucursales s ON u.idSucursal = s.idSucursal AND NOT u.permisos = 2` , (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 
-function getUsersBySucursal(idSucursal, render, printError) {
+function getUsersBySucursal(idSucursal, next) {
     let seleccion = 'u.username, u.password, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario'
     UserModel.query(`SELECT ${seleccion} FROM usuarios u WHERE u.idSucursal = ? AND u.permisos = 0`, idSucursal ,(error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 

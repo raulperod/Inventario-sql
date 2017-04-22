@@ -10,19 +10,23 @@ function usersGet(req, res) {
     let usuario = req.session.user
     // verifica que tipo de usuario es
     if( usuario.permisos === 2 ){  // si es admin general
-        UserModel.getUsers( usuarios => { // si se pudieron obtener los usuarios
-            res.render('./users/manager', { usuarios, usuario } )
-        }, error => { // si hubo un error
-            console.log(`Error al obtener los usuarios: ${error}`)
-            res.json({ msg : `Error al obtener los usuarios: ${error}` , tipo:0 })
+        UserModel.getUsers((error, usuarios) => { // si se pudieron obtener los usuarios
+            (error) ? ( // si hubo error
+                console.log(`Error al obtener los usuarios: ${error}`),
+                res.json({msg: `Error al obtener los usuarios: ${error}`, tipo: 0})
+            ) : ( // si no hubo error
+                res.render('./users/manager', {usuarios, usuario})
+            )
         })
     } else { // si es admin de sucursal
         let idSucursal = req.session.user.idSucursal // obtienes el id de la sucursal del usuario
-        UserModel.getUsersBySucursal(idSucursal, usuarios => { // si se pudieron obtener los usuarios
-            res.render('./users/manager', { usuarios, usuario } )
-        }, error => { // si hubo un error
-            console.log(`Error al obtener los usuarios: ${error}`)
-            res.json({ msg: `Error al obtener los usuarios: ${error}`, tipo:0})
+        UserModel.getUsersBySucursal(idSucursal, (error, usuarios) => { // si se pudieron obtener los usuarios
+            (error) ? ( // si hubo error
+                console.log(`Error al obtener los usuarios: ${error}`),
+                res.json({msg: `Error al obtener los usuarios: ${error}`, tipo: 0})
+            ) : (
+                res.render('./users/manager', {usuarios, usuario})
+            )
         })
     }
 }
