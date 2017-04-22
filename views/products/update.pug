@@ -7,20 +7,20 @@ block contenido
           .panel-heading
             h3.panel-title Editar producto
           .panel-body
-            form(action="/products/"+productoUpdate._id+"?_method=PUT",method="POST")
+            form(action="/products/"+productoUpdate.idProducto+"?_method=PUT",method="POST")
               fieldset
                 .form-group
                   h5  Nombre:
-                  input.form-control(type="text",name="nombre",required="required",value=productoUpdate.nombre, pattern="{3,40}$",title="El nombre del producto debe tener un minimo 3 caracteres y 40 como maximo")
+                  input.form-control(type="text", name="nombre", value=productoUpdate.nombre, required)
                 .form-group
                   h5  Codigo de barras:
-                  input.form-control(type="text",name="codigo",required="required",value=productoUpdate.codigo, pattern="{3,30}$",title="El nombre de la plaza debe tener un minimo 3 caracteres y 30 como maximo")
+                  input.form-control(type="text", name="codigo", value=productoUpdate.codigo, required=)
                 .form-group
                   h5  Descripcion:
-                  input.form-control(type="text",name="descripcion",required="required",value=productoUpdate.descripcion, pattern="{3,70}$",title="El nombre de la plaza debe tener un minimo 3 caracteres y 70 como maximo")
+                  input.form-control(type="text", name="descripcion", value=productoUpdate.descripcion, required)
                 .form-group
                   h5  Cantidad minima:
-                  input.form-control(type="number", value=productoUpdate.minimo ,name="minimo", min="0", max="10000", title="Cantidad minima del producto en el almacen" required)
+                  input.form-control(type="number", value=productoUpdate.minimo ,name="minimo", min="0", max="10000" required)
                 .form-group
                   h5  Categoria:
                   select.form-control.selectpicker(name="categoria", data-live-search="true")
@@ -28,16 +28,16 @@ block contenido
                       option(name="1") #{categoria.nombre}
                 //esto todavia hay que ver los estilos para poner un select en vez de un input
                 // boton para registrar
-                if productoUpdate.esBasico == "Si"
+                if productoUpdate.esBasico === "Si"
                   .form-group
                     label Basico
                     .radio
                       label
-                        input#optionsRadios1(type='radio', name='esBasico', value='Si', checked='')
+                        input#optionsRadios1(type='radio', name='basico', value='Si', checked='')
                         | Si
                     .radio
                       label
-                        input#optionsRadios2(type='radio', name='esBasico', value='No')
+                        input#optionsRadios2(type='radio', name='basico', value='No')
                         | No
 
                 else
@@ -46,11 +46,11 @@ block contenido
                     label Basico
                     .radio
                       label
-                        input#optionsRadios1(type='radio', name='esBasico', value='Si')
+                        input#optionsRadios1(type='radio', name='basico', value='Si')
                         | Si
                     .radio
                       label
-                        input#optionsRadios2(type='radio', name='esBasico', value='No', checked='')
+                        input#optionsRadios2(type='radio', name='basico', value='No', checked='')
                         | No
                 .form-group
                 input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")

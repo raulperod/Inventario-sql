@@ -11,9 +11,9 @@ function getCategoryById(idCategory, render, printError) {
     })
 }
 
-function getCategoryByName(name, seleccion, render, printError) {
-    CategoryModel.query('SELECT ?? FROM categorias WHERE nombre = ?', [seleccion, name], (error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+function getIdCategoryByName(name, render, printError) {
+    CategoryModel.query('SELECT c.idCategoria FROM categorias c WHERE c.nombre = ?', name, (error, resultado, fields) => {
+        return(error) ? printError(error): render(resultado[0].idCategoria)
     })
 }
 
@@ -43,7 +43,7 @@ function updateCategory(category, render, printError) {
 
 module.exports = {
     getCategoryById,
-    getCategoryByName,
+    getIdCategoryByName,
     getCategories,
     getNamesOfCategories,
     createCategory,

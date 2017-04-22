@@ -12,7 +12,6 @@ function getUserById(idUser, render, printError) {
     })
 }
 
-
 function getUserByUsername(username, render, printError) {
     let seleccion = 'u.username, u.password, u.status, u.permisos, u.idSucursal'
     UserModel.query(`SELECT ${seleccion} FROM usuarios u WHERE u.username = ? `, username ,(error, resultado, fields) => {

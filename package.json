@@ -16,8 +16,7 @@
     "Express",
     "Mysql"
   ],
-  "author": "Raul Perez, Cesar Salazar"
-  ,
+  "author": "Raul Perez, Cesar Salazar",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rauperod/Inventario-sql/issues"
@@ -28,7 +27,10 @@
     "cookie-session": "^2.0.0-beta.1",
     "express": "^4.15.2",
     "method-override": "^2.3.8",
+    "multer": "^1.3.0",
     "mysql": "^2.13.0",
-    "pug": "^2.0.0-beta11"
+    "pug": "^2.0.0-beta11",
+    "xls-to-json-lc": "^0.3.3",
+    "xlsx-to-json-lc": "^0.2.5"
   }
 }
