@@ -127,13 +127,11 @@ function excelPost(req, res) {
 
     excel.upload(req, res, err => {
         if(err){
-            console.log(err)
-            res.json({ msg: `error inesperado: ${err}`, tipo: 1})
+            Utilidad.printError(res, { msg: `error inesperado: ${err}`, tipo: 1})
             return
         }
         if(!req.file){
-            console.log("No hay archivo")
-            res.json({ msg: `error inesperado: ${err}`, tipo: 1})
+            Utilidad.printError(res, { msg: `error inesperado: ${err}`, tipo: 1})
             return
         }
         // verifico la extencion del excel
@@ -144,38 +142,38 @@ function excelPost(req, res) {
         }
 
         exceltojson({ input: req.file.path,  output: null, lowerCaseHeaders :true }, (err, productos) => {
-            if( !err ){ // si no hubo error
-                for (let producto of productos) {
-                    // variables necesarias
-                    let nombreCategoria = producto.categoria
-                    // busca la categoria elegida
-                    CategoryModel.getIdCategoryByName(nombreCategoria, idCategoria => { // si no hubo error
-                        // crea el nuevo producto
-                        let nuevoProducto = {
-                            nombre: producto.nombre,
-                            descripcion: producto.descripcion,
-                            codigo: producto.codigo,
-                            minimo: producto.minimo,
-                            esbasico: producto.basico.toLowerCase() === 'si',
-                            idCategoria
-                        }
-                        // guarda el nuevo producto en la base de datos
-                        ProductModel.createProduct(nuevoProducto, () => { // si no hubo error al guardarlo
-                            // se agrego correctametne y continua agregando productos
-                        }, error => { // si hubo un error
-                            // e  = {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2}
-                        })
-
-                    }, error => { // si hubo error
-                        // {msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0}
-                    })
-                }
-                res.json({ msg: 'Productos agregados correctamente', tipo: 3})
-
-            }else{ // hubo un erro
-                console.log(err)
-                res.json({ msg: err, tipo: 1})
+            if( !err ) { // si no hubo error
+                Utilidad.printError(res, { msg: err, tipo: 1})
+                return
             }
+            for (let producto of productos) {
+                // variables necesarias
+                let nombreCategoria = producto.categoria
+                // busca la categoria elegida
+                CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => { // si no hubo error
+                    if(error){
+                        Utilidad.printError(res, {msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
+                        return
+                    }
+                    // crea el nuevo producto
+                    let nuevoProducto = {
+                        nombre: producto.nombre,
+                        descripcion: producto.descripcion,
+                        codigo: producto.codigo,
+                        minimo: producto.minimo,
+                        esbasico: producto.basico.toLowerCase() === 'si',
+                        idCategoria
+                    }
+                    // guarda el nuevo producto en la base de datos
+                    ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
+                        if(error){
+                            Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2})
+                            return
+                        }
+                    })
+                })
+            }
+            res.json({ msg: 'Productos agregados correctamente', tipo: 3})
         })
     })
 }
