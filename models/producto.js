@@ -5,28 +5,28 @@
 
 const ProductModel = require('./coneccion')
 
-function getProductById(idProduct, render, printError) {
+function getProductById(idProduct, next) {
     ProductModel.query(`SELECT * FROM productos p WHERE p.idProducto = ?`, idProduct ,(error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado[0])
+        next(error, resultado[0])
     })
 }
 
-function getProducts(render, printError) {
+function getProducts(next) {
     let seleccion = 'p.idProducto, p.nombre, p.descripcion, p.codigo, p.minimo, p.esBasico, c.nombre nombrec'
     ProductModel.query(`SELECT ${seleccion} FROM productos p INNER JOIN categorias c ON p.idCategoria = c.idCategoria` ,(error, resultado, fields) => {
-        return(error) ? printError(error): render(resultado)
+        next(error, resultado)
     })
 }
 
-function createProduct(product, render, printError) {
+function createProduct(product, next) {
     ProductModel.query('INSERT INTO productos SET ?', product, (error, resultado, fields) => {
-        return(error) ? printError(error): render()
+        next(error)
     })
 }
 
-function updateProduct(product, render, printError) {
+function updateProduct(product, next) {
     ProductModel.query('UPDATE productos p SET ? WHERE p.idProducto = ?', [product,product.idProducto], (error, resultado, fields) => {
-        return(error) ? printError(error): render()
+        next(error)
     })
 }
 

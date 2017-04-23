@@ -13,58 +13,53 @@ const ProductModel = require('../models/producto'),
 
 function productsGet(req, res) {
     // buscas todos los productos
-    ProductModel.getProducts( productos => { // si no hubo error
-        res.render('./products/manager', { productos, usuario: req.session.user })
-    }, error => { // si ocurrio un error
-        console.log(`Error al obtener los productos: ${error}`)
-        res.json({ msg: `Error al obtener los productos: ${error}`, tipo: 0})
+    ProductModel.getProducts( (error, productos) => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al obtener los productos: ${error}`, tipo: 0})
+        ) : (
+            res.render('./products/manager', { productos, usuario: req.session.user })
+        )
     })
 }
 
 function productsNewGet(req, res) {
     // busca el nombre de las categorias
-    CategoryModel.getNamesOfCategories( categorias => { // si no hubo error
-        res.render("./products/new",{ usuario: req.session.user, categorias })
-    }, error => { // si hubo error
-        console.log(`Error al obtener las categorias: ${error}`)
-        res.json({ msg: `Error al obtener las categorias: ${error}`, tipo: 0})
+    CategoryModel.getNamesOfCategories( (error, categorias) => { // si no hubo error
+        (error) ? (
+            Utilidad.printError(res, { msg: `Error al obtener las categorias: ${error}`, tipo: 0})
+        ) : (
+            res.render("./products/new",{ usuario: req.session.user, categorias })
+        )
     })
 }
 
 function productsNewPost(req, res) {
     // variables necesarias
-    let nombreCategoria = req.body.categoria,
-        promesa = new Promise((resolve, reject) => {
-            // busca la categoria elegida
-            CategoryModel.getIdCategoryByName(nombreCategoria, idCategoria => {
-                return resolve(idCategoria)
-            }, error => { // si hubo error
-                return reject({ msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
-            })
+    let nombreCategoria = req.body.categoria
+    // busco la categoria
+    CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => {
+        if(error){
+            Utilidad.printError(res, { msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
+            return
+        }
+        // crea el nuevo producto
+        let nuevoProducto = {
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            codigo: req.body.codigo,
+            minimo: req.body.minimo,
+            esbasico: req.body.basico === 'Si',
+            idCategoria
+        }
+        // guarda el nuevo producto en la base de datos
+        ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
+            return(error) ? (
+                Utilidad.printError(res, { msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
+            ) : (
+                res.redirect('/products')
+            )
         })
-
-    promesa
-            .then( idCategoria => {
-                // crea el nuevo producto
-                let nuevoProducto = {
-                    nombre: req.body.nombre,
-                    descripcion: req.body.descripcion,
-                    codigo: req.body.codigo,
-                    minimo: req.body.minimo,
-                    esbasico: req.body.basico === 'Si',
-                    idCategoria
-                }
-                // guarda el nuevo producto en la base de datos
-                ProductModel.createProduct(nuevoProducto, () => { // si no hubo error al guardarlo
-                    res.redirect('/products')
-                }, error => { // si hubo un error
-                    // manda una alerta que se repite el nombre o codigo
-                    return reject({ msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
-                })
-            })
-            .catch( error => {
-                res.json(error)
-            })
+    })
 }
 
 function productsIdProductoGet(req, res) {
@@ -72,17 +67,19 @@ function productsIdProductoGet(req, res) {
     let usuario = req.session.user,
         idProducto = req.params.idProducto
     // busca el nombre de las categorias
-    CategoryModel.getNamesOfCategories( categorias => { // si no hubo error
+    CategoryModel.getNamesOfCategories( (error, categorias) => { // si no hubo error
+        if(error){
+            Utilidad.printError(res, { msg: `Error al obtener las categorias: ${error}`, tipo: 0})
+            return
+        }
         // busco el producto a editar
-        ProductModel.getProductById(idProducto, productoUpdate => { // si no hubo error
-            res.render("./products/update",{ usuario, categorias, productoUpdate })
-        }, error => { // si hubo error
-            console.log(`Error al obtener el producto: ${error}`)
-            res.json({ msg: `Error al obtener el producto: ${error}`, tipo: 0})
+        ProductModel.getProductById(idProducto, (error, productoUpdate) => { // si no hubo error
+            (error) ? (
+                Utilidad.printError(res, { msg: `Error al obtener el producto: ${error}`, tipo: 0})
+            ) : (
+                res.render("./products/update",{ usuario, categorias, productoUpdate })
+            )
         })
-    }, error => { // si hubo error
-        console.log(`Error al obtener las categorias: ${error}`)
-        res.json({ msg: `Error al obtener las categorias: ${error}`, tipo: 0})
     })
 }
 
@@ -91,7 +88,11 @@ function productsIdProductoPut(req, res) {
     let nombreCategoria = req.body.categoria,
         idProducto = req.params.idProducto
     // busca la categoria elegida
-    CategoryModel.getIdCategoryByName(nombreCategoria, idCategoria => { // si no hubo error
+    CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => { // si no hubo error
+        if(error){
+            Utilidad.printError(res, { msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
+            return
+        }
         // crea el producto ya editado
         let productoUpdate = {
             idProducto,
@@ -103,17 +104,13 @@ function productsIdProductoPut(req, res) {
             idCategoria
         }
         // guarda el nuevo producto en la base de datos
-        ProductModel.updateProduct(productoUpdate, () => { // si no hubo error al guardarlo
-            res.redirect('/products')
-        }, error => { // si hubo un error
-            console.log(`Error al editar el producto: ${error}`)
-            // manda una alerta que se repite el nombre o codigo
-            res.json({ msg: `Error al editar el producto: ${error}`, tipo: 1})
+        ProductModel.updateProduct(productoUpdate, error => { // si no hubo error al guardarlo
+            (error) ? (
+                Utilidad.printError(res, { msg: `Error al editar el producto: ${error}`, tipo: 1})
+            ) : (
+                res.redirect('/products')
+            )
         })
-
-    }, error => { // si hubo error
-        console.log(`Error al buscar el id de la categoria: ${error}`)
-        res.json({ msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
     })
 }
 
