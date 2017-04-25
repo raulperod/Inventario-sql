@@ -13,7 +13,7 @@ function getCategoryById(idCategory, next) {
 
 function getIdCategoryByName(name, next) {
     CategoryModel.query('SELECT c.idCategoria FROM categorias c WHERE c.nombre = ?', name, (error, resultado, fields) => {
-        next(error, resultado[0].idCategoria)
+        (typeof resultado[0] === 'undefined') ? next(error, null) : next(error, resultado[0].idCategoria)
     })
 }
 

@@ -151,8 +151,8 @@ function excelPost(req, res) {
                 let nombreCategoria = producto.categoria
                 // busca la categoria elegida
                 CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => { // si no hubo error
-                    if(error){
-                        Utilidad.printError(res, {msg: `Error al buscar el id de la categoria: ${error}`, tipo: 0})
+                    if(error || !idCategoria ){
+                        Utilidad.printError(res, {msg: `Error al buscar el id de la categoria`, tipo: 0})
                         return
                     }
                     // crea el nuevo producto
@@ -168,7 +168,6 @@ function excelPost(req, res) {
                     ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
                         if(error){
                             Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2})
-                            return
                         }
                     })
                 })
