@@ -131,7 +131,7 @@ function excelPost(req, res) {
             return
         }
         if(!req.file){
-            Utilidad.printError(res, { msg: `error inesperado: ${err}`, tipo: 1})
+            Utilidad.printError(res, { msg: `no hay archivo`, tipo: 1})
             return
         }
         // verifico la extencion del excel
@@ -142,34 +142,36 @@ function excelPost(req, res) {
         }
 
         exceltojson({ input: req.file.path,  output: null, lowerCaseHeaders :true }, (err, productos) => {
-            if( !err ) { // si no hubo error
-                Utilidad.printError(res, { msg: err, tipo: 1})
+            if( err ) { // si hubo error
+                Utilidad.printError(res, { msg: "Error inesperado", tipo: 1})
                 return
             }
             for (let producto of productos) {
                 // variables necesarias
                 let nombreCategoria = producto.categoria
                 // busca la categoria elegida
-                CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => { // si no hubo error
-                    if(error || !idCategoria ){
+                CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => {
+                    if(error || !idCategoria ){ // si hubo error
                         Utilidad.printError(res, {msg: `Error al buscar el id de la categoria`, tipo: 0})
-                        return
-                    }
-                    // crea el nuevo producto
-                    let nuevoProducto = {
-                        nombre: producto.nombre,
-                        descripcion: producto.descripcion,
-                        codigo: producto.codigo,
-                        minimo: producto.minimo,
-                        esbasico: producto.basico.toLowerCase() === 'si',
-                        idCategoria
-                    }
-                    // guarda el nuevo producto en la base de datos
-                    ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
-                        if(error){
-                            Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2})
+                    } else {// si no hubo error
+                        // crea el nuevo producto
+                        let nuevoProducto = {
+                            nombre: producto.nombre,
+                            descripcion: producto.descripcion,
+                            codigo: producto.codigo,
+                            minimo: producto.minimo,
+                            esbasico: producto.basico.toLowerCase() === 'si',
+                            idCategoria
                         }
-                    })
+                        // guarda el nuevo producto en la base de datos
+                        ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
+                            (error) ? (
+                                Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2})
+                            ) : (
+                                console.log(`se agrego correctamente el producto: ${nuevoProducto.nombre}`)
+                            )
+                        })
+                    }
                 })
             }
             res.json({ msg: 'Productos agregados correctamente', tipo: 3})
