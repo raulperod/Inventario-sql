@@ -23,6 +23,12 @@ function getPlazasOfSucursales(next) {
     })
 }
 
+function getIdSucursalOfSucursales(next) {
+    SucursalModel.query('SELECT s.idSucursal FROM sucursales s', (error, resultado, fields) => {
+        next(error, resultado)
+    })
+}
+
 function getSucursales(next) {
     SucursalModel.query('SELECT * FROM sucursales', (error, resultado, fields) => {
         next(error, resultado)
@@ -44,6 +50,7 @@ function updateSucursal(sucursal, next) {
 module.exports = {
     getSucursalById,
     getPlazasOfSucursales,
+    getIdSucursalOfSucursales,
     getIdSucursalByPlaza,
     getSucursales,
     createSucursal,

@@ -5,6 +5,8 @@
 
 const ProductModel = require('../models/producto'),
       CategoryModel = require('../models/categoria'),
+      SucursalModel = require('../models/sucursal'),
+      AlmacenModel = require('../models/almacen'),
       Utilidad = require('../ayuda/utilidad'),
       fs = require('fs'),
       xlstojson = require("xls-to-json-lc"),
@@ -53,11 +55,11 @@ function productsNewPost(req, res) {
         }
         // guarda el nuevo producto en la base de datos
         ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
-            return(error) ? (
-                Utilidad.printError(res, { msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
-            ) : (
-                res.redirect('/products')
-            )
+            if(error) {
+                Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
+            } else {
+                generarAlmacenes(req, res, nuevoProducto.nombre)
+            }
         })
     })
 }
@@ -146,13 +148,15 @@ function excelPost(req, res) {
                 Utilidad.printError(res, { msg: "Error inesperado", tipo: 1})
                 return
             }
-            for (let producto of productos) {
+            let contador = 0
+            for( let i=0 ; i < productos.length ; i++ ){
                 // variables necesarias
-                let nombreCategoria = producto.categoria
+                let producto = productos[i],
+                    nombreCategoria = producto.categoria
                 // busca la categoria elegida
                 CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => {
                     if(error || !idCategoria ){ // si hubo error
-                        Utilidad.printError(res, {msg: `Error al buscar el id de la categoria`, tipo: 0})
+                        console.log(`Error al buscar el id de la categoria`)
                     } else {// si no hubo error
                         // crea el nuevo producto
                         let nuevoProducto = {
@@ -165,17 +169,54 @@ function excelPost(req, res) {
                         }
                         // guarda el nuevo producto en la base de datos
                         ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
-                            (error) ? (
-                                Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 2})
-                            ) : (
+                            if(error){
+                                console.log(`Error al guardar el nuevo producto: ${error}`)
+                            } else {
                                 console.log(`se agrego correctamente el producto: ${nuevoProducto.nombre}`)
-                            )
+                                contador++
+                            }
+                            //( i === productos.length-1 && contador) ? :
                         })
                     }
                 })
             }
-            res.json({ msg: 'Productos agregados correctamente', tipo: 3})
         })
+    })
+}
+
+function generarAlmacenes(req, res, productName) {
+    // cuando se crea un producto, ese producto se registra en el almacen de cada sucursal
+    // busco el producto agregado para obtener el id
+    ProductModel.getIdProductoAndIdCategoriaByName(productName, (error, producto) => {
+        if(error){ // si hubo error
+            Utilidad.printError(res, { msg: `Error al obtener el id del producto: ${error}`, tipo: 0})
+            return
+        }
+        // agregar el producto a las sucursales
+        SucursalModel.getIdSucursalOfSucursales( (error, sucursales) => {
+            if(error){ // si hubo error
+                Utilidad.printError(res, {msg:`Error al obtener el id de las sucursales: ${error}`, tipo: 0})
+                return
+            }
+            // genero un ciclo para generar el almacen de ese producto en cada sucursal
+            for (let sucursal of sucursales){
+                generalAlmacen(req, res, sucursal.idSucursal, producto)
+            }
+            // cuando termine de generar los almacenes
+            res.redirect('/products')
+        })
+    })
+}
+
+function generalAlmacen(req, res, idSucursal, producto) {
+    // genera el almacen para la sucursal y el producto
+    let nuevoAlmacen = {
+        idProducto: producto.idProducto,
+        idCategoria: producto.idCategoria,
+        idSucursal
+    }
+    AlmacenModel.createAlmacen(nuevoAlmacen, error => {
+        if(error) Utilidad.printError(res, {msg:`Error al crear el almacen: ${error}`, tipo: 1})
     })
 }
 
