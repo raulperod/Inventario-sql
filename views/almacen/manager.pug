@@ -17,7 +17,7 @@ block contenido
                   th Nombre
                   th Codigo
                   th Cantidad
-                  if usuario.permisos==2
+                  if usuario.permisos === 2
                     th Sucursal
                   else
 
@@ -27,7 +27,7 @@ block contenido
                 
                   for alm in almacen
                     tr.odd.gradeX
-                      td #{alm.producto.nombre}
+                      td #{alm.nombre}
                       td #{alm.producto.codigo}
                       if alm.cantidad > alm.producto.minimo
                         td(name=""+alm._id) #{alm.cantidad}
