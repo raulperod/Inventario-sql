@@ -3,8 +3,10 @@
  */
 'use strict'
 
-const SucursalModel = require('../models/sucursal'),
-      Utilidad = require('../ayuda/utilidad')
+const   SucursalModel = require('../models/sucursal'),
+        ProductModel = require('../models/producto'),
+        AlmacenModel = require('../models/almacen'),
+        Utilidad = require('../ayuda/utilidad')
 
 function sucursalesGet(req, res) {
     // busco las sucursales
@@ -29,11 +31,21 @@ function sucursalesNewPost(req, res) {
     }
     // guardo la nueva sucursal en la base de datos
     SucursalModel.createSucursal(nuevaSucursal, error => {
-        (error) ? ( // si hubo error
+        if(error){ // si hubo error
             Utilidad.printError(res, { msg: `Error al guardar la nueva sucursal: ${error}`, tipo: 0})
-        ) : ( // si no hubo error
+        } else { // si no hubo error
             res.redirect('/sucursales')
-        )
+            // genero los almacenes para la sucursal
+            // con los productos existentes
+            // busco el id de la sucursal que se acaba de crear
+            SucursalModel.getIdSucursalByPlaza(nuevaSucursal.plaza, (error, idSucursal) => {
+                (error) ? (
+                    Utilidad.printError(res, {msg: `Error al buscar el id de la sucursal: ${error}`, tipo: 0})
+                ) : (
+                    generarAlmacenes(req, res, idSucursal)
+                )
+            })
+        }
     })
 }
 
@@ -67,10 +79,32 @@ function sucursalesIdSucursalPut(req, res) {
         )
     })
 }
-
 // pendiente, no se como eliminar por cascada, aun
 function sucursalesIdSucursalDelete(req, res) {
 
+}
+
+function generarAlmacenes(req, res, idSucursal){
+    // busco todos los productos registrados
+    ProductModel.getIdProductoAndIdCategoriaOfSucursales((error, productos) => {
+        (error) ? (
+            Utilidad.printError(res, {msg: `Error al obtener los ids de los productos: ${error}`, tipo: 0})
+        ) : (
+            productos.forEach(producto => generarAlmacen(req, res, idSucursal, producto))
+        )
+    })
+}
+
+function generarAlmacen(req, res, idSucursal, producto) {
+    // genero un almacen, con la sucursal y el producto dado
+    let nuevoAlmacen = {
+        idProducto: producto.idProducto,
+        idCategoria: producto.idCategoria,
+        idSucursal
+    }
+    AlmacenModel.createAlmacen(nuevoAlmacen, error => {
+        if(error) Utilidad.printError(res, {msg:`Error al crear el almacen: ${error}`, tipo: 1})
+    })
 }
 
 module.exports = {

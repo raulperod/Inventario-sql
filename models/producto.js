@@ -17,6 +17,12 @@ function getIdProductoAndIdCategoriaByName(name, next) {
     })
 }
 
+function getIdProductoAndIdCategoriaOfSucursales(next) {
+    ProductModel.query(`SELECT p.idProducto, p.idCategoria FROM productos p`, (error, resultado, fields) => {
+        next(error, resultado)
+    })
+}
+
 function getProducts(next) {
     let seleccion = 'p.idProducto, p.nombre, p.descripcion, p.codigo, p.minimo, p.esBasico, c.nombre nombrec'
     ProductModel.query(`SELECT ${seleccion} FROM productos p INNER JOIN categorias c ON p.idCategoria = c.idCategoria` ,(error, resultado, fields) => {
@@ -39,6 +45,7 @@ function updateProduct(product, next) {
 module.exports = {
     getProductById,
     getIdProductoAndIdCategoriaByName,
+    getIdProductoAndIdCategoriaOfSucursales,
     getProducts,
     createProduct,
     updateProduct
