@@ -36,43 +36,18 @@ function almacenIdAlmacenAddPut(req, res) {
     }else{
         let usuario = req.session.user
         // si no mandaron 0
-        Almacen.findById(req.params.idAlmacen).exec( (err, productoAlm ) => { // busco el almacen
-            if(!err && productoAlm){ // si no hay error y el almacen existe
-                res.locals.productoAlmUpdate = productoAlm
-                res.locals.productoAlmUpdate.cantidad += parseInt(req.body.cantidad)
-                // genera el registro
-                // creo la fecha
-                let fecha = new Date()
-                fecha.setHours(fecha.getHours()-7)
-                let registro = new RegistroDeMovimiento({
-                    sucursal: usuario.sucursal,
-                    usuario:  usuario._id,
-                    cantidad: parseInt(req.body.cantidad),
-                    producto: productoAlm.producto,
-                    tipo: 1,
-                    fecha
-                })
-                // guarda al producto en la base de datos
-                res.locals.productoAlmUpdate.save( err => {
-                    if(err) console.log(err)
-                })
-                // guarda el registro
-                registro.save().then( reg => {
-                    // mando la nueva cantidad a mostrar
-                    res.send(""+res.locals.productoAlmUpdate.cantidad)
-                }, err => { // si ocurre un error lo imprime
-                    console.log(err)
-                })
-            }else{
-                if(err) console.log(err)
-                res.redirect("/almacen")
-            }
-        })
+
     }
 }
 
 function almacenIdAlmacenSubPut(req, res) {
+// si no mandaron cambios
+    if( parseInt(req.body.cantidad) === 0 ){
+        res.send("") // no mando nada
+    }else{
+        let usuario = req.session.user
 
+    }
 }
 
 module.exports = {

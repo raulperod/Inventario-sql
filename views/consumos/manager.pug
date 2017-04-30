@@ -16,8 +16,9 @@ block contenido
                 tr
                   th Nombre
                   th Codigo
+                  th Categoria
                   th Cantidad
-                  if usuario.permisos==2
+                  if usuario.permisos===2
                     th Sucursal
                   else
 
@@ -26,20 +27,21 @@ block contenido
                 if usuario.permisos < 2
                   for consumo in consumos
                     tr.odd.gradeX
-                      td #{consumo.producto.nombre}
-                      td #{consumo.producto.codigo}
-                      td(name=""+consumo._id) #{consumo.cantidad}
+                      td #{consumo.nombreProducto}
+                      td #{consumo.codigo}
+                      td #{consumo.nombreCategoria}
+                      td(name=""+consumo.idAlmacen) #{consumo.cantidadConsumo}
                       td
-                        if !consumo.producto.esBasico
-                          form(id=""+consumo._id,style="display:inline" action="/consumos/"+consumo._id+"?_method=PUT",method="POST",  onsubmit="return false")
-                            input.form-control(id=""+consumo.producto.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required )
+                        if !consumo.esBasico
+                          form(id=""+consumo.idAlmacen,style="display:inline" action="/consumos/"+consumo.idAlmacen+"?_method=PUT",method="POST",  onsubmit="return false")
+                            input.form-control(id=""+consumo.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required )
                             b &nbsp &nbsp &nbsp
-                            button(type="submit/image" alt="text" name="button1" class="btn btn-danger btn-circle "+consumo._id+" "+consumo.producto.codigo ,onclick="return false")
+                            button(type="submit/image" alt="text" name="button1" class="btn btn-danger btn-circle "+consumo.idAlmacen+" "+consumo.codigo ,onclick="return false")
                               i.fa.fa-times(title="Pasar a bajas")
                         else
                           
                           fieldset( disabled='')
-                            form(style="display:inline" action="/consumos/"+consumo._id+"?_method=PUT",method="POST",   onsubmit="return false")
+                            form(style="display:inline" action="/consumos/"+consumo.idAlmacen+"?_method=PUT",method="POST",   onsubmit="return false")
                               input#disabledInput.form-control(type="number" name="cantidad" min="0" max="10000" value="0" required disabled )
                               b &nbsp &nbsp &nbsp
                               button(type="submit/image" alt="text" class="btn btn-danger btn-circle")
@@ -49,10 +51,11 @@ block contenido
 
                   for consumo in consumos
                     tr.odd.gradeX
-                      td #{consumo.producto.nombre}
-                      td #{consumo.producto.codigo}
-                      td #{consumo.cantidad}
-                      td #{consumo.sucursal.plaza}
+                      td #{consumo.nombreProducto}
+                      td #{consumo.codigo}
+                      td #{consumo.nombreCategoria}
+                      td #{consumo.cantidadConsumo}
+                      td #{consumo.plaza}
               // /.panel-body
         // /.panel
       // /.col-lg-12
@@ -80,7 +83,7 @@ block contenido
     script(src="/public/excel/js/xlsx.core.min.js")
     script(src="/public/excel/js/FileSaver.min.js")
     script(src="/public/excel/js/tableexport.min.js")
-    if usuario.permisos == 2 
+    if usuario.permisos === 2
       script.
         $("table").tableExport({
             formats: ["xlsx"],
@@ -94,6 +97,6 @@ block contenido
         $("table").tableExport({
             formats: ["xlsx"],
             bootstrap: true,
-            ignoreCols: 3, 
+            ignoreCols: 4,
             fileName: "Consumo"
         });
