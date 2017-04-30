@@ -50,7 +50,7 @@ function almacenIdAlmacenAddPut(req, res) {
                     cantidadAlmacen: almacen.cantidadAlmacen + cantidad
                 }
                 // guardo los cambios
-                AlmacenModel.updateAlmacen(almacen, error => {
+                AlmacenModel.updateAlmacen(almacenUpdate, error => {
                     if(error){ // si hubo error
                         Utilidad.printError(res, {msg:`Error al actualizar el almacen: ${error}`, tipo: 0})
                     } else { // si no hubo error
@@ -80,12 +80,54 @@ function almacenIdAlmacenAddPut(req, res) {
 }
 
 function almacenIdAlmacenSubPut(req, res) {
-// si no mandaron cambios
-    if( parseInt(req.body.cantidad) === 0 ){
+    // obtengo la cantidad
+    let cantidad = parseInt(req.body.cantidad)
+    // si no mandaron cambios
+    if( cantidad === 0 ){
         res.send("") // no mando nada
-    }else{
-        let usuario = req.session.user
+    }else{ // si se quitaron productos
+        let usuario = req.session.user,
+            idAlmacen = req.params.idAlmacen
 
+        // obtengo el almacen
+        AlmacenModel.getConsumoById(idAlmacen, (error, almacen) => {
+            if(error){ // si hubo error
+                Utilidad.printError(res, {msg:`Error al obtener el almacen: ${error}`, tipo: 0})
+            } else { // si no hubo error
+                // genero los cambios
+                let verificar = ( cantidad >= almacen.cantidadAlmacen ),
+                    almacenUpdate = {
+                        idAlmacen,
+                        cantidadAlmacen: ( verificar ) ? ( 0 ) : ( almacen.cantidadAlmacen - cantidad ),
+                        cantidadConsumo: ( verificar ) ? ( almacen.cantidadConsumo+almacen.cantidadAlmacen ) : ( almacen.cantidadConsumo+cantidad )
+                    }
+                // guardo los cambios
+                AlmacenModel.updateAlmacen(almacenUpdate, error => {
+                    if(error){
+                        Utilidad.printError(res, {msg:`Error al actualizar el almacen: ${error}`, tipo: 0})
+                    } else {
+                        // creo el movimiento
+                        let movimiento = {
+                            idSucursal: usuario.idSucursal,
+                            idUsuario: usuario.idUsuario,
+                            idProducto: almacen.idProducto,
+                            idCategoria: almacen.idCategoria,
+                            cantidad: ( verificar ) ? ( almacen.cantidadAlmacen ) : ( cantidad ),
+                            tipo: 0 // es una baja
+                        }
+                        // guardo el movimiento que ocurrio
+                        MovimientoModel.createMovimientoNoBasico(movimiento, error => {
+                            (error) ? ( // si hubo error
+                                Utilidad.printError(res, {msg:`Error al crear el movimiento: ${error}`, tipo: 0})
+                            ) : ( // si no hubo
+                                // mando la nueva cantidad del almacen
+                                (verificar) ? ( res.send('0') ) : ( res.send(`${almacenUpdate.cantidadAlmacen}`))
+                            )
+                        })
+                    }
+                })
+            }
+        })
     }
 }
 
