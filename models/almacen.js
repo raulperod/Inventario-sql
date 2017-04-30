@@ -65,7 +65,7 @@ function getConsumo(next) {
 
 function getConsumoBySucursal(idSucursal ,next) {
     AlmacenModel
-        .query(`SELECT p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadConsumo, p.esBasico
+        .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadConsumo, p.esBasico
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
                 JOIN categorias c ON a.idCategoria = c.idCategoria

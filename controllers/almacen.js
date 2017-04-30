@@ -93,6 +93,8 @@ function almacenIdAlmacenSubPut(req, res) {
         AlmacenModel.getConsumoById(idAlmacen, (error, almacen) => {
             if(error){ // si hubo error
                 Utilidad.printError(res, {msg:`Error al obtener el almacen: ${error}`, tipo: 0})
+            } else if(almacen.cantidadAlmacen === 0){ // si no hay nada en consumo
+                res.send("")
             } else { // si no hubo error
                 // genero los cambios
                 let verificar = ( cantidad >= almacen.cantidadAlmacen ),
