@@ -13,7 +13,7 @@ function getUserById(idUser, next) {
 }
 
 function getUserByUsername(username, next) {
-    let seleccion = 'u.username, u.password, u.status, u.permisos, u.idSucursal'
+    let seleccion = 'u.idUsuario, u.username, u.password, u.status, u.permisos, u.idSucursal'
     UserModel.query(`SELECT ${seleccion} FROM usuarios u WHERE u.username = ? `, username ,(error, resultado, fields) => {
         next(error, resultado[0])
     })

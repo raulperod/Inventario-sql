@@ -53,19 +53,9 @@ html(lang="es")
                   if usuario.permisos === 0
 
                     li
-                      a(href='#')
+                      a(href='/almacen')
                         i.fa.fa-archive.fa-fw
                         |  Almacen
-                        span.fa.arrow
-                      ul.nav.nav-second-level
-                        li
-                          a(href='/almacen/new')
-                            i.fa.fa-plus
-                            |  Registrar
-                        li
-                          a(href='/almacen')
-                            i.fa.fa-edit
-                            |  Lista
                     li
                       a(href='/consumos')
                         i.fa.fa-archive.fa-fw
@@ -78,19 +68,9 @@ html(lang="es")
                   else if  usuario.permisos === 1
 
                     li
-                      a(href='#')
+                      a(href='/almacen')
                         i.fa.fa-archive.fa-fw
                         |  Almacen
-                        span.fa.arrow
-                      ul.nav.nav-second-level
-                        li
-                          a(href='/almacen/new')
-                            i.fa.fa-plus
-                            |  Registrar
-                        li
-                          a(href='/almacen')
-                            i.fa.fa-edit
-                            |  Lista
                     li
                       a(href='/consumos')
                         i.fa.fa-archive.fa-fw

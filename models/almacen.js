@@ -5,6 +5,17 @@
 
 const AlmacenModel = require('./coneccion')
 
+function getAlmacenById(idAlmacen, next) {
+    AlmacenModel
+        .query(`SELECT a.idProducto, a.idCategoria, a.cantidadAlmacen 
+                FROM almacen a 
+                WHERE idAlmacen = ?`
+                , idAlmacen ,(error, resultado, fields) => {
+
+                    next(error, resultado[0])
+    })
+}
+
 function getAlmacen(next) {
     AlmacenModel
         .query(`SELECT a.cantidadAlmacen, p.nombre nombreProducto, p.codigo, p.minimo, c.nombre nombreCategoria, s.plaza 
@@ -59,10 +70,18 @@ function createAlmacen(almacen, next) {
     })
 }
 
+function updateAlmacen(almacen, next) {
+    AlmacenModel.query('UPDATE almacen SET ? WHERE idAlmacen = ?', [almacen,almacen.idAlmacen], (error, resultado, fields) => {
+        next(error)
+    })
+}
+
 module.exports = {
+    getAlmacenById,
     getAlmacen,
     getAlmacenBySucursal,
     getConsumo,
     getConsumoBySucursal,
-    createAlmacen
+    createAlmacen,
+    updateAlmacen
 }

@@ -35,7 +35,7 @@ block contenido
                         td(name=""+alm.idAlmacen style="color:red" title="Pocos productos") #{alm.cantidadAlmacen}
                       td
                         form(id=""+alm.idAlmacen,style="display:inline" action="/almacen/"+alm.idAlmacen+"?_method=PUT",method="POST" onsubmit="return false")
-                          input.form-control(id=""+alm.producto.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required)
+                          input.form-control(id=""+alm.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required)
                           b &nbsp &nbsp &nbsp
                           button(type="submit/image", alt="text", name="button1", class="btn btn-primary btn-circle "+alm.idAlmacen+" "+alm.codigo+" "+alm.minimo ,onclick="return false")
                             i.fa.fa-plus(title="Agregar")
