@@ -8,15 +8,17 @@ const express = require('express'),
     pug = require('pug'),
     restFul = require('method-override')('_method'),
     config = require('./config'),
+    cookieSession = require("cookie-session"),
     Index = require('./controllers/index'),
     User_router = require('./routes/usuario'),
     Sucursal_router = require('./routes/sucursal'),
     Tecnica_router = require('./routes/tecnica'),
     Category_router = require('./routes/categoria'),
     Router_product = require('./routes/producto'),
-    cookieSession = require("cookie-session"),
+    Almacen_router = require('./routes/almacen'),
     session_admin = require('./middleware/session-admin'),
     session_general_admin = require('./middleware/session-general-admin'),
+    session_active = require('./middleware/session-active'),
     app = express()
 
 app
@@ -42,6 +44,10 @@ app
     .get('/login', Index.loginGet )
     .post('/login', Index.loginPost )
     .get('/logout', Index.logout )
+// gelishtime/almacen
+app
+    .use("/almacen",session_active)
+    .use("/almacen",Almacen_router)
 // gelishtime/users
 app
     .use("/users", session_admin )

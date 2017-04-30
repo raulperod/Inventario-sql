@@ -5,9 +5,9 @@
 
 const AlmacenModel = require('./coneccion')
 
-function getAlmacenForGeneralAdmin(next) {
+function getAlmacen(next) {
     AlmacenModel
-        .query(`SELECT a.cantidadAlmacen, p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, s.plaza 
+        .query(`SELECT a.cantidadAlmacen, p.nombre nombreProducto, p.codigo, p.minimo, c.nombre nombreCategoria, s.plaza 
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
                 JOIN categorias c on a.idCategoria = c.idCategoria
@@ -17,9 +17,9 @@ function getAlmacenForGeneralAdmin(next) {
     })
 }
 
-function getAlmacenForSucursalAdmin(idSucursal ,next) {
+function getAlmacenBySucursal(idSucursal ,next) {
     AlmacenModel
-        .query(`SELECT p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadAlmacen
+        .query(`SELECT p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadAlmacen, p.minimo, p.esBasico
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
                 JOIN categorias c ON a.idCategoria = c.idCategoria
@@ -36,7 +36,7 @@ function createAlmacen(almacen, next) {
 }
 
 module.exports = {
-    getAlmacenForGeneralAdmin,
-    getAlmacenForSucursalAdmin,
+    getAlmacen,
+    getAlmacenBySucursal,
     createAlmacen
 }

@@ -9,12 +9,6 @@ const express = require("express"),
 
 // gelishtime/almacen
 almacen.get("/", AlmacenController.almacenGet )
-// gelishtime/new
-almacen.route("/new")
-// Metodo GET
-    .get( AlmacenController.almacenNewGet )
-    // Metodo POST
-    .post( AlmacenController.almacenNewPost )
 // gelishtime/almacen/:idAlmacen/add
 almacen.put('/:idAlmacen/add' , AlmacenController.almacenIdAlmacenAddPut )
 // gelishtime/almacen/:idAlmacen/sub

@@ -16,53 +16,48 @@ block contenido
                 tr
                   th Nombre
                   th Codigo
+                  th Categoria
                   th Cantidad
                   if usuario.permisos === 2
                     th Sucursal
                   else
-
                     th Acción
               tbody
                 if usuario.permisos < 2
-                
                   for alm in almacen
                     tr.odd.gradeX
-                      td #{alm.nombre}
-                      td #{alm.producto.codigo}
-                      if alm.cantidad > alm.producto.minimo
-                        td(name=""+alm._id) #{alm.cantidad}
+                      td #{alm.nombreProducto}
+                      td #{alm.codigo}
+                      td #{alm.nombreCategoria}
+                      if alm.cantidadAlmacen > alm.minimo
+                        td(name=""+alm.idAlmacen) #{alm.cantidadAlmacen}
                       else
-                        
-                        td(name=""+alm._id style="color:red" title="Pocos productos") #{alm.cantidad}
+                        td(name=""+alm.idAlmacen style="color:red" title="Pocos productos") #{alm.cantidadAlmacen}
                       td
-                        form(id=""+alm._id,style="display:inline" action="/almacen/"+alm._id+"?_method=PUT",method="POST" onsubmit="return false")
+                        form(id=""+alm.idAlmacen,style="display:inline" action="/almacen/"+alm.idAlmacen+"?_method=PUT",method="POST" onsubmit="return false")
                           input.form-control(id=""+alm.producto.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required)
                           b &nbsp &nbsp &nbsp
-                          button(type="submit/image", alt="text", name="button1", class="btn btn-primary btn-circle "+alm._id+" "+alm.producto.codigo+" "+alm.producto.minimo ,onclick="return false")
+                          button(type="submit/image", alt="text", name="button1", class="btn btn-primary btn-circle "+alm.idAlmacen+" "+alm.codigo+" "+alm.minimo ,onclick="return false")
                             i.fa.fa-plus(title="Agregar")
-                          if !alm.producto.esBasico                            
+                          if !alm.esBasico
                             b &nbsp &nbsp &nbsp
-                            button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle "+alm._id+" "+alm.producto.codigo+" "+alm.producto.minimo ,onclick="return false")
+                            button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle "+alm.idAlmacen+" "+alm.codigo+" "+alm.minimo ,onclick="return false")
                               i.fa.fa-minus(title="Pasar a consumo")
-                          
-                          else      
-                            
+                          else
                             b &nbsp &nbsp &nbsp
                             button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle", disabled)
                               i.fa.fa-minus(title="Pasar a consumo")
-                
                 else
-
                   for alm in almacen
                     tr.odd.gradeX
-                      td #{alm.producto.nombre}
-                      td #{alm.producto.codigo}
-                      if alm.cantidad > alm.producto.minimo
-                        td #{alm.cantidad}
+                      td #{alm.nombreProducto}
+                      td #{alm.codigo}
+                      td #{alm.nombreCategoria}
+                      if alm.cantidadAlmacen > alm.minimo
+                        td #{alm.cantidadAlmacen}
                       else
-
-                        td(style="color:red" title="Pocos productos")  #{alm.cantidad}
-                      td #{alm.sucursal.plaza}
+                        td(style="color:red" title="Pocos productos")  #{alm.cantidadAlmacen}
+                      td #{alm.plaza}
             // /.panel-body
         // /.panel
       // /.col-lg-12
@@ -90,7 +85,7 @@ block contenido
           responsive: true
         });
       });
-    if usuario.permisos == 2 
+    if usuario.permisos === 2
       script.
         $("table").tableExport({
             formats: ["xlsx"],
@@ -104,6 +99,6 @@ block contenido
         $("table").tableExport({
             formats: ["xlsx"],
             bootstrap: true,
-            ignoreCols: 3, 
+            ignoreCols: 4,
             fileName: "Almacen"
         });
