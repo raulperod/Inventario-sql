@@ -4,7 +4,8 @@
 'use strict'
 
 const AlmacenModel = require('../models/almacen'),
-    Utilidad = require('../ayuda/utilidad')
+      BajaModel = require('../models/baja'),
+      Utilidad = require('../ayuda/utilidad')
 
 function consumosGet(req, res) {
     let usuario = req.session.user
@@ -30,7 +31,53 @@ function consumosGet(req, res) {
 }
 
 function consumosIdConsumoPut(req, res) {
+    // obtenemos la cantidad
+    let cantidad = parseInt(req.body.cantidad)
+    // si no mandaron cambios
+    if( cantidad === 0 ){
+        res.send("")
+    }else{ // quitamos lo productos de consumo
+        let usuario = req.session.user,
+            idAlmacen = req.params.idConsumo
 
+        // obtengo el almacen
+        AlmacenModel.getConsumoById(idAlmacen, (error, almacen) => {
+            if(error){ // si hubo error
+                Utilidad.printError(res, {msg:`Error al obtener el almacen: ${error}`, tipo: 0})
+            } else { // si no hubo error
+                // genero los cambios
+                let verificar = ( cantidad >= almacen.cantidadConsumo ),
+                    almacenUpdate = {
+                        idAlmacen,
+                        cantidadConsumo: ( verificar ) ? ( 0 ) : ( almacen.cantidadConsumo - cantidad )
+                    }
+                // guardo los cambios
+                AlmacenModel.updateAlmacen(almacenUpdate, error => {
+                    if(error){
+                        Utilidad.printError(res, {msg:`Error al actualizar el almacen: ${error}`, tipo: 0})
+                    } else {
+                        // creo el movimiento
+                        let baja = {
+                            idSucursal: usuario.idSucursal,
+                            idUsuario: usuario.idUsuario,
+                            idProducto: almacen.idProducto,
+                            idCategoria: almacen.idCategoria,
+                            cantidad: ( verificar ) ? ( almacen.cantidadConsumo ) : ( cantidad )
+                        }
+                        // guardo el movimiento que ocurrio
+                        BajaModel.createBajaNoBasico(baja, error => {
+                            (error) ? ( // si hubo error
+                                Utilidad.printError(res, {msg:`Error al crear el movimiento: ${error}`, tipo: 0})
+                            ) : ( // si no hubo
+                                // mando la nueva cantidad del almacen
+                                (verificar) ? ( res.send('0') ) : ( res.send(`${almacenUpdate.cantidadConsumo}`))
+                            )
+                        })
+                    }
+                })
+            }
+        })
+    }
 }
 
 module.exports = {
