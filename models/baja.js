@@ -11,6 +11,13 @@ function createBajaNoBasico(baja, next) {
     })
 }
 
+function createBajaBasico(baja, next) {
+    BajaModel.query('INSERT INTO bajasbasicos SET ?', baja, (error, resultado, fields) => {
+        next(error)
+    })
+}
+
 module.exports = {
-    createBajaNoBasico
+    createBajaNoBasico,
+    createBajaBasico
 }
