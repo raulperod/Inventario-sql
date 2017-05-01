@@ -11,6 +11,18 @@ function getTecnicaById(idTecnica, next) {
     })
 }
 
+function getIdTecnicaByFullName(idTecnica, next) {
+    TecnicaModel.query(`SELECT t.idTecnica FROM tecnicas t WHERE concat(t.nombre,' ',t.apellido) = ?`, idTecnica, (error, resultado, fields) => {
+        next(error, resultado[0].idTecnica)
+    })
+}
+
+function getTecnicasNameBySucursal(idSucursal, next) {
+    TecnicaModel.query(`SELECT concat(t.nombre,' ',t.apellido) nombre FROM tecnicas t WHERE t.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
+        next(error, resultado)
+    })
+}
+
 function getTecnicas(next) {
     let seleccion = 't.nombre, t.apellido, t.idTecnica, s.plaza'
     TecnicaModel.query(`SELECT ${seleccion} FROM tecnicas t INNER JOIN sucursales s ON t.idSucursal = s.idSucursal`, (error, resultado, fields) => {
@@ -38,6 +50,8 @@ function updateTecnica(tecnica, next) {
 
 module.exports = {
     getTecnicaById,
+    getIdTecnicaByFullName,
+    getTecnicasNameBySucursal,
     getTecnicas,
     getTecnicasBySucursal,
     createTecnica,

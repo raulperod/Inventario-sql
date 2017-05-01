@@ -17,9 +17,11 @@ const express = require('express'),
     Router_product = require('./routes/producto'),
     Almacen_router = require('./routes/almacen'),
     Consumo_router = require('./routes/consumo'),
+    Basico_router = require('./routes/basico'),
     session_admin = require('./middleware/session-admin'),
     session_general_admin = require('./middleware/session-general-admin'),
     session_active = require('./middleware/session-active'),
+    session_active_sucursal = require('./middleware/session-active-sucursal'),
     app = express()
 
 app
@@ -53,6 +55,10 @@ app
 app
     .use("/consumos",session_active)
     .use("/consumos",Consumo_router)
+// gelishtime/basicos
+app
+    .use("/basicos",session_active_sucursal)
+    .use("/basicos",Basico_router)
 // gelishtime/users
 app
     .use("/users", session_admin )

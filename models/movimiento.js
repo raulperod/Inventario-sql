@@ -11,6 +11,13 @@ function createMovimientoNoBasico(movimiento, next) {
     })
 }
 
+function createMovimientoBasico(movimiento, next) {
+    MovimientoModel.query('INSERT INTO movimientosbasicos SET ?', movimiento, (error, resultado, fields) => {
+        next(error)
+    })
+}
+
 module.exports = {
-    createMovimientoNoBasico
+    createMovimientoNoBasico,
+    createMovimientoBasico
 }

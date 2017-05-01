@@ -16,6 +16,17 @@ function getAlmacenById(idAlmacen, next) {
     })
 }
 
+function getAlmacenBySucursalAndProduct(idSucursal, idProducto, next) {
+    AlmacenModel
+        .query(`SELECT a.idAlmacen, a.cantidadAlmacen, a.cantidadConsumo 
+                FROM almacen a 
+                WHERE a.idSucursal = ? AND a.idProducto = ?`
+            , [idSucursal, idProducto] ,(error, resultado, fields) => {
+
+                next(error, resultado[0])
+        })
+}
+
 function getConsumoById(idAlmacen, next) {
     AlmacenModel
         .query(`SELECT a.idProducto, a.idCategoria, a.cantidadAlmacen, a.cantidadConsumo 
@@ -89,6 +100,7 @@ function updateAlmacen(almacen, next) {
 
 module.exports = {
     getAlmacenById,
+    getAlmacenBySucursalAndProduct,
     getConsumoById,
     getAlmacen,
     getAlmacenBySucursal,

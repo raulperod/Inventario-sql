@@ -26,7 +26,7 @@ block contenido
                     h5  Tecnica:
                     select.form-control.selectpicker(name="tecnica", data-live-search="true")
                       for tecnica in tecnicas
-                        option(name="1") #{tecnica.nombreCompleto}     
+                        option(name="1") #{tecnica.nombre}
                   .form-group
                     input(type="submit" value="Asignar" class="btn btn-lg btn-primary btn-block")
               .col-md-1   
@@ -45,7 +45,7 @@ block contenido
                     h5  Tecnica:
                     select.form-control.selectpicker(name="tecnica", data-live-search="true")
                       for tecnica in tecnicas
-                        option(name="1") #{tecnica.nombreCompleto}     
+                        option(name="1") #{tecnica.nombre}
                   .form-group
                     input(type="submit" value="Baja" class="btn btn-lg btn-primary btn-block")
   // jQuery

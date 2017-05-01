@@ -30,6 +30,12 @@ function getProducts(next) {
     })
 }
 
+function getProductsBasicos(next) {
+    ProductModel.query(`SELECT p.nombre FROM productos p WHERE p.esBasico = 1` ,(error, resultado, fields) => {
+        next(error, resultado)
+    })
+}
+
 function createProduct(product, next) {
     ProductModel.query('INSERT INTO productos SET ?', product, (error, resultado, fields) => {
         next(error)
@@ -47,6 +53,7 @@ module.exports = {
     getIdProductoAndIdCategoriaByName,
     getIdProductoAndIdCategoriaOfSucursales,
     getProducts,
+    getProductsBasicos,
     createProduct,
     updateProduct
 }
