@@ -52,7 +52,7 @@ function loginPost(req, res) {
                 .then(() => {
                     // inicia al usuario
                     req.session.user = usuario
-                    res.redirect('/users')
+                    res.redirect('/almacen')
                 })
                 .catch( error => {
                     // si hubo erro lo manda

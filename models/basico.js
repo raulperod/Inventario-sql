@@ -11,6 +11,12 @@ function getBasicoByProductAndTecnica(idProducto,idTecnica, next) {
     })
 }
 
+function createBasico(basico, next) {
+    BasicoModel.query(`INSERT INTO basicosenuso SET ?`, basico, (error, resultado, fields) => {
+        next(error, resultado)
+    })
+}
+
 function updateBasico(basico, next) {
     BasicoModel
         .query(`UPDATE basicosenuso 
@@ -22,5 +28,6 @@ function updateBasico(basico, next) {
 
 module.exports = {
     getBasicoByProductAndTecnica,
+    createBasico,
     updateBasico
 }

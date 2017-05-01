@@ -30,6 +30,12 @@ function getTecnicas(next) {
     })
 }
 
+function getIdTecnicasAndIdSucursales(next) {
+    TecnicaModel.query(`SELECT t.idTecnica, t.idSucursal FROM tecnicas t`, (error, resultado, fields) => {
+        next(error, resultado)
+    })
+}
+
 function getTecnicasBySucursal(idSucursal, next) {
     TecnicaModel.query('SELECT t.idTecnica, t.nombre, t.apellido FROM tecnicas t WHERE t.idSucursal = ?', idSucursal , (error, resultado, fields) => {
         next(error, resultado)
@@ -53,6 +59,7 @@ module.exports = {
     getIdTecnicaByFullName,
     getTecnicasNameBySucursal,
     getTecnicas,
+    getIdTecnicasAndIdSucursales,
     getTecnicasBySucursal,
     createTecnica,
     updateTecnica

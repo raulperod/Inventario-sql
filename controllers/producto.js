@@ -7,6 +7,8 @@ const ProductModel = require('../models/producto'),
       CategoryModel = require('../models/categoria'),
       SucursalModel = require('../models/sucursal'),
       AlmacenModel = require('../models/almacen'),
+      TecnicaModel = require('../models/tecnica'),
+      BasicoModel = require('../models/basico'),
       Utilidad = require('../ayuda/utilidad'),
       fs = require('fs'),
       xlstojson = require("xls-to-json-lc"),
@@ -59,6 +61,10 @@ function productsNewPost(req, res) {
                 Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
             } else {
                 generarAlmacenes(req, res, nuevoProducto.nombre)
+                // si el producto es basico, se generan los basicos en uso para las tecnicas
+                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.nombre)
+                // cuando termine de generar los almacenes
+                res.redirect('/products')
             }
         })
     })
@@ -199,11 +205,7 @@ function generarAlmacenes(req, res, productName) {
                 return
             }
             // genero un ciclo para generar el almacen de ese producto en cada sucursal
-            for (let sucursal of sucursales){
-                generalAlmacen(req, res, sucursal.idSucursal, producto)
-            }
-            // cuando termine de generar los almacenes
-            res.redirect('/products')
+            sucursales.forEach(sucursal => generalAlmacen(req, res, sucursal.idSucursal, producto))
         })
     })
 }
@@ -219,6 +221,38 @@ function generalAlmacen(req, res, idSucursal, producto) {
         if(error) Utilidad.printError(res, {msg:`Error al crear el almacen: ${error}`, tipo: 1})
     })
 }
+
+function generarBasicosEnUso(req, res, productName) {
+    // busco el producto
+    ProductModel.getIdProductoAndIdCategoriaByName(productName, (error, producto) => {
+        if(error){ // si no error
+            Utilidad.printError(res, {msg:`Error al obtener el producto: ${error}`, tipo: 0})
+        } else { // si no hubo error
+            // obtengo el id de las tecnicas
+            TecnicaModel.getIdTecnicasAndIdSucursales((error, tecnicas) => {
+                if(error){ // si hubo error
+                    Utilidad.printError(res, {msg:`Error al obtener las tecnicas: ${error}`, tipo: 0})
+                } else { // si no hubo error
+                    tecnicas.forEach(tecnica => generarBasicoEnUso(req, res, tecnica, producto.idProducto))
+                }
+            })
+        }
+    })
+}
+
+function generarBasicoEnUso(req, res, tecnica, idProducto) {
+    let basico = {
+        idSucursal: tecnica.idSucursal,
+        idTecnica: tecnica.idTecnica ,
+        idProducto,
+        enUso: false
+    }
+    // guardo el basico en uso
+    BasicoModel.createBasico(basico, error => {
+        if(error) Utilidad.printError(res, {msg:`Error al crear el basico en uso: ${error}`, tipo: 0})
+    })
+}
+
 
 module.exports = {
     productsGet,
