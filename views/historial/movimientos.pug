@@ -19,55 +19,48 @@ block contenido
                   th Tipo
                   th Usuario
                   th Tecnica  
-                  if usuario.permisos == 2
+                  if usuario.permisos === 2
                     th Sucursal
                   th Fecha
               tbody
-                if usuario.permisos == 1
+                if usuario.permisos === 1
                   for movimiento in movimientos
                     tr.odd.gradeX
-                      td #{movimiento.producto.nombre}
+                      td #{movimiento.nombreProducto}
                       td #{movimiento.cantidad}
-                      if movimiento.tipo == 0
+                      if movimiento.tipo === 0
                         td Paso a consumo
                       else
-
                         td Agrego producto
-                      td #{movimiento.usuario.nombre} #{movimiento.usuario.apellido}
-                      if movimiento.tecnica
-                        td #{movimiento.tecnica.nombreCompleto}
+                      td #{movimiento.nombreUsuario}
+                      if movimiento.nombreTecnica
+                        td #{movimiento.nombreTecnica}
                       else
-                        
                         td Producto no basico   
                         
                       if movimiento.fecha.getMonth() < 10
                         - var month = "0"+movimiento.fecha.getMonth()          
                       else
-                        
                         - var month = movimiento.fecha.getMonth()
                       
                       if movimiento.fecha.getDate() < 10
                         - var day = "0"+movimiento.fecha.getDate()          
                       else
-                        
                         - var day = movimiento.fecha.getDate()
                       
                       if movimiento.fecha.getHours() < 10
                         - var hour = "0"+movimiento.fecha.getHours()        
                       else
-                        
                         - var hour = movimiento.fecha.getHours()
                       
                       if movimiento.fecha.getMinutes()  < 10
                         - var minute = "0"+ movimiento.fecha.getMinutes()        
                       else
-                        
                         - var minute =  movimiento.fecha.getMinutes()
                       
                       if movimiento.fecha.getSeconds() < 10
                         - var second = "0"+movimiento.fecha.getSeconds()        
                       else
-                        
                         - var second = movimiento.fecha.getSeconds()  
                              
                       td #{movimiento.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
@@ -76,48 +69,44 @@ block contenido
 
                   for movimiento in movimientos
                     tr.odd.gradeX
-                      td #{movimiento.producto.nombre}
+                      td #{movimiento.nombreProducto}
                       td #{movimiento.cantidad}
-                      if movimiento.tipo == 0
-                        td Paso a consumo
-                      else
 
+                      if movimiento.tipo
                         td Agrego producto
-                      td #{movimiento.usuario.nombre} #{movimiento.usuario.apellido}
-                      if movimiento.tecnica
-                        td #{movimiento.tecnica.nombreCompleto}
                       else
-                        
+                        td Paso a consumo
+
+                      td #{movimiento.nombreUsuario}
+                      if movimiento.nombreTecnica
+                        td #{movimiento.nombreTecnica}
+                      else
                         td Producto no basico
-                      td #{movimiento.sucursal.plaza}
+                      td #{movimiento.plaza}
+
                       if movimiento.fecha.getMonth() < 10
                         - var month = "0"+movimiento.fecha.getMonth()          
                       else
-                        
                         - var month = movimiento.fecha.getMonth()
                       
                       if movimiento.fecha.getDate() < 10
                         - var day = "0"+movimiento.fecha.getDate()          
                       else
-                        
                         - var day = movimiento.fecha.getDate()
                       
                       if movimiento.fecha.getHours() < 10
                         - var hour = "0"+movimiento.fecha.getHours()        
                       else
-                        
                         - var hour = movimiento.fecha.getHours()
                       
                       if movimiento.fecha.getMinutes()  < 10
                         - var minute = "0"+ movimiento.fecha.getMinutes()        
                       else
-                        
                         - var minute =  movimiento.fecha.getMinutes()
                       
                       if movimiento.fecha.getSeconds() < 10
                         - var second = "0"+movimiento.fecha.getSeconds()        
                       else
-                        
                         - var second = movimiento.fecha.getSeconds()  
                              
                       td #{movimiento.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
@@ -138,7 +127,7 @@ block contenido
     // Custom Theme JavaScript
     script(src='/public/dist/js/sb-admin-2.js')
     // Page-Level Demo Scripts - Tables - Use for reference
-    if usuario.permisos == 2
+    if usuario.permisos === 2
       script.
         $(document).ready(function() {
           $('#dataTables-example').DataTable({
