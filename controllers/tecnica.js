@@ -65,7 +65,7 @@ function tecnicasNewPost(req, res) {
                 idSucursal
             }
             // guardamos a la nueva tecnica
-            createTecnica(res, nuevaTecnia, idSucursal)
+            createTecnica(res, nuevaTecnia)
         })
     } else { // si es administrador de sucursal
         // creamos la nueva tecnica
@@ -145,7 +145,7 @@ function tecnicasIdTecnicaPut(req, res) {
     }
 }
 
-function createTecnica(res, tecnica, idSucursal) {
+function createTecnica(res, tecnica) {
     // guardamos a la nueva tecnica
     TecnicaModel.createTecnica(tecnica, error => {
         if(error){
@@ -153,7 +153,7 @@ function createTecnica(res, tecnica, idSucursal) {
             return
         }
         // creo el basico en uso de la tecnica creada
-        generarBasicosEnUso(res, tecnica, idSucursal)
+        generarBasicosEnUso(res, tecnica)
         res.redirect('/tecnicas')
     })
 }
@@ -168,7 +168,7 @@ function updateTecnica(res, tecnica) {
     })
 }
 
-function generarBasicosEnUso(res, tecnica, idSucursal){
+function generarBasicosEnUso(res, tecnica){
     // obtenemos el id de la tecnica creada
     let nombreCompleto = tecnica.nombre+' '+tecnica.apellido
     TecnicaModel.getIdTecnicaByFullName(nombreCompleto, (error, idTecnica) => {
@@ -181,14 +181,14 @@ function generarBasicosEnUso(res, tecnica, idSucursal){
                     Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}`, tipo: 0})
                 } else { // si no hubo error
                     // genero un basico en uso pro cada producto basico existente
-                    productosBasicos.forEach(productoBasico => generarBasicoEnUso(idSucursal, idTecnica, productoBasico.idProducto))
+                    productosBasicos.forEach(productoBasico => generarBasicoEnUso(res, tecnica.idSucursal, idTecnica, productoBasico.idProducto))
                 }
             })
         }
     })
 }
 
-function generarBasicoEnUso(idSucursal, idTecnica, idProducto) {
+function generarBasicoEnUso(res, idSucursal, idTecnica, idProducto) {
     // creo el basico
     let basico = {
         idSucursal,
