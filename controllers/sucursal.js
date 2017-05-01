@@ -32,7 +32,7 @@ function sucursalesNewPost(req, res) {
     // guardo la nueva sucursal en la base de datos
     SucursalModel.createSucursal(nuevaSucursal, error => {
         if(error){ // si hubo error
-            Utilidad.printError(res, { msg: `Error al guardar la nueva sucursal: ${error}`, tipo: 0})
+            Utilidad.printError(res, { msg: `Error al guardar la nueva sucursal, plaza repetida: ${error}`, tipo: 1})
         } else { // si no hubo error
             res.redirect('/sucursales')
             // genero los almacenes para la sucursal
@@ -73,7 +73,7 @@ function sucursalesIdSucursalPut(req, res) {
     // actualizo la sucursal en la base de datos
     SucursalModel.updateSucursal(sucursalUpdate, error => {
         (error) ? ( // si hubo error
-            Utilidad.printError({ msg: `Error al actualizar sucursal: ${error}`, tipo: 0 })
+            Utilidad.printError(res, { msg: `Error al actualizar sucursal, plaza repetida: ${error}`, tipo: 1 })
         ) : ( // si no hubo error
             res.redirect('/sucursales')
         )
