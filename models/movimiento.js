@@ -8,26 +8,45 @@ const MovimientoModel = require('./coneccion')
 function getMovimientosNoBasicos(next) {
     MovimientoModel.query(`SELECT p.nombre nombreProducto, m.cantidad, m.tipo, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, m.fecha
                            FROM movimientosnobasicos m
-                           JOIN  
-                            `, movimiento, (error, resultado, fields) => {
+                           JOIN productos p ON m.idProducto = p.idProducto
+                           JOIN usuarios u ON m.idUsuario = u.idUsuario
+                           JOIN sucursal s ON m.idSucursal = s.idSucursal 
+                           `, (error, resultado, fields) => {
         next(error, resultado)
     })
 }
 
 function getMovimientosBasicos(next) {
-    MovimientoModel.query(``, movimiento, (error, resultado, fields) => {
+    MovimientoModel.query(`SELECT p.nombre nombreProducto, m.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
+                           FROM movimientosbasicos m
+                           JOIN productos p ON m.idProducto = p.idProducto
+                           JOIN usuarios u ON m.idUsuario = u.idUsuario
+                           JOIN tecnicas t ON m.idTecnica = t.idTecnica
+                           JOIN sucursal s ON m.idSucursal = s.idSucursal 
+                           `, (error, resultado, fields) => {
         next(error, resultado)
     })
 }
 
 function getMovimientosNoBasicosBySucursal(idSucursal, next) {
-    MovimientoModel.query(``, idSucursal, (error, resultado, fields) => {
+    MovimientoModel.query(`SELECT p.nombre nombreProducto, m.cantidad, m.tipo, concat(u.nombre,' ',u.apellido) nombreUsuario, m.fecha
+                           FROM movimientosnobasicos m
+                           JOIN productos p ON m.idProducto = p.idProducto
+                           JOIN usuarios u ON m.idUsuario = u.idUsuario
+                           WHERE m.idSucursal = ?
+                           `, idSucursal, (error, resultado, fields) => {
         next(error, resultado)
     })
 }
 
 function getMovimientosBasicosBySucursal(idSucursal, next) {
-    MovimientoModel.query(``, idSucursal, (error, resultado, fields) => {
+    MovimientoModel.query(`SELECT p.nombre nombreProducto, m.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
+                           FROM movimientosbasicos m
+                           JOIN productos p ON m.idProducto = p.idProducto
+                           JOIN usuarios u ON m.idUsuario = u.idUsuario
+                           JOIN tecnicas t ON m.idTecnica = t.idTecnica
+                           WHERE m.idSucursal = ? 
+                           `, idSucursal, (error, resultado, fields) => {
         next(error, resultado)
     })
 }

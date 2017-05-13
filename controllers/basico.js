@@ -103,9 +103,7 @@ function basicosPut(req, res) {
                         idUsuario: usuario.idUsuario,
                         idTecnica,
                         idProducto,
-                        idCategoria,
-                        cantidad: 1,
-                        tipo: 0 // es una baja
+                        idCategoria
                     }
                     MovimientoModel.createMovimientoBasico(movimiento, error => {
                         return(error) ? ( reject({msg:`Error al crear el movimiento: ${error}`,tipo: 0}) ) : ( resolve(true) )
@@ -202,8 +200,7 @@ function basicosDelete(req, res) {
                     idUsuario: usuario.idUsuario,
                     idTecnica,
                     idProducto,
-                    idCategoria,
-                    cantidad: 1
+                    idCategoria
                 }
                 BajaModel.createBajaBasico(baja, error => {
                     return(error) ? ( reject({msg:`Error al crear la baja: ${error}`,tipo: 0}) ) : ( resolve(true) )
