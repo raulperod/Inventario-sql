@@ -25,92 +25,143 @@ block contenido
                 if usuario.permisos == 1
                   for baja in bajas
                     tr.odd.gradeX
-                      td #{baja.producto.nombre}
+                      td #{baja.nombreProducto}
                       td #{baja.cantidad}
-                      td #{baja.usuario.nombre} #{baja.usuario.apellido}
-                      if baja.tecnica
-                        td #{baja.tecnica.nombreCompleto}
-                      else
-                        
-                        td Producto no basico
+                      td #{baja.nombreUsuario}
+                      td Sin Tecnica
                       
                       if baja.fecha.getMonth() < 10
                         - var month = "0"+baja.fecha.getMonth()          
                       else
-                        
                         - var month = baja.fecha.getMonth()
                       
                       if baja.fecha.getDate() < 10
                         - var day = "0"+baja.fecha.getDate()          
                       else
-                        
                         - var day = baja.fecha.getDate()
                       
                       if baja.fecha.getHours() < 10
                         - var hour = "0"+baja.fecha.getHours()        
                       else
-                        
                         - var hour = baja.fecha.getHours()
                       
                       if baja.fecha.getMinutes()  < 10
                         - var minute = "0"+ baja.fecha.getMinutes()        
                       else
-                        
                         - var minute =  baja.fecha.getMinutes()
                       
                       if baja.fecha.getSeconds() < 10
                         - var second = "0"+baja.fecha.getSeconds()        
                       else
-                        
                         - var second = baja.fecha.getSeconds()  
                              
                       td #{baja.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
-                      
+
+                  for bajaBasico in bajasBasicos
+                    tr.odd.gradeX
+                      td #{bajaBasico.nombreProducto}
+                      td #{bajaBasico.cantidad}
+                      td #{bajaBasico.nombreUsuario}
+                      td #{bajaBasico.nombreTecnica}
+
+                      if bajaBasico.fecha.getMonth() < 10
+                        - var month = "0"+bajaBasico.fecha.getMonth()
+                      else
+                        - var month = bajaBasico.fecha.getMonth()
+
+                      if bajaBasico.fecha.getDate() < 10
+                        - var day = "0"+bajaBasico.fecha.getDate()
+                      else
+                        - var day = bajaBasico.fecha.getDate()
+
+                      if bajaBasico.fecha.getHours() < 10
+                        - var hour = "0"+bajaBasico.fecha.getHours()
+                      else
+                        - var hour = bajaBasico.fecha.getHours()
+
+                      if bajaBasico.fecha.getMinutes() < 10
+                        - var minute = "0"+ bajaBasico.fecha.getMinutes()
+                      else
+                        - var minute =  bajaBasico.fecha.getMinutes()
+
+                      if bajaBasico.fecha.getSeconds() < 10
+                        - var second = "0"+bajaBasico.fecha.getSeconds()
+                      else
+                        - var second = bajaBasico.fecha.getSeconds()
+
+                      td #{bajaBasico.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
+
                 else
 
                   for baja in bajas
                     tr.odd.gradeX
-                      td #{baja.producto.nombre}
+                      td #{baja.nombreProducto}
                       td #{baja.cantidad}
-                      td #{baja.usuario.nombre} #{baja.usuario.apellido}
-                      if baja.tecnica
-                        td #{baja.tecnica.nombreCompleto}
-                      else
-                        
-                        td Producto no basico
-                      td #{baja.sucursal.plaza}
-                      
+                      td #{baja.nombreUsuario}
+                      td Sin Tecnica
+                      td #{baja.plaza}
+
                       if baja.fecha.getMonth() < 10
-                        - var month = "0"+baja.fecha.getMonth()          
+                        - var month = "0"+baja.fecha.getMonth()
                       else
-                        
                         - var month = baja.fecha.getMonth()
-                      
+
                       if baja.fecha.getDate() < 10
-                        - var day = "0"+baja.fecha.getDate()          
+                        - var day = "0"+baja.fecha.getDate()
                       else
-                        
                         - var day = baja.fecha.getDate()
-                      
+
                       if baja.fecha.getHours() < 10
-                        - var hour = "0"+baja.fecha.getHours()        
+                        - var hour = "0"+baja.fecha.getHours()
                       else
-                        
                         - var hour = baja.fecha.getHours()
-                      
-                      if baja.fecha.getMinutes()  < 10
-                        - var minute = "0"+ baja.fecha.getMinutes()        
+
+                      if baja.fecha.getMinutes() < 10
+                        - var minute = "0"+ baja.fecha.getMinutes()
                       else
-                        
                         - var minute =  baja.fecha.getMinutes()
-                      
+
                       if baja.fecha.getSeconds() < 10
-                        - var second = "0"+baja.fecha.getSeconds()        
+                        - var second = "0"+baja.fecha.getSeconds()
                       else
-                        
-                        - var second = baja.fecha.getSeconds()  
-                             
+                        - var second = baja.fecha.getSeconds()
+
                       td #{baja.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
+
+                  for bajaBasico in bajasBasicos
+                    tr.odd.gradeX
+                      td #{bajaBasico.nombreProducto}
+                      td #{bajaBasico.cantidad}
+                      td #{bajaBasico.nombreUsuario}
+                      td #{bajaBasico.nombreTecnica}
+                      td #{bajaBasico.plaza}
+
+                      if bajaBasico.fecha.getMonth() < 10
+                        - var month = "0"+bajaBasico.fecha.getMonth()
+                      else
+                        - var month = bajaBasico.fecha.getMonth()
+
+                      if bajaBasico.fecha.getDate() < 10
+                        - var day = "0"+bajaBasico.fecha.getDate()
+                      else
+                        - var day = bajaBasico.fecha.getDate()
+
+                      if bajaBasico.fecha.getHours() < 10
+                        - var hour = "0"+bajaBasico.fecha.getHours()
+                      else
+                        - var hour = bajaBasico.fecha.getHours()
+
+                      if bajaBasico.fecha.getMinutes() < 10
+                        - var minute = "0"+ bajaBasico.fecha.getMinutes()
+                      else
+                        - var minute =  bajaBasico.fecha.getMinutes()
+
+                      if bajaBasico.fecha.getSeconds() < 10
+                        - var second = "0"+bajaBasico.fecha.getSeconds()
+                      else
+                        - var second = bajaBasico.fecha.getSeconds()
+
+                      td #{bajaBasico.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
             // /.panel-body
         // /.panel
       // /.col-lg-12

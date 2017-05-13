@@ -13,35 +13,35 @@ function historialMovimientosGet(req, res) {
 
     if( usuario.permisos === 1){ // si es administrador de sucursales
         // obtener los movimientos de productos basicos y no basicos de la sucursal
-        MovimientoModel.getMovimientosNoBasicosBySucursal(idSucursal, (error, movimientosNoBasicos) => {
+        MovimientoModel.getMovimientosNoBasicosBySucursal(idSucursal, (error, movimientos) => {
             if(error){
                 Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                 return
             }
-            MovimientoModel.getMovimientosBasicosBySucursal(idSucursal, (error, movimientosBasicos) => {
+            MovimientoModel.getMovimientosBasicosBySucursal(idSucursal, (error, asignaciones) => {
                 if(error){
                     Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                     return
                 }
                 // unir movimientos
-                res.render('./historial/movimientos',{usuario,movimientosNoBasicos,movimientosBasicos})
+                res.render('./historial/movimientos',{usuario, movimientos, asignaciones})
             })
         })
     }else{ // si es administrador general
         // obtener los movimientos de productos basicos y no basicos de todas las sucursales
         // obtener los movimientos de productos basicos y no basicos de la sucursal
-        MovimientoModel.getMovimientosNoBasicos((error, movimientosNoBasicos) => {
+        MovimientoModel.getMovimientosNoBasicos((error, movimientos) => {
             if(error){
                 Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                 return
             }
-            MovimientoModel.getMovimientosBasicos((error, movimientosBasicos) => {
+            MovimientoModel.getMovimientosBasicos((error, asignaciones) => {
                 if(error){
                     Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                     return
                 }
                 // unir movimientos
-                res.render('./historial/movimientos',{usuario,movimientosNoBasicos,movimientosBasicos})
+                res.render('./historial/movimientos',{usuario, movimientos, asignaciones})
             })
         })
     }
@@ -53,7 +53,7 @@ function historialBajasGet(req, res) {
 
     if( usuario.permisos === 1){ // si es administrador de sucursales
         // obtener los movimientos de productos basicos y no basicos de la sucursal
-        BajaModel.getBajasNoBasicosBySucursal(idSucursal, (error, bajasNoBasicos) => {
+        BajaModel.getBajasNoBasicosBySucursal(idSucursal, (error, bajas) => {
             if(error){
                 Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                 return
@@ -64,24 +64,24 @@ function historialBajasGet(req, res) {
                     return
                 }
                 // unir movimientos
-                res.render('./historial/bajas',{usuario, bajasNoBasicos, bajasBasicos})
+                res.render('./historial/bajas',{usuario, bajas, bajasBasicos})
             })
         })
     }else{ // si es administrador general
         // obtener los movimientos de productos basicos y no basicos de todas las sucursales
         // obtener los movimientos de productos basicos y no basicos de la sucursal
-        BajaModel.getBajasNoBasicos((error, bajasNoBasicos) => {
+        BajaModel.getBajasNoBasicos((error, bajas) => {
             if(error){
                 Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                 return
             }
-            BajaModel.getBajasBasicos((error, bajaosBasicos) => {
+            BajaModel.getBajasBasicos((error, bajasBasicos) => {
                 if(error){
                     Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                     return
                 }
                 // unir movimientos
-                res.render('./historial/movimientos',{usuario, bajasNoBasicos, bajasBasicos})
+                res.render('./historial/movimientos',{usuario, bajas, bajasBasicos})
             })
         })
     }
