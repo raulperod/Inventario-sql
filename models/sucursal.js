@@ -47,6 +47,12 @@ function updateSucursal(sucursal, next) {
     })
 }
 
+function deleteSucursal(idSucursal, next) {
+    SucursalModel.query(`DELETE FROM sucursales WHERE idSucursal = ? `, idSucursal , (error, resultado, fields) => {
+        next(error)
+    })
+}
+
 module.exports = {
     getSucursalById,
     getPlazasOfSucursales,
@@ -54,5 +60,6 @@ module.exports = {
     getIdSucursalByPlaza,
     getSucursales,
     createSucursal,
-    updateSucursal
+    updateSucursal,
+    deleteSucursal
 }

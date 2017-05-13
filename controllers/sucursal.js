@@ -81,7 +81,12 @@ function sucursalesIdSucursalPut(req, res) {
 }
 // pendiente, no se como eliminar por cascada, aun
 function sucursalesIdSucursalDelete(req, res) {
-
+    let idSucursal = req.params.idSucursal
+    // elimina la sucursal, y realiza eliminacion por cascada
+    SucursalModel.deleteSucursal(idSucursal, error => {
+        if(error) Utilidad.printError(res, {msg:`Error al eliminar la sucursal: ${error}`, tipo: 0})
+        res.redirect('/sucursales')
+    })
 }
 
 function generarAlmacenes(req, res, idSucursal){

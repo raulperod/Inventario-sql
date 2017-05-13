@@ -41,11 +41,18 @@ function updateCategory(category, next) {
     })
 }
 
+function deleteCategory(idCategoria, next) {
+    CategoryModel.query('DELETE FROM categorias WHERE idCategoria = ?', idCategoria , (error, resultado, fields) => {
+        next(error)
+    })
+}
+
 module.exports = {
     getCategoryById,
     getIdCategoryByName,
     getCategories,
     getNamesOfCategories,
     createCategory,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }

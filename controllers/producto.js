@@ -123,7 +123,12 @@ function productsIdProductoPut(req, res) {
 }
 
 function productsIdProductoDelete(req, res) {
-
+    let idProducto = req.params.idProducto
+    // borras el producto
+    ProductModel.deleteProduct(idProducto, error => {
+        if(error) Utilidad.printError(res, {msg:`Error al borrar producto: ${error}`, tipo: 0})
+        res.redirect('/products')
+    })
 }
 
 function excelGet(req, res) {

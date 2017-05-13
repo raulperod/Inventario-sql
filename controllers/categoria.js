@@ -66,7 +66,12 @@ function categoriesIdCategoryPut(req, res) {
 }
 
 function categoriesIdCategoryDelete(req, res) {
-
+    let idCategoria = req.params.idCategoria
+    // borramos la categoria
+    CategoryModel.deleteCategory(idCategoria, error => {
+        if(error) Utilidad.printError(res, {msg:`Error al borrar la categoria`, tipo: 0})
+        res.redirect('/categories')
+    })
 }
 
 module.exports = {

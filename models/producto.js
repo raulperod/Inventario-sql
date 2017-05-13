@@ -54,6 +54,12 @@ function updateProduct(product, next) {
     })
 }
 
+function deleteProduct(idProducto, next) {
+    ProductModel.query(`DELETE FROM productos WHERE idProducto = ?`, idProducto, (error, resultado, fields) => {
+        next(error)
+    })
+}
+
 module.exports = {
     getProductById,
     getIdProductoAndIdCategoriaByName,
@@ -62,5 +68,6 @@ module.exports = {
     getProductsBasicos,
     getIdProductsBasicos,
     createProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
