@@ -24,92 +24,131 @@ block contenido
                   th Fecha
               tbody
                 if usuario.permisos === 1
-                  for movimiento in movimientos
+                  for movimientoNoBasico in movimientosNoBasicos
                     tr.odd.gradeX
-                      td #{movimiento.nombreProducto}
-                      td #{movimiento.cantidad}
-                      if movimiento.tipo === 0
+                      td #{movimientoNoBasico.nombreProducto}
+                      td #{movimientoNoBasico.cantidad}
+                      if movimientoNoBasico.tipo === 0
                         td Paso a consumo
                       else
                         td Agrego producto
-                      td #{movimiento.nombreUsuario}
-                      if movimiento.nombreTecnica
-                        td #{movimiento.nombreTecnica}
+
+                      td #{movimientoNoBasico.nombreUsuario}
+                      td Sin tecnica
+
+                      if movimientoNoBasico.fecha.getMonth() < 10
+                        - var month = "0"+movimientoNoBasico.fecha.getMonth()
                       else
-                        td Producto no basico   
-                        
-                      if movimiento.fecha.getMonth() < 10
-                        - var month = "0"+movimiento.fecha.getMonth()          
-                      else
-                        - var month = movimiento.fecha.getMonth()
+                        - var month = movimientoNoBasico.fecha.getMonth()
                       
-                      if movimiento.fecha.getDate() < 10
-                        - var day = "0"+movimiento.fecha.getDate()          
+                      if movimientoNoBasico.fecha.getDate() < 10
+                        - var day = "0"+movimientoNoBasico.fecha.getDate()
                       else
-                        - var day = movimiento.fecha.getDate()
+                        - var day = movimientoNoBasico.fecha.getDate()
                       
-                      if movimiento.fecha.getHours() < 10
-                        - var hour = "0"+movimiento.fecha.getHours()        
+                      if movimientoNoBasico.fecha.getHours() < 10
+                        - var hour = "0"+movimientoNoBasico.fecha.getHours()
                       else
-                        - var hour = movimiento.fecha.getHours()
+                        - var hour = movimientoNoBasico.fecha.getHours()
                       
-                      if movimiento.fecha.getMinutes()  < 10
-                        - var minute = "0"+ movimiento.fecha.getMinutes()        
+                      if movimientoNoBasico.fecha.getMinutes()  < 10
+                        - var minute = "0"+ movimientoNoBasico.fecha.getMinutes()
                       else
-                        - var minute =  movimiento.fecha.getMinutes()
+                        - var minute =  movimientoNoBasico.fecha.getMinutes()
                       
-                      if movimiento.fecha.getSeconds() < 10
-                        - var second = "0"+movimiento.fecha.getSeconds()        
+                      if movimientoNoBasico.fecha.getSeconds() < 10
+                        - var second = "0"+movimientoNoBasico.fecha.getSeconds()
                       else
-                        - var second = movimiento.fecha.getSeconds()  
+                        - var second = movimientoNoBasico.fecha.getSeconds()
                              
-                      td #{movimiento.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
-                                                
-                else
+                      td #{movimientoNoBasico.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
 
-                  for movimiento in movimientos
+                  for movimientoNoBasico in movimientosNoBasicos
                     tr.odd.gradeX
-                      td #{movimiento.nombreProducto}
-                      td #{movimiento.cantidad}
-
-                      if movimiento.tipo
-                        td Agrego producto
-                      else
+                      td #{movimientoNoBasico.nombreProducto}
+                      td #{movimientoNoBasico.cantidad}
+                      if movimientoNoBasico.tipo === 0
                         td Paso a consumo
-
-                      td #{movimiento.nombreUsuario}
-                      if movimiento.nombreTecnica
-                        td #{movimiento.nombreTecnica}
+                      else
+                        td Agrego producto
+                      td #{movimientoNoBasico.nombreUsuario}
+                      if movimientoNoBasico.nombreTecnica
+                        td #{movimientoNoBasico.nombreTecnica}
                       else
                         td Producto no basico
-                      td #{movimiento.plaza}
 
-                      if movimiento.fecha.getMonth() < 10
-                        - var month = "0"+movimiento.fecha.getMonth()          
+                      if movimientoNoBasico.fecha.getMonth() < 10
+                        - var month = "0"+movimientoNoBasico.fecha.getMonth()
                       else
-                        - var month = movimiento.fecha.getMonth()
+                        - var month = movimientoNoBasico.fecha.getMonth()
+
+                      if movimientoNoBasico.fecha.getDate() < 10
+                        - var day = "0"+movimientoNoBasico.fecha.getDate()
+                      else
+                        - var day = movimientoNoBasico.fecha.getDate()
+
+                      if movimientoNoBasico.fecha.getHours() < 10
+                        - var hour = "0"+movimientoNoBasico.fecha.getHours()
+                      else
+                        - var hour = movimientoNoBasico.fecha.getHours()
+
+                      if movimientoNoBasico.fecha.getMinutes() < 10
+                        - var minute = "0"+ movimientoNoBasico.fecha.getMinutes()
+                      else
+                        - var minute =  movimientoNoBasico.fecha.getMinutes()
+
+                      if movimientoNoBasico.fecha.getSeconds() < 10
+                        - var second = "0"+movimientoNoBasico.fecha.getSeconds()
+                      else
+                        - var second = movimientoNoBasico.fecha.getSeconds()
+
+                      td #{movimientoNoBasico.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
+
+                else
+
+                  for movimientoNoBasico in movimientosNoBasicos
+                    tr.odd.gradeX
+                      td #{movimientoNoBasico.nombreProducto}
+                      td #{movimientoNoBasico.cantidad}
+
+                      if movimientoNoBasico.tipo
+                        td Agrego producto
+                      else
+                        td Paso a consumo
+
+                      td #{movimientoNoBasico.nombreUsuario}
+                      if movimientoNoBasico.nombreTecnica
+                        td #{movimientoNoBasico.nombreTecnica}
+                      else
+                        td Producto no basico
+                      td #{movimientoNoBasico.plaza}
+
+                      if movimientoNoBasico.fecha.getMonth() < 10
+                        - var month = "0"+movimientoNoBasico.fecha.getMonth()
+                      else
+                        - var month = movimientoNoBasico.fecha.getMonth()
                       
-                      if movimiento.fecha.getDate() < 10
-                        - var day = "0"+movimiento.fecha.getDate()          
+                      if movimientoNoBasico.fecha.getDate() < 10
+                        - var day = "0"+movimientoNoBasico.fecha.getDate()
                       else
-                        - var day = movimiento.fecha.getDate()
+                        - var day = movimientoNoBasico.fecha.getDate()
                       
-                      if movimiento.fecha.getHours() < 10
-                        - var hour = "0"+movimiento.fecha.getHours()        
+                      if movimientoNoBasico.fecha.getHours() < 10
+                        - var hour = "0"+movimientoNoBasico.fecha.getHours()
                       else
-                        - var hour = movimiento.fecha.getHours()
+                        - var hour = movimientoNoBasico.fecha.getHours()
                       
-                      if movimiento.fecha.getMinutes()  < 10
-                        - var minute = "0"+ movimiento.fecha.getMinutes()        
+                      if movimientoNoBasico.fecha.getMinutes()  < 10
+                        - var minute = "0"+ movimientoNoBasico.fecha.getMinutes()
                       else
-                        - var minute =  movimiento.fecha.getMinutes()
+                        - var minute =  movimientoNoBasico.fecha.getMinutes()
                       
-                      if movimiento.fecha.getSeconds() < 10
-                        - var second = "0"+movimiento.fecha.getSeconds()        
+                      if movimientoNoBasico.fecha.getSeconds() < 10
+                        - var second = "0"+movimientoNoBasico.fecha.getSeconds()
                       else
-                        - var second = movimiento.fecha.getSeconds()  
+                        - var second = movimientoNoBasico.fecha.getSeconds()
                              
-                      td #{movimiento.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
+                      td #{movimientoNoBasico.fecha.getFullYear()}/#{month}/#{day} #{hour}:#{minute}:#{second}
         // /.panel
       // /.col-lg-12
     // /.row

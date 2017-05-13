@@ -74,7 +74,7 @@ CREATE TABLE `almacen` (
   KEY `idCategoria` (`idCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `movimientosnobasicos` (
+CREATE TABLE `movimientos` (
   `idSucursal` int(10) unsigned NOT NULL,
   `idUsuario` int(10) unsigned NOT NULL,
   `idProducto` int(10) unsigned NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE `movimientosnobasicos` (
   KEY `idSucursal` (`idSucursal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `movimientosbasicos` (
+CREATE TABLE `asignacionbasicos` (
   `idSucursal` int(10) unsigned NOT NULL,
   `idUsuario` int(10) unsigned NOT NULL,
   `idTecnica` int(10) unsigned NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE `movimientosbasicos` (
   KEY `idSucursal` (`idSucursal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `bajasnobasicos` (
+CREATE TABLE `bajas` (
   `idSucursal` int(10) unsigned NOT NULL,
   `idUsuario` int(10) unsigned NOT NULL,
   `idProducto` int(10) unsigned NOT NULL,
@@ -153,18 +153,18 @@ ADD CONSTRAINT `almacen_ibfk_1` FOREIGN KEY (`idSucursal`) REFERENCES `sucursale
 ADD CONSTRAINT `almacen_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `almacen_ibfk_3` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `movimientosnobasicos`
-ADD CONSTRAINT `movimientosnobasicos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosnobasicos_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosnobasicos_ibfk_3` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosnobasicos_ibfk_4` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `movimientos`
+ADD CONSTRAINT `movimientos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `movimientos_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `movimientos_ibfk_3` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `movimientos_ibfk_4` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `movimientosbasicos`
-ADD CONSTRAINT `movimientosbasicos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosbasicos_ibfk_2` FOREIGN KEY (`idTecnica`) REFERENCES `tecnicas` (`idTecnica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosbasicos_ibfk_3` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosbasicos_ibfk_4` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `movimientosbasicos_ibfk_5` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `asignacionbasicos`
+ADD CONSTRAINT `asignacionbasicos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `asignacionbasicos_ibfk_2` FOREIGN KEY (`idTecnica`) REFERENCES `tecnicas` (`idTecnica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `asignacionbasicos_ibfk_3` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `asignacionbasicos_ibfk_4` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `asignacionbasicos_ibfk_5` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE `bajasbasicos`
 ADD CONSTRAINT `bajasbasicos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -173,11 +173,11 @@ ADD CONSTRAINT `bajasbasicos_ibfk_3` FOREIGN KEY (`idProducto`) REFERENCES `prod
 ADD CONSTRAINT `bajasbasicos_ibfk_4` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `bajasbasicos_ibfk_5` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `bajasnobasicos`
-ADD CONSTRAINT `bajasnobasicos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `bajasnobasicos_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `bajasnobasicos_ibfk_3` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `bajasnobasicos_ibfk_4` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `bajas`
+ADD CONSTRAINT `bajas_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `bajas_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `bajas_ibfk_3` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `bajas_ibfk_4` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE `basicosenuso`
 ADD CONSTRAINT `basicosenuso_ibfk_1` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,

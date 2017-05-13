@@ -7,7 +7,7 @@ const BajaModel = require('./coneccion')
 
 function getBajasNoBasicos(next) {
     MovimientoModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
-                           FROM bajasnobasicos b
+                           FROM bajas b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
                            JOIN sucursal s ON b.idSucursal = s.idSucursal 
@@ -30,7 +30,7 @@ function getBajasBasicos(next) {
 
 function getBajasNoBasicosBySucursal(idSucursal, next) {
     MovimientoModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
-                           FROM bajasnobasicos b
+                           FROM bajas b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
                            WHERE b.idSucursal = ? 
@@ -52,7 +52,7 @@ function getBajasBasicosBySucursal(idSucursal, next) {
 }
 
 function createBajaNoBasico(baja, next) {
-    BajaModel.query('INSERT INTO bajasnobasicos SET ?', baja, (error, resultado, fields) => {
+    BajaModel.query('INSERT INTO bajas SET ?', baja, (error, resultado, fields) => {
         next(error)
     })
 }
