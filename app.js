@@ -18,6 +18,7 @@ const express = require('express'),
     Almacen_router = require('./routes/almacen'),
     Consumo_router = require('./routes/consumo'),
     Basico_router = require('./routes/basico'),
+    Router_historial = require('./routes/historial'),
     session_admin = require('./middleware/session-admin'),
     session_general_admin = require('./middleware/session-general-admin'),
     session_active = require('./middleware/session-active'),
@@ -79,6 +80,10 @@ app
 app
     .use("/products",session_general_admin)
     .use("/products",Router_product)
+// gelishtime/historial
+app
+    .use("/historial",session_admin)
+    .use("/historial",Router_historial)
     // para error 404
     .use( Index.error404 )
 

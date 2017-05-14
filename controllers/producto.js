@@ -113,11 +113,12 @@ function productsIdProductoPut(req, res) {
         }
         // guarda el nuevo producto en la base de datos
         ProductModel.updateProduct(productoUpdate, error => { // si no hubo error al guardarlo
-            (error) ? (
-                Utilidad.printError(res, { msg: `Error al editar el producto: ${error}`, tipo: 1})
-            ) : (
+            if(error) {
+                Utilidad.printError(res, {msg: `Error al editar el producto: ${error}`, tipo: 1})
+            } else {
+                if(productoUpdate.esbasico) generarBasicosEnUso(req, res, productoUpdate.nombre)
                 res.redirect('/products')
-            )
+            }
         })
     })
 }
