@@ -16,7 +16,7 @@ category
     .post( CategoryController.categoriesNewPost )
 
 category
-    .route('/:idCategory')
+    .route('/:idCategoria')
     .get( CategoryController.categoriesIdCategoryGet )
     .put( CategoryController.categoriesIdCategoryPut )
     .delete( CategoryController.categoriesIdCategoryDelete )

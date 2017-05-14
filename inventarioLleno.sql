@@ -1,3 +1,9 @@
+DROP DATABASE IF EXISTS `inventario`;
+
+CREATE DATABASE `inventario` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `inventario`;
+
 -- phpMyAdmin SQL Dump
 -- version 4.5.1
 -- http://www.phpmyadmin.net

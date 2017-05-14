@@ -70,11 +70,11 @@ function basicosPut(req, res) {
                 return new Promise((resolve, reject) => {
                     if(resolved.enUso){
                         // mandar alerta que esta en uso
-                        reject({msg:`Error el producto esta en uso`, tipo: 1})
+                        reject({msg:`Error el producto esta en uso`, tipo: 11})
                     } else {
                         // busco el almacen para poder comprobar si tiene productos
                         AlmacenModel.getAlmacenBySucursalAndProduct(usuario.idSucursal, idProducto, (error, almacen) => {
-                            return(error) ? ( reject({msg:`Error al obtener el almacen: ${error}`, tipo: 1}) ) : ( resolve(almacen) )
+                            return(error) ? ( reject({msg:`Error al obtener el almacen: ${error}`, tipo: 0}) ) : ( resolve(almacen) )
                         })
                     }
                 })
@@ -91,7 +91,7 @@ function basicosPut(req, res) {
                         })
                     } else {
                         // se manda una alerta de que no hay productos
-                        reject({msg:`Error no hay productos disponibles`, tipo: 2})
+                        reject({msg:`Error no hay productos disponibles`, tipo: 12})
                     }
                 })
             })
@@ -125,7 +125,7 @@ function basicosPut(req, res) {
             })
             .then(resolved => {
                 // se asigno correctamente y se manda una alerta
-                res.send({msg:`Producto asignado correctamente`, tipo: 3})
+                res.send({msg:`Producto asignado correctamente`, tipo: 13})
             })
             .catch(error => {
                 Utilidad.printError(res, error)
@@ -174,11 +174,11 @@ function basicosDelete(req, res) {
                 if(resolved.enUso){
                     // busco el almacen para poder comprobar si tiene productos
                     AlmacenModel.getAlmacenBySucursalAndProduct(usuario.idSucursal, idProducto, (error, almacen) => {
-                        return(error) ? ( reject({msg:`Error al obtener el almacen: ${error}`, tipo: 1}) ) : ( resolve(almacen) )
+                        return(error) ? ( reject({msg:`Error al obtener el almacen: ${error}`, tipo: 0}) ) : ( resolve(almacen) )
                     })
                 } else {
                     // mandar alerta que esta en uso
-                    reject({msg:`Error el producto no esta en uso`, tipo: 1})
+                    reject({msg:`Error el producto no esta en uso`, tipo: 21})
                 }
             })
         })
@@ -222,7 +222,7 @@ function basicosDelete(req, res) {
         })
         .then(resolved => {
             // se asigno correctamente y se manda una alerta
-            res.send({msg:`Baja realizada correctamente`, tipo: 3})
+            res.send({msg:`Baja realizada correctamente`, tipo: 23})
         })
         .catch(error => {
             Utilidad.printError(res, error)
