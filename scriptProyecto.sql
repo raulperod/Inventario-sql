@@ -57,7 +57,8 @@ CREATE TABLE `productos` (
   `minimo` int(10) unsigned NOT NULL,
   `esBasico` tinyint(1) NOT NULL,
   PRIMARY KEY (`idProducto`),
-  UNIQUE KEY `nombre` (`nombre`,`codigo`),
+  UNIQUE KEY `nombre` (`nombre`),
+  UNIQUE KEY `codigo` (`codigo`),
   KEY `idCategoria` (`idCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

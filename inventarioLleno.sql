@@ -624,7 +624,8 @@ ALTER TABLE `movimientos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`idProducto`),
-  ADD UNIQUE KEY `nombre` (`nombre`,`codigo`),
+  ADD UNIQUE KEY `nombre` (`nombre`),
+  ADD UNIQUE KEY `codigo` (`codigo`),
   ADD KEY `idCategoria` (`idCategoria`);
 
 --
