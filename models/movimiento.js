@@ -10,19 +10,19 @@ function getMovimientosNoBasicos(next) {
                            FROM movimientos m
                            JOIN productos p ON m.idProducto = p.idProducto
                            JOIN usuarios u ON m.idUsuario = u.idUsuario
-                           JOIN sucursal s ON m.idSucursal = s.idSucursal 
+                           JOIN sucursales s ON m.idSucursal = s.idSucursal 
                            `, (error, resultado, fields) => {
         next(error, resultado)
     })
 }
 
 function getMovimientosBasicos(next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, m.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
+    MovimientoModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
                            FROM asignacionbasicos m
                            JOIN productos p ON m.idProducto = p.idProducto
                            JOIN usuarios u ON m.idUsuario = u.idUsuario
                            JOIN tecnicas t ON m.idTecnica = t.idTecnica
-                           JOIN sucursal s ON m.idSucursal = s.idSucursal 
+                           JOIN sucursales s ON m.idSucursal = s.idSucursal 
                            `, (error, resultado, fields) => {
         next(error, resultado)
     })
@@ -40,7 +40,7 @@ function getMovimientosNoBasicosBySucursal(idSucursal, next) {
 }
 
 function getMovimientosBasicosBySucursal(idSucursal, next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, m.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
+    MovimientoModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
                            FROM asignacionbasicos m
                            JOIN productos p ON m.idProducto = p.idProducto
                            JOIN usuarios u ON m.idUsuario = u.idUsuario

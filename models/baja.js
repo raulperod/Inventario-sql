@@ -6,30 +6,30 @@
 const BajaModel = require('./coneccion')
 
 function getBajasNoBasicos(next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
+    BajaModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
                            FROM bajas b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
-                           JOIN sucursal s ON b.idSucursal = s.idSucursal 
+                           JOIN sucursales s ON b.idSucursal = s.idSucursal 
                            `, (error, resultado, fields) => {
         next(error, resultado)
     })
 }
 
 function getBajasBasicos(next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, b.fecha
+    BajaModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, b.fecha
                            FROM bajasbasicos b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
                            JOIN tecnicas t ON b.idTecnica = t.idTecnica
-                           JOIN sucursal s ON b.idSucursal = s.idSucursal 
+                           JOIN sucursales s ON b.idSucursal = s.idSucursal 
                            `, (error, resultado, fields) => {
         next(error, resultado)
     })
 }
 
 function getBajasNoBasicosBySucursal(idSucursal, next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
+    BajaModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
                            FROM bajas b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
@@ -40,7 +40,7 @@ function getBajasNoBasicosBySucursal(idSucursal, next) {
 }
 
 function getBajasBasicosBySucursal(idSucursal, next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, b.fecha
+    BajaModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, b.fecha
                            FROM bajasbasicos b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
