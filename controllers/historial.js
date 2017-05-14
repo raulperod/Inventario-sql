@@ -81,7 +81,7 @@ function historialBajasGet(req, res) {
                     return
                 }
                 // unir movimientos
-                res.render('./historial/movimientos',{usuario, bajas, bajasBasicos})
+                res.render('./historial/bajas',{usuario, bajas, bajasBasicos})
             })
         })
     }

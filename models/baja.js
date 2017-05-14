@@ -29,7 +29,7 @@ function getBajasBasicos(next) {
 }
 
 function getBajasNoBasicosBySucursal(idSucursal, next) {
-    BajaModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
+    BajaModel.query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, b.fecha
                            FROM bajas b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario
@@ -40,7 +40,7 @@ function getBajasNoBasicosBySucursal(idSucursal, next) {
 }
 
 function getBajasBasicosBySucursal(idSucursal, next) {
-    BajaModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, b.fecha
+    BajaModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, b.fecha
                            FROM bajasbasicos b
                            JOIN productos p ON b.idProducto = p.idProducto
                            JOIN usuarios u ON b.idUsuario = u.idUsuario

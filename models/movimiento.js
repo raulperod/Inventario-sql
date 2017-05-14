@@ -40,7 +40,7 @@ function getMovimientosNoBasicosBySucursal(idSucursal, next) {
 }
 
 function getMovimientosBasicosBySucursal(idSucursal, next) {
-    MovimientoModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
+    MovimientoModel.query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, m.fecha
                            FROM asignacionbasicos m
                            JOIN productos p ON m.idProducto = p.idProducto
                            JOIN usuarios u ON m.idUsuario = u.idUsuario
