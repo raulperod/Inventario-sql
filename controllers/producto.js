@@ -160,15 +160,21 @@ function excelPost(req, res) {
                 Utilidad.printError(res, { msg: "Error inesperado", tipo: 1})
                 return
             }
-            let contador = 0
-            for( let i=0 ; i < productos.length ; i++ ){
+            // borro el archivo excel
+            fs.unlinkSync(req.file.path)
+
+            let contador = 0,
+                longitud = productos.length
+            for( let i=0 ; i < longitud ; i++ ){
                 // variables necesarias
                 let producto = productos[i],
                     nombreCategoria = producto.categoria
                 // busca la categoria elegida
                 CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => {
                     if(error || !idCategoria ){ // si hubo error
-                        console.log(`Error al buscar el id de la categoria`)
+                        i = longitud // detengo el ciclo
+                        Utilidad.printError(res, {msg: "Hubo error al agregar alguno de los productos", tipo: 2} )
+                        res = null;
                     } else {// si no hubo error
                         // crea el nuevo producto
                         let nuevoProducto = {
@@ -182,12 +188,22 @@ function excelPost(req, res) {
                         // guarda el nuevo producto en la base de datos
                         ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
                             if(error){
-                                console.log(`Error al guardar el nuevo producto: ${error}`)
+                                i = longitud // detengo el ciclo
+                                // mando una alerta
+                                Utilidad.printError(res, {msg: `Hubo error al agregar alguno de los productos: ${error}`, tipo: 2} )
+                                res = null;
                             } else {
                                 console.log(`se agrego correctamente el producto: ${nuevoProducto.nombre}`)
                                 contador++
+                                // checa si hay error
+                                if ( i === (longitud - 1) ){
+                                    if(contador === 5){
+                                        Utilidad.printError(res, {msg: "Se agregaron correctamente los productos", tipo: 3})
+                                    }else{
+                                        Utilidad.printError(res, { msg: "Hubo error al agregar alguno de los productos", tipo: 2})
+                                    }
+                                }
                             }
-                            //( i === productos.length-1 && contador) ? :
                         })
                     }
                 })

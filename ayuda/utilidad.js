@@ -4,8 +4,13 @@
 'use strict'
 
 function printError(res, error) {
-    console.log(error.msg)
-    res.json(error)
+    try{
+        console.log(error.msg)
+        res.json(error)
+    } catch (error){
+        // no pasa nada
+    }
+
 }
 
 function returnPromise(condicion, verdadero, falso) {
