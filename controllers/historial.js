@@ -5,6 +5,8 @@
 
 const MovimientoModel = require('../models/movimiento'),
       BajaModel = require('../models/baja'),
+      BasicoModel = require('../models/basico'),
+      SucursalModel = require('../models/sucursal'),
       Utilidad = require('../ayuda/utilidad')
 
 function historialMovimientosGet(req, res) {
@@ -87,19 +89,37 @@ function historialBajasGet(req, res) {
     }
 }
 
-function historialGeneralGet(req, res) {
-    res.redirect('/almacen')
-}
-
 function historialSucursalGet(req, res) {
-    res.redirect('/almacen')
-}
-
-function historialDatosGeneralGet(req, res) {
-
+    BasicoModel.getBasicos( (error, basicos) => {
+        (error) ? (
+            Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}` , tipo: 0})
+        ) : (
+            res.render('./historial/sucursal', { basicos, usuario: req.session.user} )
+        )
+    })
 }
 
 function historialDatosSucursalGet(req, res) {
+
+}
+
+function historialGeneralGet(req, res) {
+    SucursalModel.getPlazasOfSucursales((error, sucursales) => {
+        if(error){
+            Utilidad.printError(res, {msg:`Error al obtener las sucursales: ${error}` , tipo: 0})
+            return
+        }
+        BasicoModel.getBasicos( (error, basicos) => {
+            (error) ? (
+                Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}` , tipo: 0})
+            ) : (
+                res.render('./historial/general', {basicos, sucursales, usuario: req.session.user} )
+            )
+        })
+    })
+}
+
+function historialDatosGeneralGet(req, res) {
 
 }
 
