@@ -19,14 +19,14 @@ historial.get("/general", HistorialController.historialGeneralGet )
 // gelishtime/historial/sucursal
 // Metodo GET
 historial.get("/sucursal", HistorialController.historialSucursalGet )
-// gelishtime/historial/datosGeneral
-// Metodo GET
-historial.post("/datosGeneral", HistorialController.historialDatosGeneralPost )
 // gelishtime/historial/sucursaltop
 // Metodo POST
 historial.post("/sucursaltop", HistorialController.historialSucursalTopPost )
 // gelishtime/historial/sucursalbasicos
 // Metodo POST
 historial.post("/sucursalbasicos", HistorialController.historialSucursalBasicosPost )
+// gelishtime/historial/datosGeneral
+// Metodo GET
+historial.post("/datosGeneral", HistorialController.historialDatosGeneralPost )
 
 module.exports = historial;

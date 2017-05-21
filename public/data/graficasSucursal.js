@@ -80,11 +80,10 @@ function obtenerComparacion() {
 // funcion principal
 $(function(){
     // obtengo el formulario del topten
-    formularioTopTen = $("#formtopten")
-    formularioComparacion = $("#formbasicos")
+    formularioTopTen = $('#formtopten')
+    formularioComparacion = $('#formbasicos')
     obtenerTopTen()
     obtenerComparacion()
-
     // fechas para el top ten
     $("input[name=iniciot]").change(function(){
         obtenerTopTen()
