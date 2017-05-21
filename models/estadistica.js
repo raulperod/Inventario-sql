@@ -25,7 +25,7 @@ function getComparacion(idSucursal, idProducto, inicio, final, next) {
                 JOIN tecnicas t ON t.idTecnica = b.idTecnica
                 WHERE (b.idSucursal = ?) AND (b.idProducto = ?) AND (b.fecha BETWEEN ? AND ?) 
                 GROUP BY nombre`
-            , [idSucursal, inicio, final], (error, resultado, fields) => {
+            , [idSucursal, idProducto, inicio, final], (error, resultado, fields) => {
 
                 next(error, resultado)
             })

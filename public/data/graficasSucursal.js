@@ -1,11 +1,7 @@
-var formularioTopTen;
-var formularioComparacion;
-var bajas;
-var productos; // nombre de los productos no basicos
-var bajasBasicos;//agarro las bajas con tecnica
-var tecnicas;///para nombres de tecnicas
-var datos;//para los datos de la grafica
-var options = { //para las opciones de la grafica
+var formularioTopTen,
+    formularioComparacion,
+    datos,//para los datos de la grafica
+    options = { //para las opciones de la grafica
     title: 'Basicos Usados por Tecnica',
     hAxis: {title: 'Tecnica',  titleTextStyle: {color: '#333'}},
     vAxis: {title: 'Cantidad',  titleTextStyle: {color: '#333'}, minValue: 0},
@@ -13,8 +9,8 @@ var options = { //para las opciones de la grafica
     bar: { groupWidth: "80%" },
     width: 900,
     height: 400
-};
-var grafica;//para la grafica
+},
+    grafica;//para la grafica
 
 // funcion que agrega las nuevas filas a la tabla
 function agregarFilas(bajas){
@@ -67,12 +63,11 @@ function obtenerTopTen() {
 // obtencion de los datos para el top ten
 function obtenerComparacion() {
     $.ajax({
-        url: '/historial/sucursalbasicos',
+        url: '/historial/sucursalbas',
         type: 'POST',
         data: formularioComparacion.serialize(),
         success : function(data) {
             // top ten
-            console.log(data)
             dibujar(data)
         }
     });

@@ -17,17 +17,18 @@ block contenido
             .tab-content
               #topten.tab-pane.fade.in.active
                 .col-lg-10.col-lg-offset-1
+                form( id="formtopten", style="display:inline", action="/historial/generaltop", method="POST")
                   .form-groups
                     .panel-body
                       .col-lg-4
                         label Fecha Inicio:
-                        input.form-control(id="Finicial" type="date" name="inicioP" )
+                        input.form-control(id="Finicial" type="date" name="iniciot" )
                       .col-lg-4
                         label Fecha Final:
-                        input.form-control(id="Ffinal" type="date" name="finalP" )
+                        input.form-control(id="Ffinal" type="date" name="finalt" )
                       .col-lg-4
                         label Sucursal:
-                        select.form-control(id="sucursal" name="sucursal" )
+                        select.form-control(id="sucursal" name="sucursaltop" )
                           for sucursal in sucursales
                             option(name="1") #{sucursal.plaza}      
                         
@@ -43,14 +44,15 @@ block contenido
                           // falta poner las filas  
               #basicos.tab-pane.fade
                 .col-lg-12
+                form( id="formbasicos", style="display:inline", action="/historial/sucursalbas", method="POST")
                   .form-groups
                     .panel-body
                       .col-lg-3
                         label Fecha Inicio:
-                        input.form-control(id="FinicialB" type="date" name="inicioB" )
+                        input.form-control(id="FinicialB" type="date" name="iniciob" )
                       .col-lg-3
                         label Fecha Final:
-                        input.form-control(id="FfinalB" type="date" name="finalB")
+                        input.form-control(id="FfinalB" type="date" name="finalb")
                       .col-lg-3
                         label Producto:
                         select.form-control(id="producto" name="basico" )
@@ -58,7 +60,7 @@ block contenido
                             option(name="1") #{basico.nombre}
                       .col-lg-3
                         label Sucursal:
-                        select.form-control(id="sucursalGrafica" name="sucursalBasico" )
+                        select.form-control(id="sucursalGrafica" name="sucursalbas" )
                           for sucursal in sucursales
                             option(name="1") #{sucursal.plaza}      
                 .col-lg-10.col-lg-offset-1

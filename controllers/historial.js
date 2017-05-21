@@ -119,22 +119,17 @@ function historialSucursalBasicosPost(req, res) {
     let inicio = req.body.iniciob,
         final = sumarDia( req.body.finalb ),
         idSucursal = req.session.user.idSucursal,
-        nombreProducto = req.body.basico,
-        idProducto = null
+        nombreProducto = req.body.basico
 
     // obtener el id del producto a comparar
     ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
-        if(error){
-            Utilidad.printError(res, {msg:`Error al obtener el id del producto: ${error}`, tipo: 0})
-            return
+        if(!error){
+            EstadisticaModel.getComparacion(idSucursal, producto.idProducto, inicio, final, (error, comparacion) => {
+                if(!error){
+                    res.send(comparacion)
+                }
+            })
         }
-        idProducto = producto.idProducto
-        EstadisticaModel.getComparacion(idSucursal, idProducto, inicio, final, (error, comparacion) => {
-            if(!error){
-                console.log(comparacion)
-                res.send(comparacion)
-            }
-        })
     })
 }
 
@@ -154,8 +149,45 @@ function historialGeneralGet(req, res) {
     })
 }
 
-function historialDatosGeneralPost(req, res) {
+function historialGeneralTopPost(req, res) {
+    // obtengo las fechas
+    let inicio = req.body.iniciot,
+        final = sumarDia( req.body.finalt ),
+        sucursal = req.body.sucursaltop
 
+    // busco la sucursal por el nombre de la plaza
+    SucursalModel.getIdSucursalByPlaza(sucursal, (error, idSucursal) => {
+        if(!error){
+            EstadisticaModel.getTopTen(idSucursal, inicio, final, (error, topten) => {
+                if(!error){
+                    res.send(topten)
+                }
+            })
+        }
+    })
+}
+
+function historialGeneralBasicosPost(req, res) {
+    // obtengo las fechas
+    let inicio = req.body.iniciob,
+        final = sumarDia( req.body.finalb ),
+        sucursal = req.body.sucursalbas,
+        nombreProducto = req.body.basico
+
+    SucursalModel.getIdSucursalByPlaza(sucursal, (error, idSucursal) => {
+        if(!error){
+            // obtener el id del producto a comparar
+            ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
+                if(!error) {
+                    EstadisticaModel.getComparacion(idSucursal, producto.idProducto, inicio, final, (error, comparacion) => {
+                        if(!error){
+                            res.send(comparacion)
+                        }
+                    })
+                }
+            })
+        }
+    })
 }
 
 function sumarDia(fecha) {
@@ -171,7 +203,8 @@ module.exports = {
     historialBajasGet,
     historialGeneralGet,
     historialSucursalGet,
-    historialDatosGeneralPost,
     historialSucursalTopPost,
-    historialSucursalBasicosPost
+    historialSucursalBasicosPost,
+    historialGeneralBasicosPost,
+    historialGeneralTopPost
 }
