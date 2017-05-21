@@ -10,241 +10,241 @@ var options;//para las opciones de la grafica
 var grafica;//para la grafica// funcion que obtiene el nombre de los productos
 // funcion que obtiene el nombre de los productos
 function obtenerNombres(productos){
-  var arregloNombres = [];
-  // ciclo para obtener los nombres
-  for(var i = 0 ; productos[i] ; i++){
-    // obtengo los nombres de los productos
-    arregloNombres.push(productos[i].nombre);
-  }
-  return arregloNombres;
+    var arregloNombres = [];
+    // ciclo para obtener los nombres
+    for(var i = 0 ; productos[i] ; i++){
+        // obtengo los nombres de los productos
+        arregloNombres.push(productos[i].nombre);
+    }
+    return arregloNombres;
 }
 // obtiene las bajas de productos
 function obtenerBajas(productos,bajasDeProductos){
-  var bajas=[];
-  // obtener la cantidad de bajas por productos no basicos
-  for(let producto of productos){
-    var suma = 0;
-    for(let bajaProducto of bajasDeProductos){
-      if(producto == bajaProducto.producto.nombre){
-        suma+=bajaProducto.cantidad;
-      }
+    var bajas=[];
+    // obtener la cantidad de bajas por productos no basicos
+    for(let producto of productos){
+        var suma = 0;
+        for(let bajaProducto of bajasDeProductos){
+            if(producto == bajaProducto.producto.nombre){
+                suma+=bajaProducto.cantidad;
+            }
+        }
+        // guardo la cantidad de bajas del producto
+        bajas.push({"nombre":producto,"cantidad":suma})
     }
-    // guardo la cantidad de bajas del producto
-    bajas.push({"nombre":producto,"cantidad":suma})
-  }
-  // ordeno los productos
-  bajas.sort(function(a, b){return (b.cantidad-a.cantidad)})
-  return bajas;
+    // ordeno los productos
+    bajas.sort(function(a, b){return (b.cantidad-a.cantidad)})
+    return bajas;
 }
 // funcion que agrega las nuevas filas a la tabla
 function agregarFilas(bajas){
-  for(var i=0 ; bajas[i] && i<10 ; i++){
-    var nombre = bajas[i].nombre;
-    var cantidad = bajas[i].cantidad;
-    $('#dataTables-example tr:last').after('<tr><td>'+nombre+'</td><td>'+cantidad+'</td></tr>');
-  }
+    for(var i=0 ; bajas[i] && i<10 ; i++){
+        var nombre = bajas[i].nombre;
+        var cantidad = bajas[i].cantidad;
+        $('#dataTables-example tr:last').after('<tr><td>'+nombre+'</td><td>'+cantidad+'</td></tr>');
+    }
 }
 // filtra las bajas por rango de fecha
 function bajasFecha(bajas){
-  // obtengo las fechas
-  var fechaInicial = ( new Date( $('input[name=inicioP]').val() ) ).getTime();
-  var fechaFinal = ( new Date( $('input[name=finalP]').val() ) ).getTime() + 86400000
-  // si no hay fecha
-  if(!fechaFinal) fechaFinal=new Date();
-  if(!fechaInicial) fechaInicial=(new Date(1995,11,17)-2.628e+9);
-  // realizo el filtro por rango de fecha
-  var bajasProductos = bajas.filter(function(baja){
-    // obtengo la fecha de la baja
-    var bajaFecha = (new Date(baja.fecha)).getTime();
-    var comparacion = (bajaFecha >= fechaInicial) && (bajaFecha <= fechaFinal);
-    return comparacion;
-  });
-  return bajasProductos;
+    // obtengo las fechas
+    var fechaInicial = ( new Date( $('input[name=inicioP]').val() ) ).getTime();
+    var fechaFinal = ( new Date( $('input[name=finalP]').val() ) ).getTime() + 86400000
+    // si no hay fecha
+    if(!fechaFinal) fechaFinal=new Date();
+    if(!fechaInicial) fechaInicial=(new Date(1995,11,17)-2.628e+9);
+    // realizo el filtro por rango de fecha
+    var bajasProductos = bajas.filter(function(baja){
+        // obtengo la fecha de la baja
+        var bajaFecha = (new Date(baja.fecha)).getTime();
+        var comparacion = (bajaFecha >= fechaInicial) && (bajaFecha <= fechaFinal);
+        return comparacion;
+    });
+    return bajasProductos;
 }
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-  // Obtenemos el total de columnas (tr) del id "dataTables-example"
-  var trs=$("#dataTables-example tr").length;
-  for(var i=1 ; i<trs ; i++){
-    // Eliminamos la ultima columna
-    $("#dataTables-example tr:last").remove();
-  }
+    // Obtenemos el total de columnas (tr) del id "dataTables-example"
+    var trs=$("#dataTables-example tr").length;
+    for(var i=1 ; i<trs ; i++){
+        // Eliminamos la ultima columna
+        $("#dataTables-example tr:last").remove();
+    }
 };
 // filtra las bajas por rango de fecha
 function bajasPorSucursal(bajas){
-  // obtengo la sucursal elegida
-  var sucursalElegida = $("select[name=sucursal]").val();
-  // realizo el filtro por sucursal
-  var bajasProductos = bajas.filter(function(baja){
-    // obtengo la fecha de la baja
-    var comparacion = sucursalElegida == baja.sucursal.plaza;
-    return comparacion;
-  });
-  return bajasProductos;
+    // obtengo la sucursal elegida
+    var sucursalElegida = $("select[name=sucursal]").val();
+    // realizo el filtro por sucursal
+    var bajasProductos = bajas.filter(function(baja){
+        // obtengo la fecha de la baja
+        var comparacion = sucursalElegida == baja.sucursal.plaza;
+        return comparacion;
+    });
+    return bajasProductos;
 }
 // genera el top ten de productos
 function generarTopTen(datos){
-  eliminaFilas(); // elimino las filas
-  // si no he inicializado productos
-  if(!productos) productos = obtenerNombres(datos.productos);
-  // obtengo las bajas por rango de fecha
-  var bajasSucursal = bajasPorSucursal(datos.bajasProductos);
-  var bajasProductos = bajasFecha(bajasSucursal);
-  var bajas = obtenerBajas(productos,bajasProductos);
-  agregarFilas(bajas);
+    eliminaFilas(); // elimino las filas
+    // si no he inicializado productos
+    if(!productos) productos = obtenerNombres(datos.productos);
+    // obtengo las bajas por rango de fecha
+    var bajasSucursal = bajasPorSucursal(datos.bajasProductos);
+    var bajasProductos = bajasFecha(bajasSucursal);
+    var bajas = obtenerBajas(productos,bajasProductos);
+    agregarFilas(bajas);
 }
 //obtener nombres de las tecnicas
 function obtenerNombresTecnicas(tecnicas){
-  var arregloNombres = [];
-  columnasGrafica=0;
-  var sucursalElegida=$("select[name=sucursalBasico]").val();
-  // ciclo para obtener los nombres
-  for(var i = 0 ; tecnicas[i] ; i++){
-    // obtengo los nombres de los productos
-    if(tecnicas[i].sucursal.plaza == sucursalElegida){
-      columnasGrafica++;
-      arregloNombres.push(tecnicas[i].nombreCompleto);
+    var arregloNombres = [];
+    columnasGrafica=0;
+    var sucursalElegida=$("select[name=sucursalBasico]").val();
+    // ciclo para obtener los nombres
+    for(var i = 0 ; tecnicas[i] ; i++){
+        // obtengo los nombres de los productos
+        if(tecnicas[i].sucursal.plaza == sucursalElegida){
+            columnasGrafica++;
+            arregloNombres.push(tecnicas[i].nombreCompleto);
+        }
     }
-  }
-  return arregloNombres;
+    return arregloNombres;
 }
 //filtrar fecha
 function bajasBasicosFecha(bajas){
-  // obtengo las fechas
-  var fechaInicial = ( new Date( $('input[name=inicioB]').val() ) ).getTime();
-  var fechaFinal = (( new Date( $('input[name=finalB]').val() ) ).getTime()) + 86400000;
-  //Por si le quita el valor de la fecha a alguno
-  if(!fechaFinal) fechaFinal=new Date();
-  if(!fechaInicial) fechaInicial=(new Date(1995,11,17)-2.628e+9);
-  // realizo el filtro por rango de fecha
-  var bajasProductos = bajas.filter(function(baja){
-    // obtengo la fecha de la baja
-    var bajaFecha = (new Date(baja.fecha)).getTime();
-    var comparacion = (bajaFecha >= fechaInicial) && (bajaFecha <= fechaFinal);
-    return comparacion;
-  });
-  return bajasProductos;
+    // obtengo las fechas
+    var fechaInicial = ( new Date( $('input[name=inicioB]').val() ) ).getTime();
+    var fechaFinal = (( new Date( $('input[name=finalB]').val() ) ).getTime()) + 86400000;
+    //Por si le quita el valor de la fecha a alguno
+    if(!fechaFinal) fechaFinal=new Date();
+    if(!fechaInicial) fechaInicial=(new Date(1995,11,17)-2.628e+9);
+    // realizo el filtro por rango de fecha
+    var bajasProductos = bajas.filter(function(baja){
+        // obtengo la fecha de la baja
+        var bajaFecha = (new Date(baja.fecha)).getTime();
+        var comparacion = (bajaFecha >= fechaInicial) && (bajaFecha <= fechaFinal);
+        return comparacion;
+    });
+    return bajasProductos;
 }
 //obtener las bajas de los basicos de cada tecnica
 function obtenerBajasBasicos(tecnicas,bajasBasicos){
-  var bajas=[];
-  columnaGrafica=0;
-  //obtengo el producto que esta seleccionado en el select
-  var productoElegido=$("select[name=basico]").val();
-  // obtener la cantidad de bajas por productos no basicos
-  for(let tecnica of tecnicas){
-    var suma = 0;
-    for(let bajaBasico of bajasBasicos){
-      if(tecnica == bajaBasico.tecnica.nombreCompleto){
-        if(productoElegido == bajaBasico.producto.nombre){
-          suma+=bajaBasico.cantidad;
+    var bajas=[];
+    columnaGrafica=0;
+    //obtengo el producto que esta seleccionado en el select
+    var productoElegido=$("select[name=basico]").val();
+    // obtener la cantidad de bajas por productos no basicos
+    for(let tecnica of tecnicas){
+        var suma = 0;
+        for(let bajaBasico of bajasBasicos){
+            if(tecnica == bajaBasico.tecnica.nombreCompleto){
+                if(productoElegido == bajaBasico.producto.nombre){
+                    suma+=bajaBasico.cantidad;
+                }
+            }
         }
-      }
+        // guardo la cantidad de bajas del producto por tecnica
+        bajas.push({"tecnica":tecnica,"cantidad":suma})
     }
-    // guardo la cantidad de bajas del producto por tecnica
-    bajas.push({"tecnica":tecnica,"cantidad":suma})
-  }
-  // ordeno los productos
-  //bajas.sort(function(a, b){return (b.cantidad-a.cantidad)})
-  return bajas;
+    // ordeno los productos
+    //bajas.sort(function(a, b){return (b.cantidad-a.cantidad)})
+    return bajas;
 }
 // dibuja la grafica de comparar basicos por tecnica inicial
 function graficaBasicos(){
-  tecnicas = obtenerNombresTecnicas(datosGeneral.tecnicas);
-  bajasBasicos= bajasBasicosFecha(datosGeneral.bajasBasicos);
-  objetoBasicos = obtenerBajasBasicos(tecnicas,bajasBasicos);
-  dibujar();
+    tecnicas = obtenerNombresTecnicas(datosGeneral.tecnicas);
+    bajasBasicos= bajasBasicosFecha(datosGeneral.bajasBasicos);
+    objetoBasicos = obtenerBajasBasicos(tecnicas,bajasBasicos);
+    dibujar();
 }
 // dibuja la grafica de comparar basicos por tecnica inicial
 function dibujar(){
-  google.charts.load('current', {packages: ['corechart', 'bar']});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-    //son las llaves para acceder al arreglo de objetoBasicos
-    //var keys = Object.keys(objetoBasicos);
-    datos = new google.visualization.DataTable();
-    datos.addColumn('string', "Nombre");
-    datos.addColumn('number', "Cantidad");
-    for (i=0; i<columnasGrafica;i++){
-      datos.addRow([objetoBasicos[i].tecnica,objetoBasicos[i].cantidad]);
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        //son las llaves para acceder al arreglo de objetoBasicos
+        //var keys = Object.keys(objetoBasicos);
+        datos = new google.visualization.DataTable();
+        datos.addColumn('string', "Nombre");
+        datos.addColumn('number', "Cantidad");
+        for (i=0; i<columnasGrafica;i++){
+            datos.addRow([objetoBasicos[i].tecnica,objetoBasicos[i].cantidad]);
+        }
+        options = {
+            title: 'Basicos Usados por Tecnica',
+            hAxis: {title: 'Tecnica',  titleTextStyle: {color: '#333'}},
+            vAxis: {title: 'Cantidad',  titleTextStyle: {color: '#333'}, minValue: 0},
+            legend: { position: 'none' },
+            bar: { groupWidth: "80%" },
+            width: '800',
+            height: "400",
+            chartArea: {
+                left: "10%",
+                top: "10%",
+                height: "80%",
+                width: "80%"
+            },
+        };
+        grafica = new google.visualization.ColumnChart(document.getElementById('grafica'));
+        grafica.draw(datos, options);
     }
-    options = {
-      title: 'Basicos Usados por Tecnica',
-      hAxis: {title: 'Tecnica',  titleTextStyle: {color: '#333'}},
-      vAxis: {title: 'Cantidad',  titleTextStyle: {color: '#333'}, minValue: 0},
-      legend: { position: 'none' },
-      bar: { groupWidth: "80%" },
-      width: '800',
-      height: "400",
-      chartArea: {
-          left: "10%",
-          top: "10%",
-          height: "80%",
-          width: "80%"
-      },
-    };
-    grafica = new google.visualization.ColumnChart(document.getElementById('grafica'));
-    grafica.draw(datos, options);
-  }
 }
 // redibuja la grafica de comparar basicos por tecnica
 function redibujar(){
-  objetosBasicos=[];
-  bajasBasicos= bajasBasicosFecha(datosGeneral.bajasBasicos);
-  objetoBasicos = obtenerBajasBasicos(tecnicas,bajasBasicos);
-  google.charts.load('current', {packages: ['corechart', 'bar']});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-    //son las llaves para acceder al arreglo de objetoBasicos
-    //var keys = Object.keys(objetoBasicos);
-    datos = new google.visualization.DataTable();
-    datos.addColumn('string', "Nombre");
-    datos.addColumn('number', "Cantidad");
-    for (i=0; i<columnasGrafica;i++){
-      datos.addRow([objetoBasicos[i].tecnica,objetoBasicos[i].cantidad]);
+    objetosBasicos=[];
+    bajasBasicos= bajasBasicosFecha(datosGeneral.bajasBasicos);
+    objetoBasicos = obtenerBajasBasicos(tecnicas,bajasBasicos);
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        //son las llaves para acceder al arreglo de objetoBasicos
+        //var keys = Object.keys(objetoBasicos);
+        datos = new google.visualization.DataTable();
+        datos.addColumn('string', "Nombre");
+        datos.addColumn('number', "Cantidad");
+        for (i=0; i<columnasGrafica;i++){
+            datos.addRow([objetoBasicos[i].tecnica,objetoBasicos[i].cantidad]);
+        }
+        grafica = new google.visualization.ColumnChart(document.getElementById('grafica'));
+        grafica.draw(datos, options);
     }
-    grafica = new google.visualization.ColumnChart(document.getElementById('grafica'));
-    grafica.draw(datos, options);
-  }
 }
 // funcion principal
 $(function(){
-  $.ajax({
-    url: '/historial/datosGeneral',
-    type: 'GET',
-    success : function(data) {
-      datosGeneral = data;
-      // graficas iniciales
-      // top ten
-      generarTopTen(datosGeneral);
-      graficaBasicos();
-    }
-  });
-  // fechas para el top ten
-  $("input[name=inicioP]").change(function(){
-    generarTopTen(datosGeneral);
+    $.ajax({
+        url: '/historial/datosGeneral',
+        type: 'GET',
+        success : function(data) {
+            datosGeneral = data;
+            // graficas iniciales
+            // top ten
+            generarTopTen(datosGeneral);
+            graficaBasicos();
+        }
+    });
+    // fechas para el top ten
+    $("input[name=inicioP]").change(function(){
+        generarTopTen(datosGeneral);
 	});
-  $("input[name=finalP]").change(function(){
-    generarTopTen(datosGeneral);
+    $("input[name=finalP]").change(function(){
+        generarTopTen(datosGeneral);
 	});
-  // select de sucursal
-  $("select[name=sucursal]").change(function(){
-    generarTopTen(datosGeneral);
-  });
-  // fecha para los basicos por tecnica
-  $("input[name=inicioB]").change(function(){
+     // select de sucursal
+    $("select[name=sucursal]").change(function(){
+        generarTopTen(datosGeneral);
+    });
+    // fecha para los basicos por tecnica
+    $("input[name=inicioB]").change(function(){
 		redibujar();
 	});
-  $("input[name=finalB]").change(function(){
+    $("input[name=finalB]").change(function(){
 		redibujar();
 	});
-  // select del producto basico
-  $("select[name=basico]").change(function(){
-    redibujar();
-  });
-  // select del sucursal basico
-  $("select[name=sucursalBasico]").change(function(){
-    tecnicas = obtenerNombresTecnicas(datosGeneral.tecnicas);
-    redibujar();
-  });
+    // select del producto basico
+    $("select[name=basico]").change(function(){
+        redibujar();
+    });
+    // select del sucursal basico
+    $("select[name=sucursalBasico]").change(function(){
+        tecnicas = obtenerNombresTecnicas(datosGeneral.tecnicas);
+        redibujar();
+    });
 });

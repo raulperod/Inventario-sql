@@ -7,6 +7,8 @@ const MovimientoModel = require('../models/movimiento'),
       BajaModel = require('../models/baja'),
       BasicoModel = require('../models/basico'),
       SucursalModel = require('../models/sucursal'),
+      EstadisticaModel = require('../models/estadistica'),
+      ProductoModel = require('../models/producto'),
       Utilidad = require('../ayuda/utilidad')
 
 function historialMovimientosGet(req, res) {
@@ -99,8 +101,41 @@ function historialSucursalGet(req, res) {
     })
 }
 
-function historialDatosSucursalGet(req, res) {
+function historialSucursalTopPost(req, res) {
+    // obtengo las fechas
+    let inicio = req.body.iniciot,
+        final = sumarDia( req.body.finalt ),
+        idSucursal = req.session.user.idSucursal
 
+    EstadisticaModel.getTopTen(idSucursal, inicio, final, (error, topten) => {
+        if(!error){
+            res.send(topten)
+        }
+    })
+}
+
+function historialSucursalBasicosPost(req, res) {
+    // obtengo las fechas
+    let inicio = req.body.iniciob,
+        final = sumarDia( req.body.finalb ),
+        idSucursal = req.session.user.idSucursal,
+        nombreProducto = req.body.basico,
+        idProducto = null
+
+    // obtener el id del producto a comparar
+    ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
+        if(error){
+            Utilidad.printError(res, {msg:`Error al obtener el id del producto: ${error}`, tipo: 0})
+            return
+        }
+        idProducto = producto.idProducto
+        EstadisticaModel.getComparacion(idSucursal, idProducto, inicio, final, (error, comparacion) => {
+            if(!error){
+                console.log(comparacion)
+                res.send(comparacion)
+            }
+        })
+    })
 }
 
 function historialGeneralGet(req, res) {
@@ -119,8 +154,16 @@ function historialGeneralGet(req, res) {
     })
 }
 
-function historialDatosGeneralGet(req, res) {
+function historialDatosGeneralPost(req, res) {
 
+}
+
+function sumarDia(fecha) {
+    let nuevaFecha = fecha.split('-')
+    let dia = parseInt( nuevaFecha[2] )
+    dia++
+    if ( dia < 10 ) dia = '0' + dia
+    return  ( nuevaFecha[0] + '-' + nuevaFecha[1] + '-' + dia )
 }
 
 module.exports = {
@@ -128,6 +171,7 @@ module.exports = {
     historialBajasGet,
     historialGeneralGet,
     historialSucursalGet,
-    historialDatosGeneralGet,
-    historialDatosSucursalGet
+    historialDatosGeneralPost,
+    historialSucursalTopPost,
+    historialSucursalBasicosPost
 }

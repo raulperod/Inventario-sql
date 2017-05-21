@@ -17,14 +17,15 @@ block contenido
             .tab-content
               #topten.tab-pane.fade.in.active
                 .col-lg-10.col-lg-offset-1
+                form(id="formtopten",style="display:inline" action="/historial/sucursaltop", method="POST")
                   .form-groups
                     .panel-body
                       .col-lg-5
                         label Fecha Inicio:
-                        input.form-control(id="Finicial" type="date" name="inicioP" )
+                        input.form-control(id="Finicial" type="date" name="iniciot" )
                       .col-lg-5
                         label Fecha Final:
-                        input.form-control(id="Ffinal" type="date" name="finalP" )  
+                        input.form-control(id="Ffinal" type="date" name="finalt" )
                 .col-lg-10.col-lg-offset-1
                   .form-groups
                     .panel-body
@@ -37,14 +38,15 @@ block contenido
                           // falta poner las filas  
               #basicos.tab-pane.fade
                 .col-lg-12
+                form(id="formbasicos",style="display:inline" action="/historial/sucursalbasicos", method="POST")
                   .form-groups
                     .panel-body
                       .col-lg-4
                         label Fecha Inicio:
-                        input.form-control(id="FinicialB" type="date" name="inicioB" )
+                        input.form-control(id="FinicialB" type="date" name="iniciob" )
                       .col-lg-4
                         label Fecha Final:
-                        input.form-control(id="FfinalB" type="date" name="finalB")
+                        input.form-control(id="FfinalB" type="date" name="finalb")
                       .col-lg-4
                         label Producto:
                         select.form-control(id="producto" name="basico" )
@@ -55,7 +57,7 @@ block contenido
   script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js') 
   script(src='/public/vendor/jquery/jquery.min.js')
   script(src='/public/data/fechaInicial.js')
-  //script(src='/public/data/graficasSucursal.js' charset="utf-8")
+  script(src='/public/data/graficasSucursal.js' charset="utf-8")
   // Bootstrap Core JavaScript
   script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
   // Metis Menu Plugin JavaScript
