@@ -9,10 +9,9 @@ function getAlmacenById(idAlmacen, next) {
     AlmacenModel
         .query(`SELECT a.idProducto, a.idCategoria, a.cantidadAlmacen 
                 FROM almacen a 
-                WHERE idAlmacen = ?`
-                , idAlmacen ,(error, resultado, fields) => {
+                WHERE idAlmacen = ?` , idAlmacen ,(error, resultado, fields) => {
 
-                    next(error, resultado[0])
+            next(error, resultado[0])
     })
 }
 
@@ -20,10 +19,9 @@ function getAlmacenBySucursalAndProduct(idSucursal, idProducto, next) {
     AlmacenModel
         .query(`SELECT a.idAlmacen, a.cantidadAlmacen, a.cantidadConsumo 
                 FROM almacen a 
-                WHERE a.idSucursal = ? AND a.idProducto = ?`
-            , [idSucursal, idProducto] ,(error, resultado, fields) => {
+                WHERE a.idSucursal = ? AND a.idProducto = ?` , [idSucursal, idProducto] ,(error, resultado, fields) => {
 
-                next(error, resultado[0])
+            next(error, resultado[0])
         })
 }
 
@@ -31,11 +29,10 @@ function getConsumoById(idAlmacen, next) {
     AlmacenModel
         .query(`SELECT a.idProducto, a.idCategoria, a.cantidadAlmacen, a.cantidadConsumo 
                 FROM almacen a 
-                WHERE idAlmacen = ?`
-            , idAlmacen ,(error, resultado, fields) => {
+                WHERE idAlmacen = ?` , idAlmacen ,(error, resultado, fields) => {
 
-                next(error, resultado[0])
-            })
+            next(error, resultado[0])
+        })
 }
 
 function getAlmacen(next) {
@@ -44,10 +41,10 @@ function getAlmacen(next) {
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
                 JOIN categorias c on a.idCategoria = c.idCategoria
-                JOIN sucursales s on a.idSucursal = s.idSucursal`
-                , (error, resultado, fields) => {
+                JOIN sucursales s on a.idSucursal = s.idSucursal` , (error, resultado, fields) => {
+
             next(error, resultado)
-    })
+        })
 }
 
 function getAlmacenBySucursal(idSucursal ,next) {
@@ -56,10 +53,10 @@ function getAlmacenBySucursal(idSucursal ,next) {
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
                 JOIN categorias c ON a.idCategoria = c.idCategoria
-                WHERE a.idSucursal = ?`
-            , idSucursal ,(error, resultado, fields) => {
-                next(error, resultado)
-            })
+                WHERE a.idSucursal = ?`  , idSucursal ,(error, resultado, fields) => {
+
+            next(error, resultado)
+        })
 }
 
 function getConsumo(next) {
@@ -68,10 +65,10 @@ function getConsumo(next) {
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
                 JOIN categorias c on a.idCategoria = c.idCategoria
-                JOIN sucursales s on a.idSucursal = s.idSucursal`
-            , (error, resultado, fields) => {
-                next(error, resultado)
-            })
+                JOIN sucursales s on a.idSucursal = s.idSucursal` , (error, resultado, fields) => {
+
+            next(error, resultado)
+        })
 }
 
 function getConsumoBySucursal(idSucursal ,next) {
@@ -80,22 +77,29 @@ function getConsumoBySucursal(idSucursal ,next) {
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
                 JOIN categorias c ON a.idCategoria = c.idCategoria
-                WHERE a.idSucursal = ?`
-            , idSucursal ,(error, resultado, fields) => {
-                next(error, resultado)
-            })
+                WHERE a.idSucursal = ?` , idSucursal ,(error, resultado, fields) => {
+
+            next(error, resultado)
+        })
 }
 
 function createAlmacen(almacen, next) {
-    AlmacenModel.query('INSERT INTO almacen SET ?', almacen, (error, resultado, fields) => {
-        next(error)
-    })
+    AlmacenModel
+        .query(`INSERT INTO almacen 
+                SET ?`, almacen, (error, resultado, fields) => {
+
+            next(error)
+        })
 }
 
 function updateAlmacen(almacen, next) {
-    AlmacenModel.query('UPDATE almacen SET ? WHERE idAlmacen = ?', [almacen,almacen.idAlmacen], (error, resultado, fields) => {
-        next(error)
-    })
+    AlmacenModel
+        .query(`UPDATE almacen 
+                SET ? 
+                WHERE idAlmacen = ?`, [almacen,almacen.idAlmacen], (error, resultado, fields) => {
+
+            next(error)
+        })
 }
 
 module.exports = {

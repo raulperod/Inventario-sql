@@ -11,11 +11,10 @@ function getTopTen(idSucursal, inicio, final, next) {
                 FROM bajas b 
                 JOIN productos p ON p.idProducto = b.idProducto 
                 WHERE b.idSucursal = ? AND (b.fecha BETWEEN ? AND ?)  
-                GROUP BY p.nombre`
-            , [idSucursal, inicio, final], (error, resultado, fields) => {
+                GROUP BY p.nombre` , [idSucursal, inicio, final], (error, resultado, fields) => {
 
-                next(error, resultado)
-            })
+            next(error, resultado)
+        })
 }
 
 function getComparacion(idSucursal, idProducto, inicio, final, next) {
@@ -24,11 +23,10 @@ function getComparacion(idSucursal, idProducto, inicio, final, next) {
                 FROM bajasbasicos b 
                 JOIN tecnicas t ON t.idTecnica = b.idTecnica
                 WHERE (b.idSucursal = ?) AND (b.idProducto = ?) AND (b.fecha BETWEEN ? AND ?) 
-                GROUP BY nombre`
-            , [idSucursal, idProducto, inicio, final], (error, resultado, fields) => {
+                GROUP BY nombre` , [idSucursal, idProducto, inicio, final], (error, resultado, fields) => {
 
-                next(error, resultado)
-            })
+            next(error, resultado)
+        })
 }
 
 module.exports = {
