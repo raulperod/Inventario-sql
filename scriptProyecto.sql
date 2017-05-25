@@ -23,8 +23,8 @@ CREATE TABLE `usuarios` (
   `username` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   `permisos` int(10) unsigned NOT NULL,
-  `nombre` varchar(20) NOT NULL,
-  `apellido` varchar(20) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idUsuario`),
   UNIQUE KEY `username` (`username`),
@@ -34,8 +34,8 @@ CREATE TABLE `usuarios` (
 CREATE TABLE `tecnicas` (
   `idTecnica` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idSucursal` int(10) unsigned NOT NULL,
-  `nombre` varchar(20) NOT NULL,
-  `apellido` varchar(20) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
   PRIMARY KEY (`idTecnica`),
   KEY `idSucursal` (`idSucursal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

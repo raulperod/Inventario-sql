@@ -94,7 +94,7 @@ function tecnicasIdTecnicaGet(req, res) {
                 (error) ? (
                     Utilidad.printError(res, { msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
                 ) : (
-                    res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate: tecnicaUpdate[0] })
+                    res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate: tecnicaUpdate })
                 )
             })
         })
