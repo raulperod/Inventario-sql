@@ -32,13 +32,14 @@ function categoriesNewPost(req, res) {
         (error) ? (
             Utilidad.printError(res, { msg: `Error al agregar la nueva categoria: ${error}`, tipo: 1})
         ) : (
-            res.redirect('/categories')
+            //res.redirect('/categories')
+            res.json({msg:"",tipo:3})
         )
     })
 }
 
 function categoriesIdCategoryGet(req, res) {
-    let idCategory = req.params.idCategory
+    let idCategory = req.params.idCategoria
     // busco la categoria
     CategoryModel.getCategoryById(idCategory, (error, categoryUpdate) => { // si no hubo error
         (error) ? (
@@ -51,7 +52,7 @@ function categoriesIdCategoryGet(req, res) {
 
 function categoriesIdCategoryPut(req, res) {
     let categoriaUpdate = {
-        idCategoria: req.params.idCategory,
+        idCategoria: req.params.idCategoria,
         nombre: req.body.nombre,
         descripcion: req.body.descripcion
     }
@@ -60,7 +61,8 @@ function categoriesIdCategoryPut(req, res) {
         (error) ? (
             Utilidad.printError(res, { msg: `Error al actualizar la categoria: ${error}`, tipo: 1})
         ) : (
-            res.redirect('/categories')
+            //res.redirect('/categories')
+            res.json({msg:"",tipo:3})
         )
     })
 }

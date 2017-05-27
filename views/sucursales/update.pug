@@ -7,14 +7,15 @@ block contenido
           .panel-heading
             h3.panel-title Editar sucursal
           .panel-body
-            form(action="/sucursales/"+sucursalUpdate.idSucursal+"?_method=PUT",method="POST")
+            #aviso
+            form(action="/sucursales/"+sucursalUpdate.idSucursal+"?_method=PUT",method="POST",id="formUpdate")
               fieldset
               .form-group
                 h5  Plaza:
-                input.form-control(type="text",name="plaza", value=sucursalUpdate.plaza required)
+                input.form-control(type="text",name="plaza", value=sucursalUpdate.plaza, required,id="plaza" )
               .form-group
                 h5  Ciudad:
-                input.form-control(type="text",name="ciudad", value=sucursalUpdate.ciudad required)
+                input.form-control(type="text",name="ciudad", value=sucursalUpdate.ciudad, required, id="city")
               // boton para registrar
               .form-group
               input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
@@ -26,3 +27,4 @@ block contenido
   script(src='/public/vendor/metisMenu/metisMenu.min.js')
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
+  script(src='/public/avisos/sucursalUpdate.js')   

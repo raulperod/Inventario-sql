@@ -7,23 +7,25 @@ block contenido
           .panel-heading
             h3.panel-title Actualizar categoria
           .panel-body
-            form(action="/categories/"+categoryUpdate.idCategoria+"?_method=PUT",method="POST")
+            #aviso
+            form(action="/categories/"+categoryUpdate.idCategoria+"?_method=PUT",method="POST", id="formUpdate")
               fieldset
                 .form-group
                   h5  Nombre:
-                  input.form-control(type="text", name="nombre", value=categoryUpdate.nombre, required)
+                  input.form-control(type="text", name="nombre", value=categoryUpdate.nombre, id="name" required)
                 .form-group
                   h5  Descripcion:
-                  input.form-control(type="text", name="descripcion", value=categoryUpdate.descripcion, required)
+                  input.form-control(type="text", name="descripcion", value=categoryUpdate.descripcion, id="desc" required)
                 // boton para registrar
                 .form-group
                 input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
 
   // jQuery
-  script(src='/src/vendor/jquery/jquery.min.js')
+  script(src='/public/vendor/jquery/jquery.min.js')
   // Bootstrap Core JavaScript
-  script(src='/src/vendor/bootstrap/js/bootstrap.min.js')
+  script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
   // Metis Menu Plugin JavaScript
-  script(src='/src/vendor/metisMenu/metisMenu.min.js')
+  script(src='/public/vendor/metisMenu/metisMenu.min.js')
   // Custom Theme JavaScript
-  script(src='/src/dist/js/sb-admin-2.js')
+  script(src='/public/dist/js/sb-admin-2.js')
+  script(src='/public/avisos/categoriaUpdate.js')

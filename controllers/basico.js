@@ -131,7 +131,6 @@ function basicosPut(req, res) {
                 Utilidad.printError(res, error)
             })
 }
-
 function basicosDelete(req, res) {
     // si se le asigna un producto
     let usuario = req.session.user,

@@ -7,20 +7,21 @@ block contenido
           .panel-heading
             h3.panel-title Editar producto
           .panel-body
-            form(action="/products/"+productoUpdate.idProducto+"?_method=PUT",method="POST")
+            #aviso
+            form(action="/products/"+productoUpdate.idProducto+"?_method=PUT",method="POST",id="formUpdate")
               fieldset
                 .form-group
                   h5  Nombre:
-                  input.form-control(type="text", name="nombre", value=productoUpdate.nombre, required)
+                  input.form-control(type="text", name="nombre", value=productoUpdate.nombre, required,id="name")
                 .form-group
                   h5  Codigo de barras:
-                  input.form-control(type="text", name="codigo", value=productoUpdate.codigo, required=)
+                  input.form-control(type="text", name="codigo", value=productoUpdate.codigo, required,id="cb")
                 .form-group
                   h5  Descripcion:
-                  input.form-control(type="text", name="descripcion", value=productoUpdate.descripcion, required)
+                  input.form-control(type="text", name="descripcion", value=productoUpdate.descripcion, required,id="desc")
                 .form-group
                   h5  Cantidad minima:
-                  input.form-control(type="number", value=productoUpdate.minimo ,name="minimo", min="0", max="10000" required)
+                  input.form-control(type="number", value=productoUpdate.minimo ,name="minimo", min="0", max="10000" required,id="min")
                 .form-group
                   h5  Categoria:
                   select.form-control.selectpicker(name="categoria", data-live-search="true")
@@ -64,3 +65,4 @@ block contenido
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
   script(src='/public/dist/js/bootstrap-select.min.js')
+  script(src='/public/avisos/productoUpdate.js')  

@@ -123,6 +123,7 @@ function usersIdUsuarioPut(req ,res) {
     if( usuario.permisos === 2 ){ // si es administrado general
         let plaza = req.body.plaza  // obtengo la nueva sucursal del usuario
         // busco la nueva sucursal
+        console.log('plaza: ' + plaza)
         SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => { // si no hubo error
             if (error){
                 Utilidad.printError(res, { msg : `Error al buscar la nueva sucursal: ${error}` , tipo : 0})
@@ -163,7 +164,8 @@ function createUser(res, user) {
             // mando una alerta que el username esta repetido
             Utilidad.printError(res, { msg: `Error al agregar en nuevo usuario: ${error}`, tipo: 1 })
         ) : ( // si no hubo error
-            res.redirect('/users')
+            //res.redirect('/users')
+            res.json({msg:"",tipo:3})
         )
     })
 }
@@ -174,7 +176,8 @@ function updateUser(res, user) {
             // mando una alerta que se repitio el username
             Utilidad.printError(res, { msg: `Error al actualizar el usuario: ${error}` , tipo: 1})
         ) : ( // si no hubo error
-            res.redirect('/users')
+            //res.redirect('/users')
+            res.json({ msg: "", tipo:3 })
         )
     })
 }

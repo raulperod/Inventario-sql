@@ -19,7 +19,7 @@ function getIdSucursalByPlaza(plaza, next) {
     SucursalModel
         .query(`SELECT s.idSucursal 
                 FROM sucursales s 
-                WHERE s.plaza = ?`,  plaza , (error, resultado, fields) => {
+                WHERE s.plaza = ?`,  plaza, (error, resultado, fields) => {
 
             next(error, resultado[0].idSucursal)
         })

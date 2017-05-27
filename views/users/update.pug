@@ -7,23 +7,24 @@ block contenido
           .panel-heading
             h3.panel-title Editar usuario
           .panel-body
-            form(action="/users/"+usuarioUpdate.idUsuario+"?_method=PUT",method="POST")
+            #aviso
+            form(action="/users/"+usuarioUpdate.idUsuario+"?_method=PUT", method="POST", id="formUpdate")
               fieldset
                 .form-group
                   h5  Usuario:
-                  input.form-control(type="text",name="username",value=usuarioUpdate.username, pattern="^([a-zA-Z0-9]{4,20})$", title="El nombre de usuario debe tener unicamente letras y numeros, minimo 4 caracteres y 20 como maximo" required)
+                  input.form-control(type="text", name="username", value=usuarioUpdate.username, id="user" required)
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text",name="name",value=usuarioUpdate.nombre, pattern="{3,40}$", title="El nombre  debe tener un minimo 3 caracteres y 40 como maximo" required)
+                  input.form-control(type="text", name="name", value=usuarioUpdate.nombre , id="name" required)
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text" ,name="last_name", value=usuarioUpdate.apellido, pattern="{3,40}$", title="El apellido debe tener un minimo 3 caracteres y 40 como maximo" required)
+                  input.form-control(type="text" , name="last_name", value=usuarioUpdate.apellido , id="last", required)
                 .form-group
                   h5  Contraseña:
-                  input.form-control(type="text" ,name="password",value=usuarioUpdate.password, pattern="^([a-zA-Z0-9]{4,20})$", title="La contraseña debe tener unicamente letras y numeros, minimo 4 caracteres y 20 como maximo" required)
+                  input.form-control(type="text" , name="password", value=usuarioUpdate.password, id="pass" required)
                 .form-group
                   h5  Confirmación de contraseña:
-                  input.form-control(type="text" ,name="password_confirmation" ,value=usuarioUpdate.password, pattern="^([a-zA-Z0-9]{4,20})$",title="La contraseña debe tener unicamente letras y numeros, minimo 4 caracteres y 20 como maximo" required)
+                  input.form-control(type="text" , name="password_confirmation" , value=usuarioUpdate.password , id="pass2" required)
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
@@ -52,3 +53,4 @@ block contenido
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
   script(src='/public/dist/js/bootstrap-select.min.js')
+  script(src='/public/avisos/usuarioUpdate.js')

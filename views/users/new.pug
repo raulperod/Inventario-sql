@@ -7,27 +7,28 @@ block contenido
           .panel-heading
             h3.panel-title Registrar usuario
           .panel-body
-            form(action="/users/new",method="POST",role='form')
+            #aviso
+            form(action="/users/new",method="POST",role='form',id="formNew")
               fieldset
                 .form-group
                   h5  Usuario:
-                  input.form-control(type="text", name="username", placeholder="Usuario", required)
+                  input.form-control(type="text", name="username", placeholder="Usuario", required,id="user")
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text", name="name", placeholder="Nombre", required)
+                  input.form-control(type="text", name="name", placeholder="Nombre", required,id="name")
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text", name="last_name", placeholder="Apellido", required)
+                  input.form-control(type="text", name="last_name", placeholder="Apellido", required,id="last")
                 .form-group
                   h5  Contraseña:
-                  input.form-control(type="password", name="password", placeholder="Contraseña", required)
+                  input.form-control(type="password", name="password", placeholder="Contraseña", required,id="pass")
                 .form-group
                   h5  Confirmación de contraseña:
-                  input.form-control(type="password", name="password_confirmation", placeholder="Confirmar contraseña" required)
+                  input.form-control(type="password", name="password_confirmation", placeholder="Confirmar contraseña", required,id="pass2")
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
-                    select.form-control.selectpicker(name="plaza", data-live-search="true")
+                    select.form-control.selectpicker(name="plaza", data-live-search="true",id="sucursal")
                       for sucursal in sucursales
                         option(name="1") #{sucursal.plaza}
 
@@ -44,3 +45,4 @@ block contenido
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
   script(src='/public/dist/js/bootstrap-select.min.js')
+  script(src='/public/avisos/usuarioNew.js')  

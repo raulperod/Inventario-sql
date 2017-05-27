@@ -7,20 +7,21 @@ block contenido
           .panel-heading
             h3.panel-title Registrar producto
           .panel-body
-            form(action="/products/new",method="POST",role='form')
+            #aviso
+            form(action="/products/new",method="POST",role='form',id="formNew")
               fieldset
                 .form-group
                   h5  Nombre:
-                  input.form-control(type="text", name="nombre", placeholder="Nombre", required)
+                  input.form-control(type="text", name="nombre", placeholder="Nombre", required,id="name")
                 .form-group
                   h5  Codigo de barras:
-                  input.form-control(type="text", name="codigo", placeholder="Codigo de barra", required)
+                  input.form-control(type="text", name="codigo", placeholder="Codigo de barra", required,id="cb")
                 .form-group
                   h5  Descripcion:
-                  input.form-control(type="text", name="descripcion", placeholder="Descripcion", required)
+                  input.form-control(type="text", name="descripcion", placeholder="Descripcion", required,id="desc")
                 .form-group
                   h5  Cantidad minima:
-                  input.form-control(type="number" placeholder="Cantidad minima" name="minimo" min="0" max="10000" required)
+                  input.form-control(type="number" placeholder="Cantidad minima" name="minimo" min="0" max="10000" required,id="min")
                 .form-group
                   h5  Categoria:
                   select.form-control.selectpicker(name="categoria", data-live-search="true")
@@ -50,3 +51,4 @@ block contenido
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
   script(src='/public/dist/js/bootstrap-select.min.js')
+  script(src='/public/avisos/productoNew.js')  

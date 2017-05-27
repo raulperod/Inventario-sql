@@ -15,8 +15,8 @@ block contenido
               .col-md-5
                 h4
                   | Asignacion de basico
-                
-                form(action="/basicos?_method=PUT",method="POST",role='form')
+                #aviso1
+                form(action="/basicos?_method=PUT",method="POST",role='form', id="form1")
                   .form-group
                     h5  Producto:
                     select.form-control.selectpicker(name="producto", data-live-search="true")
@@ -28,14 +28,14 @@ block contenido
                       for tecnica in tecnicas
                         option(name="1") #{tecnica.nombre}
                   .form-group
-                    input(type="submit" value="Asignar" class="btn btn-lg btn-primary btn-block")
+                    input(type="submit" value="Asignar" class="btn btn-lg btn-primary btn-block", id="boton1")
               .col-md-1   
               
               .col-md-5      
                 h4
                   | Baja de basico
-                  
-                form(action="/basicos?_method=DELETE",method="POST",role='form')
+                #aviso2  
+                form(action="/basicos?_method=DELETE",method="POST",role='form', id="form2")
                   .form-group
                     h5  Producto:
                     select.form-control.selectpicker(name="producto", data-live-search="true")
@@ -47,7 +47,7 @@ block contenido
                       for tecnica in tecnicas
                         option(name="1") #{tecnica.nombre}
                   .form-group
-                    input(type="submit" value="Baja" class="btn btn-lg btn-primary btn-block")
+                    input(type="submit" value="Baja" class="btn btn-lg btn-primary btn-block", id="boton2")
   // jQuery
   script(src='/public/vendor/jquery/jquery.min.js')
   // Bootstrap Core JavaScript
@@ -57,3 +57,4 @@ block contenido
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
   script(src='/public/dist/js/bootstrap-select.min.js')
+  script(src='/public/avisos/basico.js')   

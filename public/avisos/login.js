@@ -12,7 +12,7 @@ $(function(){
 
     $("input:submit").click(function() {
         if(user.value == "" || pass.value == ""){
-            mostrarAviso(4);
+            mostrarAviso(5);
             return false;
         }
         obtenerMensaje();
@@ -34,7 +34,7 @@ function mostrarAviso(error){
             $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
                 +"data-dismiss='alert' aria-hidden='true'>&times;</button>Contraseña incorrecta!.</div>");
             break;
-        case 4:
+        case 5:
             $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
                 +"data-dismiss='alert' aria-hidden='true'>&times;</button>Ambos campos son requeridos!.</div>");
             break;

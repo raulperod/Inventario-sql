@@ -7,14 +7,15 @@ block contenido
           .panel-heading
             h3.panel-title Registrar sucursal
           .panel-body
-            form(action="/sucursales/new",method="POST",role='form')
+            #aviso
+            form(action="/sucursales/new",method="POST",role='form',id="formNew")
               fieldset
                 .form-group
                   h5  Plaza:
-                  input.form-control(type="text" name="plaza" placeholder="Plaza"  required)
+                  input.form-control(type="text" name="plaza" placeholder="Plaza"  required id="plaza")
                 .form-group
                   h5  Ciudad:
-                  input.form-control(type="text" name="ciudad" placeholder="Ciudad" required)
+                  input.form-control(type="text" name="ciudad" placeholder="Ciudad" required id="city")
                 .form-group
                 input(type="submit" value="Registrar sucursal" class="btn btn-lg btn-primary btn-block")
   // jQuery
@@ -25,3 +26,4 @@ block contenido
   script(src='/public/vendor/metisMenu/metisMenu.min.js')
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
+  script(src='/public/avisos/sucursalNew.js')  

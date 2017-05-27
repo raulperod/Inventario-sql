@@ -64,7 +64,8 @@ function productsNewPost(req, res) {
                 // si el producto es basico, se generan los basicos en uso para las tecnicas
                 if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.nombre)
                 // cuando termine de generar los almacenes
-                res.redirect('/products')
+                //res.redirect('/products')
+                res.json({msg:"",tipo:3})
             }
         })
     })
@@ -85,6 +86,7 @@ function productsIdProductoGet(req, res) {
             (error) ? (
                 Utilidad.printError(res, { msg: `Error al obtener el producto: ${error}`, tipo: 0})
             ) : (
+                req.session.productoUpdate = productoUpdate,
                 res.render("./products/update",{ usuario, categorias, productoUpdate })
             )
         })
@@ -116,8 +118,11 @@ function productsIdProductoPut(req, res) {
             if(error) {
                 Utilidad.printError(res, {msg: `Error al editar el producto: ${error}`, tipo: 1})
             } else {
-                if(productoUpdate.esbasico) generarBasicosEnUso(req, res, productoUpdate.nombre)
-                res.redirect('/products')
+                if(productoUpdate.esbasico && req.session.productoUpdate.esBasico == 0) generarBasicosEnUso(req, res, productoUpdate.nombre)
+                // restablesco el productoUpdate
+                req.session.productoUpdate = null
+                //res.redirect('/products')
+                res.json({msg:"",tipo:3})
             }
         })
     })

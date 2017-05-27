@@ -34,7 +34,8 @@ function sucursalesNewPost(req, res) {
         if(error){ // si hubo error
             Utilidad.printError(res, { msg: `Error al guardar la nueva sucursal, plaza repetida: ${error}`, tipo: 1})
         } else { // si no hubo error
-            res.redirect('/sucursales')
+            //res.redirect('/sucursales')
+            res.json({msg:"",tipo:3})
             // genero los almacenes para la sucursal
             // con los productos existentes
             // busco el id de la sucursal que se acaba de crear
@@ -75,7 +76,8 @@ function sucursalesIdSucursalPut(req, res) {
         (error) ? ( // si hubo error
             Utilidad.printError(res, { msg: `Error al actualizar sucursal, plaza repetida: ${error}`, tipo: 1 })
         ) : ( // si no hubo error
-            res.redirect('/sucursales')
+            //res.redirect('/sucursales')
+            res.json({msg:"",tipo:3})
         )
     })
 }
