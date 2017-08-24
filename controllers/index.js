@@ -8,28 +8,18 @@ const UserModel = require('../models/usuario'),
 
 function index(req, res) {
     // verifica si existe un usuario logeado
-    if(req.session.user){
-        res.redirect("/almacen");  // lo redirecciona a almacen
-    }else{
-        // si no esta logeado lo manda al login
-        res.redirect("/login");
-    }
+    (req.session.user) ? res.redirect("/almacen") : res.redirect("/login")
 }
 
 function loginGet(req, res) {
     // si no esta logeado entra al login
-    if(!req.session.user){
-        // manda falsa las alertas y renderisa login
-        res.render("login")
-    }else{  // si ya esta logeado, entonces se redirecciona al almacen
-        res.redirect("/almacen")
-    }
+    (req.session.user) ? res.redirect("/almacen") : res.render('login')
 }
 
 // para logearte
 function loginPost(req, res) {
     // declaro variables necesarias
-    let username = req.body.username,
+    let username = req.body.username.toLowerCase(),
         password = req.body.password
 
     UserModel.getUserByUsername(username, (error, usuario) =>{

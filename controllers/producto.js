@@ -155,9 +155,9 @@ function excelPost(req, res) {
         }
         // verifico la extencion del excel
         if(req.file.originalname.split('.')[req.file.originalname.split('.').length-1] === 'xlsx'){
-            exceltojson = xlsxtojson;
+            exceltojson = xlsxtojson
         }else{
-            exceltojson = xlstojson;
+            exceltojson = xlstojson
         }
 
         exceltojson({ input: req.file.path,  output: null, lowerCaseHeaders :true }, (err, productos) => {
@@ -179,7 +179,7 @@ function excelPost(req, res) {
                     if(error || !idCategoria ){ // si hubo error
                         i = longitud // detengo el ciclo
                         Utilidad.printError(res, {msg: "Hubo error al agregar alguno de los productos", tipo: 2} )
-                        res = null;
+                        res = null
                     } else {// si no hubo error
                         // crea el nuevo producto
                         let nuevoProducto = {
@@ -196,8 +196,12 @@ function excelPost(req, res) {
                                 i = longitud // detengo el ciclo
                                 // mando una alerta
                                 Utilidad.printError(res, {msg: `Hubo error al agregar alguno de los productos: ${error}`, tipo: 2} )
-                                res = null;
+                                res = null
                             } else {
+                                // genera los almacenes
+                                generarAlmacenes(req, res, nuevoProducto.nombre)
+                                // si el producto es basico, se generan los basicos en uso para las tecnicas
+                                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.nombre)
                                 console.log(`se agrego correctamente el producto: ${nuevoProducto.nombre}`)
                                 contador++
                                 // checa si hay error
