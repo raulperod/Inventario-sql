@@ -96,6 +96,7 @@ function historialSucursalGet(req, res) {
         (error) ? (
             Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}` , tipo: 0})
         ) : (
+            req.session.basicos = basicos,
             res.render('./historial/sucursal', { basicos, usuario: req.session.user} )
         )
     })
@@ -119,10 +120,10 @@ function historialSucursalBasicosPost(req, res) {
     let inicio = req.body.iniciob,
         final = sumarDia( req.body.finalb ),
         idSucursal = req.session.user.idSucursal,
-        nombreProducto = req.body.basico
+        codigoProducto = getCodigoByName(req.session.basicos, req.body.basico)
 
     // obtener el id del producto a comparar
-    ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
+    ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
         if(!error){
             EstadisticaModel.getComparacion(idSucursal, producto.idProducto, inicio, final, (error, comparacion) => {
                 if(!error){
@@ -143,6 +144,7 @@ function historialGeneralGet(req, res) {
             (error) ? (
                 Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}` , tipo: 0})
             ) : (
+                req.session.basicos = basicos,
                 res.render('./historial/general', {basicos, sucursales, usuario: req.session.user} )
             )
         })
@@ -172,12 +174,12 @@ function historialGeneralBasicosPost(req, res) {
     let inicio = req.body.iniciob,
         final = sumarDia( req.body.finalb ),
         sucursal = req.body.sucursalbas,
-        nombreProducto = req.body.basico
+        codigoProducto = getCodigoByName(req.session.basicos, req.body.basico)
 
     SucursalModel.getIdSucursalByPlaza(sucursal, (error, idSucursal) => {
         if(!error){
             // obtener el id del producto a comparar
-            ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
+            ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
                 if(!error) {
                     EstadisticaModel.getComparacion(idSucursal, producto.idProducto, inicio, final, (error, comparacion) => {
                         if(!error){
@@ -196,6 +198,22 @@ function sumarDia(fecha) {
     dia++
     if ( dia < 10 ) dia = '0' + dia
     return  ( nuevaFecha[0] + '-' + nuevaFecha[1] + '-' + dia )
+}
+
+function getCodigoByName(basicos, nombre){
+    let productos = basicos,
+        longitud = productos.length,
+        codigo = null
+    // busca el codigo del producto
+    for(let i = 0; i < longitud ; i++){
+        let producto = productos[i]
+        if(producto.nombre === nombre){
+            codigo = producto.codigo // obtengo el codigo del producto basico
+            i = longitud // termino el ciclo
+        }
+    }
+
+    return codigo
 }
 
 module.exports = {

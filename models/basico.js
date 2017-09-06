@@ -7,7 +7,7 @@ const BasicoModel = require('./coneccion')
 
 function getBasicos(next){
     BasicoModel
-        .query(`SELECT p.nombre 
+        .query(`SELECT p.nombre, p.codigo 
                 FROM productos p 
                 WHERE p.esBasico = 1`, (error, resultado, fields) => {
 
