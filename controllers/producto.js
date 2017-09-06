@@ -60,9 +60,9 @@ function productsNewPost(req, res) {
             if(error) {
                 Utilidad.printError(res, {msg: `Error al guardar el nuevo producto: ${error}`, tipo: 1})
             } else {
-                generarAlmacenes(req, res, nuevoProducto.nombre)
+                generarAlmacenes(req, res, nuevoProducto.codigo)
                 // si el producto es basico, se generan los basicos en uso para las tecnicas
-                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.nombre)
+                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.codigo)
                 // cuando termine de generar los almacenes
                 //res.redirect('/products')
                 res.json({msg:"",tipo:3})
@@ -176,7 +176,7 @@ function excelPost(req, res) {
                     nombreCategoria = producto.categoria
                 // busca la categoria elegida
                 CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => {
-                    if(error || !idCategoria ){ // si hubo error
+                    if(error || !idCategoria){ // si hubo error
                         i = longitud // detengo el ciclo
                         Utilidad.printError(res, {msg: "Hubo error al agregar alguno de los productos", tipo: 2} )
                         res = null
@@ -221,10 +221,10 @@ function excelPost(req, res) {
     })
 }
 
-function generarAlmacenes(req, res, productName) {
+function generarAlmacenes(req, res, productCode) {
     // cuando se crea un producto, ese producto se registra en el almacen de cada sucursal
     // busco el producto agregado para obtener el id
-    ProductModel.getIdProductoAndIdCategoriaByName(productName, (error, producto) => {
+    ProductModel.getIdProductoAndIdCategoriaByCode(productCode, (error, producto) => {
         if(error){ // si hubo error
             Utilidad.printError(res, { msg: `Error al obtener el id del producto: ${error}`, tipo: 0})
             return
@@ -253,9 +253,9 @@ function generalAlmacen(req, res, idSucursal, producto) {
     })
 }
 
-function generarBasicosEnUso(req, res, productName) {
+function generarBasicosEnUso(req, res, productCode) {
     // busco el producto
-    ProductModel.getIdProductoAndIdCategoriaByName(productName, (error, producto) => {
+    ProductModel.getIdProductoAndIdCategoriaByCode(productCode, (error, producto) => {
         if(error){ // si no error
             Utilidad.printError(res, {msg:`Error al obtener el producto: ${error}`, tipo: 0})
         } else { // si no hubo error

@@ -83,7 +83,7 @@ function tecnicasIdTecnicaGet(req, res) {
         idTecnica = req.params.idTecnica
 
     if( usuario.permisos === 2 ){ // si es administrador general
-        // busco las sucurales
+        // busco las sucursales
         SucursalModel.getPlazasOfSucursales( (error, sucursales) => { // si no hubo error
             if(error){
                 Utilidad.printError(res, { msg: `Error al obtener las sucursales: ${error}`, tipo: 0})
@@ -137,8 +137,7 @@ function tecnicasIdTecnicaPut(req, res) {
         let tecnicaUpdate = {
             idTecnica,
             nombre: req.body.name,
-            apellido: req.body.last_name,
-            idSucursal: usuario.idSucursal
+            apellido: req.body.last_name
         }
         // actualizo la tecnica en la base de datos
         updateTecnica(res, tecnicaUpdate)
@@ -171,7 +170,8 @@ function updateTecnica(res, tecnica) {
 function generarBasicosEnUso(res, tecnica){
     // obtenemos el id de la tecnica creada
     let nombreCompleto = tecnica.nombre+' '+tecnica.apellido
-    TecnicaModel.getIdTecnicaByFullName(nombreCompleto, (error, idTecnica) => {
+
+    TecnicaModel.getIdTecnicaByFullNameAndIdSucursal(nombreCompleto, tecnica.idSucursal, (error, idTecnica) => {
         if(error){ // si hubo error
             Utilidad.printError(res, {msg:`Error al obtener la tecnica: ${error}`, tipo: 0})
         } else { // si no hubo error
@@ -180,7 +180,7 @@ function generarBasicosEnUso(res, tecnica){
                 if(error){ // si hubo un error
                     Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}`, tipo: 0})
                 } else { // si no hubo error
-                    // genero un basico en uso pro cada producto basico existente
+                    // genero un basico en uso por cada producto basico existente
                     productosBasicos.forEach(productoBasico => generarBasicoEnUso(res, tecnica.idSucursal, idTecnica, productoBasico.idProducto))
                 }
             })

@@ -17,7 +17,7 @@ function loginGet(req, res) {
 }
 
 // para logearte
-function loginPost(req, res) {
+function loginPost(req, res){
     // declaro variables necesarias
     let username = req.body.username.toLowerCase(),
         password = req.body.password
