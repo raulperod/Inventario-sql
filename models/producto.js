@@ -46,7 +46,7 @@ function getProducts(next) {
 
 function getProductsBasicos(next) {
     ProductModel
-        .query(`SELECT p.nombre
+        .query(`SELECT p.nombre, p.codigo
                 FROM productos p
                 WHERE p.esBasico = 1` ,(error, resultado, fields) => {
 

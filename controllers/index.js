@@ -40,7 +40,7 @@ function loginPost(req, res){
                     return Utilidad.returnPromise(usuario.password === password, true, { msg: 'Error contraseña incorrecta', tipo: 3 })
                 })
                 .then(() => {
-                    // inicia al usuario
+                    // inicia al usuario y sus variables a utlizar
                     req.session.user = usuario
                     // envia para saber que es correcto
                     res.json ({msg:'Datos correctos', tipo: 4})

@@ -92,7 +92,7 @@ function historialBajasGet(req, res) {
 }
 
 function historialSucursalGet(req, res) {
-    BasicoModel.getBasicos( (error, basicos) => {
+    ProductoModel.getProductsBasicos( (error, basicos) => {
         (error) ? (
             Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}` , tipo: 0})
         ) : (
@@ -140,7 +140,7 @@ function historialGeneralGet(req, res) {
             Utilidad.printError(res, {msg:`Error al obtener las sucursales: ${error}` , tipo: 0})
             return
         }
-        BasicoModel.getBasicos( (error, basicos) => {
+        ProductoModel.getProductsBasicos( (error, basicos) => {
             (error) ? (
                 Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}` , tipo: 0})
             ) : (

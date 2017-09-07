@@ -5,16 +5,6 @@
 
 const BasicoModel = require('./coneccion')
 
-function getBasicos(next){
-    BasicoModel
-        .query(`SELECT p.nombre, p.codigo 
-                FROM productos p 
-                WHERE p.esBasico = 1`, (error, resultado, fields) => {
-
-            next(error, resultado)
-        })
-}
-
 function getBasicoByProductAndTecnica(idProducto,idTecnica, next) {
     BasicoModel
         .query(`SELECT b.enUso 
@@ -45,7 +35,6 @@ function updateBasico(basico, next) {
 }
 
 module.exports = {
-    getBasicos,
     getBasicoByProductAndTecnica,
     createBasico,
     updateBasico

@@ -22,6 +22,7 @@ function basicosGet(req, res) {
                 (error) ? ( // si hubo error
                     Utilidad.printError(res, {msg:`Error al obtener los productos: ${error}`, tipo: 0})
                 ) : ( // no hubo error
+                    req.session.productos = productos,
                     res.render("./basicos/manager",{ usuario, tecnicas ,productos })
                 )
             })
@@ -32,7 +33,7 @@ function basicosGet(req, res) {
 function basicosPut(req, res) {
     // si se le asigna un producto
     let usuario = req.session.user,
-        nombreProducto = req.body.producto,
+        codigoProducto = getCodigoByName(req.session.productos ,req.body.producto),
         nombreTecnica = req.body.tecnica,
         almacen = null,
         idTecnica = null,
@@ -40,7 +41,7 @@ function basicosPut(req, res) {
         idCategoria = null,
         promesa = new Promise((resolve, reject) =>{
             // busco el id de la tecnica
-            TecnicaModel.getIdTecnicaByFullName(nombreTecnica,(error, idTecnica) => {
+            TecnicaModel.getIdTecnicaByFullNameAndIdSucursal(nombreTecnica, usuario.idSucursal,(error, idTecnica) => {
                 return(error) ? ( reject({msg:`Error al obtener el id de la tecnica: ${error}`, tipo: 0}) ) : ( resolve(idTecnica) )
             })
         })
@@ -51,7 +52,7 @@ function basicosPut(req, res) {
             .then(resolved => {
                 idTecnica = resolved
                 return new Promise((resolve, reject) => {
-                    ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
+                    ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
                         return(error) ? ( reject({msg:`Error al obtener el id del producto: ${error}`, tipo: 0}) ) : ( resolve(producto) )
                     })
                 })
@@ -131,10 +132,11 @@ function basicosPut(req, res) {
                 Utilidad.printError(res, error)
             })
 }
+
 function basicosDelete(req, res) {
     // si se le asigna un producto
     let usuario = req.session.user,
-        nombreProducto = req.body.producto,
+        codigoProducto = getCodigoByName(req.session.productos ,req.body.producto),
         nombreTecnica = req.body.tecnica,
         almacen = null,
         idTecnica = null,
@@ -142,7 +144,7 @@ function basicosDelete(req, res) {
         idCategoria = null,
         promesa = new Promise((resolve, reject) =>{
             // busco el id de la tecnica
-            TecnicaModel.getIdTecnicaByFullName(nombreTecnica,(error, idTecnica) => {
+            TecnicaModel.getIdTecnicaByFullNameAndIdSucursal(nombreTecnica, usuario.idSucursal,(error, idTecnica) => {
                 return(error) ? ( reject({msg:`Error al obtener el id de la tecnica: ${error}`, tipo: 0}) ) : ( resolve(idTecnica) )
             })
         })
@@ -153,7 +155,7 @@ function basicosDelete(req, res) {
         .then(resolved => {
             idTecnica = resolved
             return new Promise((resolve, reject) => {
-                ProductoModel.getIdProductoAndIdCategoriaByName(nombreProducto,(error, producto) => {
+                ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
                     return(error) ? ( reject({msg:`Error al obtener el id del producto: ${error}`, tipo: 0}) ) : ( resolve(producto) )
                 })
             })
@@ -227,6 +229,23 @@ function basicosDelete(req, res) {
             Utilidad.printError(res, error)
         })
 }
+
+function getCodigoByName(basicos, nombre){
+    let productos = basicos,
+        longitud = productos.length,
+        codigo = null
+    // busca el codigo del producto
+    for(let i = 0; i < longitud ; i++){
+        let producto = productos[i]
+        if(producto.nombre === nombre){
+            codigo = producto.codigo // obtengo el codigo del producto basico
+            i = longitud // termino el ciclo
+        }
+    }
+
+    return codigo
+}
+
 
 module.exports = {
     basicosGet,

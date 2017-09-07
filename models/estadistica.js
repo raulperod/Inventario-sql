@@ -10,7 +10,7 @@ function getTopTen(idSucursal, inicio, final, next) {
         .query(`SELECT p.nombre, SUM(cantidad) cantidad 
                 FROM bajas b 
                 JOIN productos p ON p.idProducto = b.idProducto 
-                WHERE b.idSucursal = ? AND (b.fecha BETWEEN ? AND ?)  
+                WHERE p.esBasico = 0 AND b.idSucursal = ? AND (b.fecha BETWEEN ? AND ?)  
                 GROUP BY p.nombre` , [idSucursal, inicio, final], (error, resultado, fields) => {
 
             next(error, resultado)

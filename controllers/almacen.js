@@ -9,23 +9,26 @@ const AlmacenModel = require('../models/almacen'),
 
 function almacenGet(req, res) {
     let usuario = req.session.user
+
     if( usuario.permisos === 2){ // si es administrador general
         // obtengo el almacen
         AlmacenModel.getAlmacen((error, almacen) => {
-            (error) ? (
+            if(error){
                 Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
-            ) : (
-                res.render('./almacen/manager', { usuario, almacen})
-            )
+            }else{
+                res.render('./almacen/manager', {usuario, almacen})
+                req.session.user.almacen = almacen // guardo el almacen
+            }
         })
     }else{ // si es administrador de sucursal o recepcionista
         // obtengo el almacen
         AlmacenModel.getAlmacenBySucursal(usuario.idSucursal, (error, almacen) => {
-            (error) ? (
+            if(error){
                 Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
-            ) : (
-                res.render('./almacen/manager', { usuario, almacen})
-            )
+            }else {
+                res.render('./almacen/manager', {usuario, almacen})
+                req.session.user.almacen = almacen // guardo el almacen
+            }
         })
     }
 }

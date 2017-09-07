@@ -9,6 +9,7 @@ const AlmacenModel = require('../models/almacen'),
 
 function consumosGet(req, res) {
     let usuario = req.session.user
+
     if( usuario.permisos === 2){ // si es administrador general
         // obtengo el consumo
         AlmacenModel.getConsumo((error, consumos) => {

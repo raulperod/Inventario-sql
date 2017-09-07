@@ -118,7 +118,7 @@ function productsIdProductoPut(req, res) {
             if(error) {
                 Utilidad.printError(res, {msg: `Error al editar el producto: ${error}`, tipo: 1})
             } else {
-                if(productoUpdate.esbasico && req.session.productoUpdate.esBasico == 0) generarBasicosEnUso(req, res, productoUpdate.nombre)
+                if(productoUpdate.esbasico && req.session.productoUpdate.esBasico == 0) generarBasicosEnUso(req, res, productoUpdate.codigo)
                 // restablesco el productoUpdate
                 req.session.productoUpdate = null
                 //res.redirect('/products')
@@ -196,13 +196,12 @@ function excelPost(req, res) {
                                 i = longitud // detengo el ciclo
                                 // mando una alerta
                                 Utilidad.printError(res, {msg: `Hubo error al agregar alguno de los productos: ${error}`, tipo: 2} )
-                                res = null
                             } else {
                                 // genera los almacenes
-                                generarAlmacenes(req, res, nuevoProducto.nombre)
+                                generarAlmacenes(req, res, nuevoProducto.codigo)
                                 // si el producto es basico, se generan los basicos en uso para las tecnicas
-                                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.nombre)
-                                console.log(`se agrego correctamente el producto: ${nuevoProducto.nombre}`)
+                                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.codigo)
+                                console.log(`se agrego correctamente el producto: ${nuevoProducto.codigo}`)
                                 contador++
                                 // checa si hay error
                                 if ( i === (longitud - 1) ){
