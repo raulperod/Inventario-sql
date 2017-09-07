@@ -168,18 +168,14 @@ function excelPost(req, res) {
             // borro el archivo excel
             fs.unlinkSync(req.file.path)
 
-            let contador = 0,
-                longitud = productos.length
-            for( let i=0 ; i < longitud ; i++ ){
+            for( let i=0 ; i < productos.length ; i++ ){
                 // variables necesarias
                 let producto = productos[i],
                     nombreCategoria = producto.categoria
                 // busca la categoria elegida
                 CategoryModel.getIdCategoryByName(nombreCategoria, (error, idCategoria) => {
                     if(error || !idCategoria){ // si hubo error
-                        i = longitud // detengo el ciclo
                         Utilidad.printError(res, {msg: "Hubo error al agregar alguno de los productos", tipo: 2} )
-                        res = null
                     } else {// si no hubo error
                         // crea el nuevo producto
                         let nuevoProducto = {
@@ -193,24 +189,14 @@ function excelPost(req, res) {
                         // guarda el nuevo producto en la base de datos
                         ProductModel.createProduct(nuevoProducto, error => { // si no hubo error al guardarlo
                             if(error){
-                                i = longitud // detengo el ciclo
                                 // mando una alerta
                                 Utilidad.printError(res, {msg: `Hubo error al agregar alguno de los productos: ${error}`, tipo: 2} )
                             } else {
                                 // genera los almacenes
-                                generarAlmacenes(req, res, nuevoProducto.codigo)
+                                generarAlmacenes(req, res, producto.codigo)
                                 // si el producto es basico, se generan los basicos en uso para las tecnicas
-                                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, nuevoProducto.codigo)
-                                console.log(`se agrego correctamente el producto: ${nuevoProducto.codigo}`)
-                                contador++
-                                // checa si hay error
-                                if ( i === (longitud - 1) ){
-                                    if(contador === 5){
-                                        Utilidad.printError(res, {msg: "Se agregaron correctamente los productos", tipo: 3})
-                                    }else{
-                                        Utilidad.printError(res, { msg: "Hubo error al agregar alguno de los productos", tipo: 2})
-                                    }
-                                }
+                                if(nuevoProducto.esbasico) generarBasicosEnUso(req, res, producto.codigo)
+                                console.log(`se agrego correctamente el producto: ${producto.codigo}`)
                             }
                         })
                     }
