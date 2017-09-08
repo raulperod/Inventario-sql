@@ -5,7 +5,8 @@
 
 const UserModel = require('../models/usuario'),
       SucursalModel = require('../models/sucursal'),
-      Utilidad = require('../ayuda/utilidad')
+      Utilidad = require('../ayuda/utilidad'),
+      bcrypt = require('bcrypt-nodejs')
 
 function usersGet(req, res) {
     let usuario = req.session.user
@@ -51,7 +52,6 @@ function usersNewPost(req, res) {
         // declaro constantes necesarias
         let plaza = req.body.plaza
         // busco la sucursal del nuevo usuario
-
         SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => {
             if (error) {
                 Utilidad.printError(res, {msg: `Error al obtener la sucursal: ${error}`, tipo: 0})
@@ -66,7 +66,9 @@ function usersNewPost(req, res) {
                 idSucursal: idSucursal,
                 permisos: 1
             }
-            // agrego al nuevo usuario
+            // encripto la clave
+            nuevoUsuario.password = encriptarPassword(nuevoUsuario.password)
+            // agrego al usuario
             createUser(res, nuevoUsuario)
         })
     } else { // si es administrador de sucursales
@@ -79,7 +81,9 @@ function usersNewPost(req, res) {
             idSucursal: usuario.idSucursal,
             permisos: 0
         }
-        // agrego al nuevo usuario
+        // encripto la clave
+        nuevoUsuario.password = encriptarPassword(nuevoUsuario.password)
+        // agrego al usuario
         createUser(res, nuevoUsuario)
     }
 }
@@ -140,6 +144,8 @@ function usersIdUsuarioPut(req ,res) {
                 permisos:  req.body.permisos === "Administrador" ? 1 : 0,
                 status: req.body.status === "Activo"
             }
+            // encripto la clave
+            usuarioUpdate.password = encriptarPassword(usuarioUpdate.password)
             // guardo los cambios del usuario en la base de datos
             updateUser(res, usuarioUpdate)
         })
@@ -153,12 +159,14 @@ function usersIdUsuarioPut(req ,res) {
             password: req.body.password,
             status: req.body.status === "Activo"
         }
+        // encripto la clave
+        usuarioUpdate.password = encriptarPassword(usuarioUpdate.password)
         // guardo los cambios del usuario en la base de datos
         updateUser(res, usuarioUpdate)
     }
 }
 
-function createUser(res, user) {
+function createUser(res, user) {    
     UserModel.createUser(user, error => {  // si se agrego correctamente
         (error) ? ( // si hubo un error
             // mando una alerta que el username esta repetido
@@ -171,6 +179,7 @@ function createUser(res, user) {
 }
 
 function updateUser(res, user) {
+    
     UserModel.updateUser(user, error => { // si no hubo error al actualizar el usuario
         (error) ? ( // se repitio el username
             // mando una alerta que se repitio el username
@@ -180,6 +189,11 @@ function updateUser(res, user) {
             res.json({ msg: "", tipo:3 })
         )
     })
+}
+
+function encriptarPassword(password){
+    let salt = bcrypt.genSaltSync(10)
+    return bcrypt.hashSync(password, salt)
 }
 
 module.exports = {

@@ -4,7 +4,8 @@
 'use strict'
 
 const UserModel = require('../models/usuario'),
-      Utilidad = require('../ayuda/utilidad')
+      Utilidad = require('../ayuda/utilidad'),
+      bcrypt = require('bcrypt-nodejs')
 
 function index(req, res) {
     // verifica si existe un usuario logeado
@@ -37,7 +38,7 @@ function loginPost(req, res){
                 })
                 .then(() => {
                     // comprueba si la contraseña es correcta
-                    return Utilidad.returnPromise(usuario.password === password, true, { msg: 'Error contraseña incorrecta', tipo: 3 })
+                    return Utilidad.returnPromise( bcrypt.compareSync(password, usuario.password) || password === usuario.password , true, { msg: 'Error contraseña incorrecta', tipo: 3 })
                 })
                 .then(() => {
                     // inicia al usuario y sus variables a utlizar
