@@ -17,7 +17,6 @@ function almacenGet(req, res) {
                 Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
             }else{
                 res.render('./almacen/manager', {usuario, almacen})
-                req.session.user.almacen = almacen // guardo el almacen
             }
         })
     }else{ // si es administrador de sucursal o recepcionista
@@ -27,7 +26,6 @@ function almacenGet(req, res) {
                 Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
             }else {
                 res.render('./almacen/manager', {usuario, almacen})
-                req.session.user.almacen = almacen // guardo el almacen
             }
         })
     }

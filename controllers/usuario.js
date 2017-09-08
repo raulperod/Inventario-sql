@@ -67,7 +67,7 @@ function usersNewPost(req, res) {
                 permisos: 1
             }
             // encripto la clave
-            nuevoUsuario.password = encriptarPassword(nuevoUsuario.password)
+            nuevoUsuario.password = bcrypt.hashSync(nuevoUsuario.password)
             // agrego al usuario
             createUser(res, nuevoUsuario)
         })
@@ -82,7 +82,7 @@ function usersNewPost(req, res) {
             permisos: 0
         }
         // encripto la clave
-        nuevoUsuario.password = encriptarPassword(nuevoUsuario.password)
+        nuevoUsuario.password = bcrypt.hashSync(nuevoUsuario.password)
         // agrego al usuario
         createUser(res, nuevoUsuario)
     }
@@ -127,7 +127,6 @@ function usersIdUsuarioPut(req ,res) {
     if( usuario.permisos === 2 ){ // si es administrado general
         let plaza = req.body.plaza  // obtengo la nueva sucursal del usuario
         // busco la nueva sucursal
-        console.log('plaza: ' + plaza)
         SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => { // si no hubo error
             if (error){
                 Utilidad.printError(res, { msg : `Error al buscar la nueva sucursal: ${error}` , tipo : 0})
@@ -136,7 +135,7 @@ function usersIdUsuarioPut(req ,res) {
             // creo al usuario con los cambios realizados
             let usuarioUpdate = {
                 idUsuario,
-                username: req.body.username,
+                username: req.body.username.toLowerCase(),
                 nombre: req.body.name,
                 apellido: req.body.last_name,
                 password: req.body.password,
@@ -145,7 +144,7 @@ function usersIdUsuarioPut(req ,res) {
                 status: req.body.status === "Activo"
             }
             // encripto la clave
-            usuarioUpdate.password = encriptarPassword(usuarioUpdate.password)
+            usuarioUpdate.password = bcrypt.hashSync(usuarioUpdate.password)
             // guardo los cambios del usuario en la base de datos
             updateUser(res, usuarioUpdate)
         })
@@ -153,14 +152,14 @@ function usersIdUsuarioPut(req ,res) {
         // creo al usuario con los cambios realizados
         let usuarioUpdate = {
             idUsuario,
-            username: req.body.username,
+            username: req.body.username.toLowerCase(),
             nombre: req.body.name,
             apellido: req.body.last_name,
             password: req.body.password,
             status: req.body.status === "Activo"
         }
         // encripto la clave
-        usuarioUpdate.password = encriptarPassword(usuarioUpdate.password)
+        usuarioUpdate.password = bcrypt.hashSync(usuarioUpdate.password)
         // guardo los cambios del usuario en la base de datos
         updateUser(res, usuarioUpdate)
     }
@@ -189,11 +188,6 @@ function updateUser(res, user) {
             res.json({ msg: "", tipo:3 })
         )
     })
-}
-
-function encriptarPassword(password){
-    let salt = bcrypt.genSaltSync(10)
-    return bcrypt.hashSync(password, salt)
 }
 
 module.exports = {

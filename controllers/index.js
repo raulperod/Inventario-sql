@@ -22,7 +22,7 @@ function loginPost(req, res){
     // declaro variables necesarias
     let username = req.body.username.toLowerCase(),
         password = req.body.password
-
+    
     UserModel.getUserByUsername(username, (error, usuario) =>{
         // declaro la promesa
         let promesa = Utilidad.returnPromise(!error, true, { msg: `Error con la base de datos : ${error}`, tipo: 0 })
@@ -38,7 +38,7 @@ function loginPost(req, res){
                 })
                 .then(() => {
                     // comprueba si la contraseña es correcta
-                    return Utilidad.returnPromise( bcrypt.compareSync(password, usuario.password) || password === usuario.password , true, { msg: 'Error contraseña incorrecta', tipo: 3 })
+                    return Utilidad.returnPromise( password === usuario.password || bcrypt.compareSync(password, usuario.password) , true, { msg: 'Error contraseña incorrecta', tipo: 3 })
                 })
                 .then(() => {
                     // inicia al usuario y sus variables a utlizar
