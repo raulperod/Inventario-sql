@@ -168,7 +168,8 @@ function excelPost(req, res) {
             // borro el archivo excel
             fs.unlinkSync(req.file.path)
 
-            for( let i=0 ; i < productos.length ; i++ ){
+            for( let i=0,contador = 1331 ; i <= productos.length ; i++,contador++ ){
+
                 // variables necesarias
                 let producto = productos[i],
                     nombreCategoria = producto.categoria
@@ -200,7 +201,9 @@ function excelPost(req, res) {
                             }
                         })
                     }
+
                 })
+                
             }
         })
     })
@@ -269,6 +272,10 @@ function generarBasicoEnUso(req, res, tecnica, idProducto) {
     })
 }
 
+function getCategoria(nombre){
+    let categorias = ['Gelish','Goldwell','Guadalajara','Morgan Taylor','Nioxin','Pestaña','Prohesion','Seche']
+    return categorias.indexOf(nombre) + 1
+}
 
 module.exports = {
     productsGet,
