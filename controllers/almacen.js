@@ -115,7 +115,7 @@ function almacenIdAlmacenSubPut(req, res) {
     }
 }
 
-function almacenCategoryPost(req, res){
+function almacenCategoryGet(req, res){
     let usuario = req.session.user,
         categoria = req.body.categoria, // obtienes el nombre de la categoria
         sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
@@ -123,20 +123,12 @@ function almacenCategoryPost(req, res){
     if( usuario.permisos === 2){ // si es administrador general
         // obtengo el almacen
         AlmacenModel.getAlmacenByPlazaAndCategory( sucursal, categoria, (error, almacen) => {
-            (error) ? (
-                Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
-            ) : (
-                res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
-            )
+            if(!error) res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
         })
     }else{ // si es administrador de sucursal o recepcionista
         // obtengo el almacen
         AlmacenModel.getAlmacenBySucursalAndCategory( sucursal, categoria, (error, almacen) => {
-            (error) ? (
-                Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
-            ) : (
-                res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
-            )
+            if(!error) res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
         })
     }
 }
@@ -145,5 +137,5 @@ module.exports = {
     almacenGet,
     almacenIdAlmacenAddPut,
     almacenIdAlmacenSubPut,
-    almacenCategoryPost
+    almacenCategoryGet
 }

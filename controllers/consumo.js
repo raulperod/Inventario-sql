@@ -64,7 +64,7 @@ function consumosIdConsumoPut(req, res) {
     }
 }
 
-function consumoCategoryPost(req, res){
+function consumoCategoryGet(req, res){
     let usuario = req.session.user,
     categoria = req.body.categoria, // obtienes el nombre de la categoria
     sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
@@ -72,20 +72,12 @@ function consumoCategoryPost(req, res){
     if( usuario.permisos === 2){ // si es administrador general
         // obtengo el consumo
         AlmacenModel.getConsumoByPlazaAndCategory( sucursal, categoria, (error, consumos) => {
-            (error) ? (
-                Utilidad.printError(res, {msg: `Error al obtener el consumo: ${error}`, tipo: 0})
-            ) : (
-                res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada
-            )
+            if(!error) res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada            
         })
     }else{ // si es administrador de sucursal o recepcionista
         // obtengo el consumo
         AlmacenModel.getConsumoBySucursalAndCategory( sucursal, categoria, (error, consumos) => {
-            (error) ? (
-                Utilidad.printError(res, {msg: `Error al obtener el consumo: ${error}`, tipo: 0})
-            ) : (
-                res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada
-            )
+            if(!error) res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada
         })
     }    
 }
@@ -93,5 +85,5 @@ function consumoCategoryPost(req, res){
 module.exports = {
     consumosGet,
     consumosIdConsumoPut,
-    consumoCategoryPost
+    consumoCategoryGet
 }
