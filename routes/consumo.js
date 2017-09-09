@@ -8,10 +8,10 @@ const express = require("express"),
     consumo = express.Router()
 
 // gelishtime/consumos
-consumo
-    .get("/", ConsumoController.consumosGet )
+consumo.get("/", ConsumoController.consumosGet )
+// gelishtime/categoria/:categoria/get
+consumo.post('/:categoria/get', ConsumoController.consumoCategoryGet )
 // gelishtime/consumos/:idConsumo
-consumo
-    .put("/:idConsumo", ConsumoController.consumosIdConsumoPut )
+consumo.put("/:idConsumo", ConsumoController.consumosIdConsumoPut )
 
 module.exports = consumo
