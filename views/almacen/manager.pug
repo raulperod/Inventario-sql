@@ -6,6 +6,23 @@ block contenido
       .col-lg-12
         h3.page-header Productos en existencia
     .row
+      .col-lg-10.col-lg-offset-1
+        form( id="formalmacen", style="display:inline", action="/categoria/get", method="POST")
+          .form-groups
+            .panel-body
+              .col-lg-4
+              .col-lg-4
+                label Sucursal:
+                input.form-control(id="sucursal" name="plaza" )
+                  for sucursal in sucursales
+                    option(name="1") #{sucursal.plaza}
+              .col-lg-4
+                label Categoria:
+                input.form-control(id="categoria" name="categoria" )
+                  for categoria in categorias
+                    option(name="1") #{categoria.nombre}  
+              
+    .row
       .col-lg-12
         .panel.panel-default
           .panel-heading
@@ -20,38 +37,9 @@ block contenido
                   if usuario.permisos < 2
                     th Acción
               tbody
-                if usuario.permisos < 2
-                  for alm in almacen
-                    tr.odd.gradeX
-                      td #{alm.nombreProducto}
-                      td #{alm.codigo}
-                      if alm.cantidadAlmacen > alm.minimo
-                        td(name=""+alm.idAlmacen) #{alm.cantidadAlmacen}
-                      else
-                        td(name=""+alm.idAlmacen style="color:red" title="Pocos productos") #{alm.cantidadAlmacen}
-                      td
-                        form(id=""+alm.idAlmacen,style="display:inline" action="/almacen/"+alm.idAlmacen+"?_method=PUT",method="POST" onsubmit="return false")
-                          input.form-control(id=""+alm.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required)
-                          b &nbsp &nbsp &nbsp
-                          button(type="submit/image", alt="text", name="button1", class="btn btn-primary btn-circle "+alm.idAlmacen+" "+alm.codigo+" "+alm.minimo ,onclick="return false")
-                            i.fa.fa-plus(title="Agregar")
-                          if !alm.esBasico
-                            b &nbsp &nbsp &nbsp
-                            button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle "+alm.idAlmacen+" "+alm.codigo+" "+alm.minimo ,onclick="return false")
-                              i.fa.fa-minus(title="Pasar a consumo")
-                          else
-                            b &nbsp &nbsp &nbsp
-                            button(type="submit/image", alt="text", name="button2", class="btn btn-danger btn-circle", disabled)
-                              i.fa.fa-minus(title="Pasar a consumo")
-                else
-                  for alm in almacen
-                    tr.odd.gradeX
-                      td #{alm.nombreProducto}
-                      td #{alm.codigo}
-                      if alm.cantidadAlmacen > alm.minimo
-                        td #{alm.cantidadAlmacen}
-                      else
-                        td(style="color:red" title="Pocos productos")  #{alm.cantidadAlmacen}
+                tr.odd.gradeX
+                  
+                      
             // /.panel-body
         // /.panel
       // /.col-lg-12

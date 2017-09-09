@@ -6,6 +6,22 @@ block contenido
       .col-lg-12
         h3.page-header Productos en consumo
     .row
+      .col-lg-10.col-lg-offset-1
+        form( id="formconsumo", style="display:inline", action="/categoria/get", method="POST")
+          .form-groups
+            .panel-body
+              .col-lg-4
+              .col-lg-4
+                label Sucursal:
+                input.form-control(id="sucursal" name="plaza" )
+                  for sucursal in sucursales
+                    option(name="1") #{sucursal.plaza}
+              .col-lg-4
+                label Categoria:
+                input.form-control(id="categoria" name="categoria" )
+                  for categoria in categorias
+                    option(name="1") #{categoria.nombre}      
+    .row
       .col-lg-12
         .panel.panel-default
           .panel-heading
@@ -20,35 +36,8 @@ block contenido
                   if usuario.permisos < 2
                     th Acción
               tbody
-                if usuario.permisos < 2
-                  for consumo in consumos
                     tr.odd.gradeX
-                      td #{consumo.nombreProducto}
-                      td #{consumo.codigo}
-                      td(name=""+consumo.idAlmacen) #{consumo.cantidadConsumo}
-                      td
-                        if !consumo.esBasico
-                          form(id=""+consumo.idAlmacen,style="display:inline" action="/consumos/"+consumo.idAlmacen+"?_method=PUT",method="POST",  onsubmit="return false")
-                            input.form-control(id=""+consumo.codigo,type="number" name="cantidad" min="0" max="10000" value="0" required )
-                            b &nbsp &nbsp &nbsp
-                            button(type="submit/image" alt="text" name="button1" class="btn btn-danger btn-circle "+consumo.idAlmacen+" "+consumo.codigo ,onclick="return false")
-                              i.fa.fa-times(title="Pasar a bajas")
-                        else
-                          
-                          fieldset( disabled='')
-                            form(style="display:inline" action="/consumos/"+consumo.idAlmacen+"?_method=PUT",method="POST",   onsubmit="return false")
-                              input#disabledInput.form-control(type="number" name="cantidad" min="0" max="10000" value="0" required disabled )
-                              b &nbsp &nbsp &nbsp
-                              button(type="submit/image" alt="text" class="btn btn-danger btn-circle")
-                                i.fa.fa-times(title="Pasar a bajas")
-                  
-                else
-
-                  for consumo in consumos
-                    tr.odd.gradeX
-                      td #{consumo.nombreProducto}
-                      td #{consumo.codigo}
-                      td #{consumo.cantidadConsumo}
+                      
               // /.panel-body
         // /.panel
       // /.col-lg-12

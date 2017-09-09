@@ -6,6 +6,18 @@ block contenido
       .col-lg-12
         h3.page-header Lista de productos
     .row
+      .col-lg-10.col-lg-offset-1
+        form( id="formconsumo", style="display:inline", action="/categoria/get", method="POST")
+          .form-groups
+            .panel-body
+              .col-lg-4
+              .col-lg-4
+              .col-lg-4
+                label Categoria:
+                input.form-control(id="categoria" name="categoria" )
+                  for categoria in categorias
+                    option(name="1") #{categoria.nombre}          
+    .row
       .col-lg-12
         .panel.panel-default
           .panel-heading
@@ -21,23 +33,8 @@ block contenido
                   th Basico
                   th Acción
               tbody
-                for producto in productos
-                  tr.odd.gradeX
-                    td #{producto.nombre}
-                    td #{producto.descripcion}
-                    td #{producto.codigo}
-                    td #{producto.minimo}
-                    if producto.esBasico
-                      td Si
-                    else
-                      td No  
-                    td
-                      a(class="btn btn btn-primary btn-circle" href="/products/"+producto.idProducto)
-                        i.fa.fa-list(title="Editar")
-                      b &nbsp &nbsp &nbsp
-                      form(id="eliminar"  style="display:inline" action="/products/"+producto.idProducto+"?_method=DELETE", method="POST", onsubmit="return confirm('¿Continuar con la eliminación?')")
-                        button(type="submit/image" alt="text" value="" class="btn btn-danger btn-circle")
-                          i.fa.fa-times(title="Eliminar")
+                tr.odd.gradeX
+                    
             // /.panel-body
         // /.panel
       // /.col-lg-12
