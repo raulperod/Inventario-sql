@@ -5,11 +5,21 @@
 
 const AlmacenModel = require('../models/almacen'),
       MovimientoModel = require('../models/movimiento'),
+      CategoryModel = require('../models/categoria'),
+      SucursalModel = require('../models/sucursal'),
       Utilidad = require('../ayuda/utilidad')
 
 function almacenGet(req, res) { 
     // muestra la vista del almacen
-    res.render('./almacen/manager', {usuario: req.session.user})
+    SucursalModel.getPlazasOfSucursales((error, sucursales => {
+        if(!error){
+            CategoryModel.getNamesOfCategories((error, categorias) => {
+                if(!error){
+                    res.render('./almacen/manager', {usuario: req.session.user, sucursales, categorias})
+                }
+            })
+        }
+    }))
 }
 
 function almacenIdAlmacenAddPut(req, res) {

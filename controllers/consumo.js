@@ -5,11 +5,21 @@
 
 const AlmacenModel = require('../models/almacen'),
       BajaModel = require('../models/baja'),
+      CategoryModel = require('../models/categoria'),
+      SucursalModel = require('../models/sucursal'),
       Utilidad = require('../ayuda/utilidad')
 
 function consumosGet(req, res) {
     // muestra la vista de los productos en consumo
-    res.render('./consumos/manager', {usuario: req.session.user})
+    SucursalModel.getPlazasOfSucursales((error, sucursales => {
+        if(!error){
+            CategoryModel.getNamesOfCategories((error, categorias) => {
+                if(!error){
+                    res.render('./consumos/manager', {usuario: req.session.user, sucursales, categorias})
+                }
+            })
+        }
+    }))
 }
 
 function consumosIdConsumoPut(req, res) {

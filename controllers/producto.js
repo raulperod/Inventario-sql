@@ -16,7 +16,11 @@ const ProductModel = require('../models/producto'),
       excel = require('./excel')
 
 function productsGet(req, res) {
-    res.render('./products/manager', { usuario: req.session.user })
+    CategoryModel.getNamesOfCategories((error, categorias) => {
+        if(!error){
+            res.render('./products/manager', { usuario: req.session.user, categorias })        
+        }
+    })
 }
 
 function productsCategoryGet(req, res){
