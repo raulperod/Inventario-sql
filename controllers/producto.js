@@ -285,6 +285,7 @@ function getCategoria(nombre){
 
 module.exports = {
     productsGet,
+    productsCategoryGet,
     productsNewGet,
     productsNewPost,
     productsIdProductoGet,

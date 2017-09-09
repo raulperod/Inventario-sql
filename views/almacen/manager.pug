@@ -13,12 +13,12 @@ block contenido
               .col-lg-4
               .col-lg-4
                 label Sucursal:
-                input.form-control(id="sucursal" name="plaza" )
+                select.form-control(id="sucursal" name="plaza" )
                   for sucursal in sucursales
                     option(name="1") #{sucursal.plaza}
               .col-lg-4
                 label Categoria:
-                input.form-control(id="categoria" name="categoria" )
+                select.form-control(id="categoria" name="categoria" )
                   for categoria in categorias
                     option(name="1") #{categoria.nombre}  
               

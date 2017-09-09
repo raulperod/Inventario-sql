@@ -11,7 +11,7 @@ const AlmacenModel = require('../models/almacen'),
 
 function almacenGet(req, res) { 
     // muestra la vista del almacen
-    SucursalModel.getPlazasOfSucursales((error, sucursales => {
+    SucursalModel.getPlazasOfSucursales((error, sucursales) => {
         if(!error){
             CategoryModel.getNamesOfCategories((error, categorias) => {
                 if(!error){
@@ -19,7 +19,7 @@ function almacenGet(req, res) {
                 }
             })
         }
-    }))
+    })
 }
 
 function almacenIdAlmacenAddPut(req, res) {

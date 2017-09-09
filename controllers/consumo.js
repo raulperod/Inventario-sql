@@ -11,7 +11,7 @@ const AlmacenModel = require('../models/almacen'),
 
 function consumosGet(req, res) {
     // muestra la vista de los productos en consumo
-    SucursalModel.getPlazasOfSucursales((error, sucursales => {
+    SucursalModel.getPlazasOfSucursales((error, sucursales) => {
         if(!error){
             CategoryModel.getNamesOfCategories((error, categorias) => {
                 if(!error){
@@ -19,7 +19,7 @@ function consumosGet(req, res) {
                 }
             })
         }
-    }))
+    })
 }
 
 function consumosIdConsumoPut(req, res) {
