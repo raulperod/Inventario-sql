@@ -35,25 +35,25 @@ function getConsumoById(idAlmacen, next) {
         })
 }
 
-function getAlmacen(next) {
+function getAlmacenByPlazaAndCategory(plaza, categoria, next) {
     AlmacenModel
-        .query(`SELECT a.cantidadAlmacen, p.nombre nombreProducto, p.codigo, p.minimo, c.nombre nombreCategoria, s.plaza 
+        .query(`SELECT a.cantidadAlmacen, p.nombre nombreProducto, p.codigo, p.minimo
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
-                JOIN categorias c on a.idCategoria = c.idCategoria
-                JOIN sucursales s on a.idSucursal = s.idSucursal` , (error, resultado, fields) => {
+                JOIN categorias c on a.idCategoria = c.idCategoria AND c.nombre = ?
+                JOIN sucursales s on a.idSucursal = s.idSucursal AND s.plaza = ?` , [categoria, plaza], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getAlmacenBySucursal(idSucursal ,next) {
+function getAlmacenBySucursalAndCategory(idSucursal, categoria,next) {
     AlmacenModel
-        .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadAlmacen, p.minimo, p.esBasico
+        .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, a.cantidadAlmacen, p.minimo, p.esBasico
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
-                JOIN categorias c ON a.idCategoria = c.idCategoria
-                WHERE a.idSucursal = ?`  , idSucursal ,(error, resultado, fields) => {
+                JOIN categorias c ON a.idCategoria = c.idCategoria AND c.nombre = ?
+                WHERE a.idSucursal = ?`  , [categoria, idSucursal] ,(error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -106,8 +106,8 @@ module.exports = {
     getAlmacenById,
     getAlmacenBySucursalAndProduct,
     getConsumoById,
-    getAlmacen,
-    getAlmacenBySucursal,
+    getAlmacenByPlazaAndCategory,
+    getAlmacenBySucursalAndCategory,
     getConsumo,
     getConsumoBySucursal,
     createAlmacen,

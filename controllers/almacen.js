@@ -7,28 +7,9 @@ const AlmacenModel = require('../models/almacen'),
       MovimientoModel = require('../models/movimiento'),
       Utilidad = require('../ayuda/utilidad')
 
-function almacenGet(req, res) {
-    let usuario = req.session.user
-
-    if( usuario.permisos === 2){ // si es administrador general
-        // obtengo el almacen
-        AlmacenModel.getAlmacen((error, almacen) => {
-            if(error){
-                Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
-            }else{
-                res.render('./almacen/manager', {usuario, almacen})
-            }
-        })
-    }else{ // si es administrador de sucursal o recepcionista
-        // obtengo el almacen
-        AlmacenModel.getAlmacenBySucursal(usuario.idSucursal, (error, almacen) => {
-            if(error){
-                Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
-            }else {
-                res.render('./almacen/manager', {usuario, almacen})
-            }
-        })
-    }
+function almacenGet(req, res) { 
+    // muestra la vista del almacen
+    res.render('./almacen/manager', {usuario: req.session.user})
 }
 
 function almacenIdAlmacenAddPut(req, res) {
@@ -130,6 +111,32 @@ function almacenIdAlmacenSubPut(req, res) {
                     }
                 })
             }
+        })
+    }
+}
+
+function almacenCategoryPost(req, res){
+    let usuario = req.session.user,
+        categoria = req.body.categoria, // obtienes el nombre de la categoria
+        sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
+
+    if( usuario.permisos === 2){ // si es administrador general
+        // obtengo el almacen
+        AlmacenModel.getAlmacenByPlazaAndCategory( sucursal, categoria, (error, almacen) => {
+            (error) ? (
+                Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
+            ) : (
+                res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
+            )
+        })
+    }else{ // si es administrador de sucursal o recepcionista
+        // obtengo el almacen
+        AlmacenModel.getAlmacenBySucursalAndCategory( sucursal, categoria, (error, almacen) => {
+            (error) ? (
+                Utilidad.printError(res, {msg: `Error al obtener el almacen: ${error}`, tipo: 0})
+            ) : (
+                res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
+            )
         })
     }
 }
