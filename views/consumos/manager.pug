@@ -16,12 +16,8 @@ block contenido
                 tr
                   th Nombre
                   th Codigo
-                  th Categoria
                   th Cantidad
-                  if usuario.permisos===2
-                    th Sucursal
-                  else
-
+                  if usuario.permisos < 2
                     th Acción
               tbody
                 if usuario.permisos < 2
@@ -29,7 +25,6 @@ block contenido
                     tr.odd.gradeX
                       td #{consumo.nombreProducto}
                       td #{consumo.codigo}
-                      td #{consumo.nombreCategoria}
                       td(name=""+consumo.idAlmacen) #{consumo.cantidadConsumo}
                       td
                         if !consumo.esBasico
@@ -53,9 +48,7 @@ block contenido
                     tr.odd.gradeX
                       td #{consumo.nombreProducto}
                       td #{consumo.codigo}
-                      td #{consumo.nombreCategoria}
                       td #{consumo.cantidadConsumo}
-                      td #{consumo.plaza}
               // /.panel-body
         // /.panel
       // /.col-lg-12
@@ -97,6 +90,6 @@ block contenido
         $("table").tableExport({
             formats: ["xlsx"],
             bootstrap: true,
-            ignoreCols: 4,
+            ignoreCols: 3,
             fileName: "Consumo"
         });

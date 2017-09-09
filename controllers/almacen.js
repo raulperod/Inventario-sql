@@ -144,5 +144,6 @@ function almacenCategoryPost(req, res){
 module.exports = {
     almacenGet,
     almacenIdAlmacenAddPut,
-    almacenIdAlmacenSubPut
+    almacenIdAlmacenSubPut,
+    almacenCategoryPost
 }

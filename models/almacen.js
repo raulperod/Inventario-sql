@@ -47,7 +47,7 @@ function getAlmacenByPlazaAndCategory(plaza, categoria, next) {
         })
 }
 
-function getAlmacenBySucursalAndCategory(idSucursal, categoria,next) {
+function getAlmacenBySucursalAndCategory(idSucursal, categoria, next) {
     AlmacenModel
         .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, a.cantidadAlmacen, p.minimo, p.esBasico
                 FROM almacen a
@@ -59,25 +59,26 @@ function getAlmacenBySucursalAndCategory(idSucursal, categoria,next) {
         })
 }
 
-function getConsumo(next) {
+function getConsumoByPlazaAndCategory(plaza, categoria, next) {
     AlmacenModel
-        .query(`SELECT p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadConsumo, s.plaza 
+        .query(`SELECT p.nombre nombreProducto, p.codigo, a.cantidadConsumo 
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
-                JOIN categorias c on a.idCategoria = c.idCategoria
-                JOIN sucursales s on a.idSucursal = s.idSucursal` , (error, resultado, fields) => {
+                JOIN categorias c on a.idCategoria = c.idCategoria AND c.nombre = ?
+                JOIN sucursales s on a.idSucursal = s.idSucursal AND s.plaza = ?` 
+                , [categoria, plaza], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getConsumoBySucursal(idSucursal ,next) {
+function getConsumoBySucursalAndCategory(idSucursal, categoria, next) {
     AlmacenModel
         .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadConsumo, p.esBasico
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
-                JOIN categorias c ON a.idCategoria = c.idCategoria
-                WHERE a.idSucursal = ?` , idSucursal ,(error, resultado, fields) => {
+                JOIN categorias c ON a.idCategoria = c.idCategoria AND c.nombre = ?
+                WHERE a.idSucursal = ?` , [categoria, idSucursal] ,(error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -108,8 +109,8 @@ module.exports = {
     getConsumoById,
     getAlmacenByPlazaAndCategory,
     getAlmacenBySucursalAndCategory,
-    getConsumo,
-    getConsumoBySucursal,
+    getConsumoByPlazaAndCategory,
+    getConsumoBySucursalAndCategory,
     createAlmacen,
     updateAlmacen
 }
