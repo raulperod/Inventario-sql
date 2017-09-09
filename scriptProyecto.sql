@@ -21,7 +21,7 @@ CREATE TABLE `usuarios` (
   `idUsuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idSucursal` int(10) unsigned NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `permisos` int(10) unsigned NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
