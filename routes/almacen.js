@@ -9,8 +9,8 @@ const express = require("express"),
 
 // gelishtime/almacen
 almacen.get("/", AlmacenController.almacenGet )
-// gelistime/almacen/:categoria/get
-almacen.post('/:categoria/get', AlmacenController.almacenCategoryGet )
+// gelistime/almacen/categoria/get
+almacen.post('/categoria/get', AlmacenController.almacenCategoryGet )
 // gelishtime/almacen/:idAlmacen/add
 almacen.put('/:idAlmacen/add' , AlmacenController.almacenIdAlmacenAddPut )
 // gelishtime/almacen/:idAlmacen/sub
