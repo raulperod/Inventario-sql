@@ -34,11 +34,11 @@ function getIdProductoAndIdCategoriaOfSucursales(next) {
         })
 }
 
-function getProducts(next) {
+function getProductsByCategory(categoria, next) {
     ProductModel
-        .query(`SELECT p.idProducto, p.nombre, p.descripcion, p.codigo, p.minimo, p.esBasico, c.nombre nombrec
+        .query(`SELECT p.idProducto, p.nombre, p.descripcion, p.codigo, p.minimo, p.esBasico
                 FROM productos p
-                INNER JOIN categorias c ON p.idCategoria = c.idCategoria` ,(error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria AND c.nombre = ?` , categoria, (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -96,7 +96,7 @@ module.exports = {
     getProductById,
     getIdProductoAndIdCategoriaByCode,
     getIdProductoAndIdCategoriaOfSucursales,
-    getProducts,
+    getProductsByCategory,
     getProductsBasicos,
     getIdProductsBasicos,
     createProduct,

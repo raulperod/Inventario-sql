@@ -16,13 +16,15 @@ const ProductModel = require('../models/producto'),
       excel = require('./excel')
 
 function productsGet(req, res) {
+    res.render('./products/manager', { usuario: req.session.user })
+}
+
+function productsCategoryGet(req, res){
+    let usuario = req.session.user,
+        categoria = req.body.categoria
     // buscas todos los productos
-    ProductModel.getProducts( (error, productos) => { // si no hubo error
-        (error) ? (
-            Utilidad.printError(res, { msg: `Error al obtener los productos: ${error}`, tipo: 0})
-        ) : (
-            res.render('./products/manager', { productos, usuario: req.session.user })
-        )
+    ProductModel.getProductsByCategory( categoria, (error, productos) => { // si no hubo error
+        if(!error) res.send(productos)
     })
 }
 
