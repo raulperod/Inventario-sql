@@ -22,6 +22,24 @@ function almacenGet(req, res) {
     })
 }
 
+function almacenPost(req, res){
+    let usuario = req.session.user,
+        categoria = req.body.categoria, // obtienes el nombre de la categoria
+        sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
+   
+    if( usuario.permisos === 2){ // si es administrador general
+        // obtengo el almacen
+        AlmacenModel.getAlmacenByPlazaAndCategory( sucursal, categoria, (error, almacen) => {
+            if(!error) res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
+        })
+    }else{ // si es administrador de sucursal o recepcionista
+        // obtengo el almacen
+        AlmacenModel.getAlmacenBySucursalAndCategory( sucursal, categoria, (error, almacen) => {
+            if(!error) res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
+        })
+    }
+}
+
 function almacenIdAlmacenAddPut(req, res) {
     // obtengo la cantidad
     let cantidad = parseInt(req.body.cantidad)
@@ -125,27 +143,9 @@ function almacenIdAlmacenSubPut(req, res) {
     }
 }
 
-function almacenCategoryGet(req, res){
-    let usuario = req.session.user,
-        categoria = req.body.categoria, // obtienes el nombre de la categoria
-        sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
-
-    if( usuario.permisos === 2){ // si es administrador general
-        // obtengo el almacen
-        AlmacenModel.getAlmacenByPlazaAndCategory( sucursal, categoria, (error, almacen) => {
-            if(!error) res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
-        })
-    }else{ // si es administrador de sucursal o recepcionista
-        // obtengo el almacen
-        AlmacenModel.getAlmacenBySucursalAndCategory( sucursal, categoria, (error, almacen) => {
-            if(!error) res.send(almacen) // se envia el almacen con los productos de la caterogia seleccionada
-        })
-    }
-}
-
 module.exports = {
     almacenGet,
     almacenIdAlmacenAddPut,
     almacenIdAlmacenSubPut,
-    almacenCategoryGet
+    almacenPost
 }

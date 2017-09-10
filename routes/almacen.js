@@ -8,9 +8,10 @@ const express = require("express"),
     almacen = express.Router()
 
 // gelishtime/almacen
-almacen.get("/", AlmacenController.almacenGet )
-// gelistime/almacen/categoria/get
-almacen.post('/categoria/get', AlmacenController.almacenCategoryGet )
+almacen
+    .route("/")
+    .get(  AlmacenController.almacenGet )
+    .post( AlmacenController.almacenPost )
 // gelishtime/almacen/:idAlmacen/add
 almacen.put('/:idAlmacen/add' , AlmacenController.almacenIdAlmacenAddPut )
 // gelishtime/almacen/:idAlmacen/sub

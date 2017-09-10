@@ -7,7 +7,7 @@ block contenido
         h3.page-header Productos en existencia
     .row
       .col-lg-10.col-lg-offset-1
-        form( id="formalmacen", style="display:inline", action="/categoria/get", method="POST")
+        form( id="formalmacen", style="display:inline", action="/almacen", method="POST")
           .form-groups
             .panel-body
               .col-lg-4
@@ -37,16 +37,19 @@ block contenido
                   if usuario.permisos < 2
                     th Acción
               tbody
-                tr.odd.gradeX
-                  
                       
             // /.panel-body
         // /.panel
       // /.col-lg-12
     // /.row
     // jQuery
-    script(src='/public/vendor/jquery/jquery.min.js')
-    script(src='/public/data/postAlmacen.js')
+    script(src='/public/vendor/jquery/jquery.min.js')    
+    if usuario.permisos < 2 
+      script(src='/public/data/getAlmacenNormal.js')
+    else
+
+      script(src='/public/data/getAlmacenGeneral.js')  
+      
     // Bootstrap Core JavaScript
     script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
     // Metis Menu Plugin JavaScript
@@ -57,30 +60,14 @@ block contenido
     script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
     // Custom Theme JavaScript
     script(src='/public/dist/js/sb-admin-2.js')
-    // Page-Level Demo Scripts - Tables - Use for reference
-    script(src="/public/excel/js/xlsx.core.min.js")
-    script(src="/public/excel/js/FileSaver.min.js")
-    script(src="/public/excel/js/tableexport.min.js")
     script.
       $(document).ready(function() {
         $('#dataTables-example').DataTable({
           responsive: true
         });
       });
-    if usuario.permisos === 2
-      script.
-        $("table").tableExport({
-            formats: ["xlsx"],
-            bootstrap: true,
-            fileName: "Almacen"
-        });
-    
-    else     
-      
-      script.
-        $("table").tableExport({
-            formats: ["xlsx"],
-            bootstrap: true,
-            ignoreCols: 3,
-            fileName: "Almacen"
-        });
+
+    // Page-Level Demo Scripts - Tables - Use for reference
+    script(src="/public/excel/js/xlsx.core.min.js")
+    script(src="/public/excel/js/FileSaver.min.js")
+    script(src="/public/excel/js/tableexport.min.js")
