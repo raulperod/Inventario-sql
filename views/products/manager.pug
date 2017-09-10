@@ -7,7 +7,7 @@ block contenido
         h3.page-header Lista de productos
     .row
       .col-lg-10.col-lg-offset-1
-        form( id="formconsumo", style="display:inline", action="/categoria/get", method="POST")
+        form( id="formproducto", style="display:inline", action="/products", method="POST")
           .form-groups
             .panel-body
               .col-lg-4
@@ -33,7 +33,6 @@ block contenido
                   th Basico
                   th Acción
               tbody
-                tr.odd.gradeX
                     
             // /.panel-body
         // /.panel
@@ -41,6 +40,7 @@ block contenido
     // /.row
     // jQuery
     script(src='/public/vendor/jquery/jquery.min.js')
+    script(src='/public/data/getProducts.js')
     // Bootstrap Core JavaScript
     script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
     // Metis Menu Plugin JavaScript

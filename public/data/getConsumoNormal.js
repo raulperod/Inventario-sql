@@ -114,7 +114,7 @@ $(function(){
     obtenerConsumo();
 
     // fechas para el top ten
-    $("input[name=plaza]").change(function(){
+    $("select[name=plaza]").change(function(){
         obtenerConsumo();
     });
         // select de sucursal

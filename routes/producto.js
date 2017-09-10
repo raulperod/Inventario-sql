@@ -8,10 +8,9 @@ const express = require("express"),
     producto = express.Router()
 // gelishtime/products
 producto
-    .get("/", ProductoController.productsGet)
-// gelishtime/products/categoria/get
-producto
-    .post('/categoria/get', ProductoController.productsCategoryGet)
+    .route('/')
+    .get(  ProductoController.productsGet)
+    .post( ProductoController.productsPost)
 // gelishtime/products/new
 producto
     .route("/new")

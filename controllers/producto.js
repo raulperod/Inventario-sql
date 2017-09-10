@@ -23,7 +23,7 @@ function productsGet(req, res) {
     })
 }
 
-function productsCategoryGet(req, res){
+function productsPost(req, res){
     let usuario = req.session.user,
         categoria = req.body.categoria
     // buscas todos los productos
@@ -285,7 +285,7 @@ function getCategoria(nombre){
 
 module.exports = {
     productsGet,
-    productsCategoryGet,
+    productsPost,
     productsNewGet,
     productsNewPost,
     productsIdProductoGet,
