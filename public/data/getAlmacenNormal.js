@@ -48,6 +48,10 @@ function eliminaFilas(){
     }
 };
 
+function ajustarTabla(){
+    $('#dataTables-example').DataTable();
+}
+
 function reiniciarExcel(){
     $("table").tableExport({
         formats: ["xlsx"],
@@ -65,12 +69,11 @@ function obtenerAlmacen() {
         data: formularioAlmacen.serialize(),
         success : function(data) {
             // Almacen
-            console.log(data);
             eliminaFilas(); // elimino las filas
             // si no he inicializado productos
             agregarFilas(data);
             // ajusto la tabla
-            //ajustarTabla()
+            ajustarTabla()
             reiniciarExcel();
             activarBotones();
         }

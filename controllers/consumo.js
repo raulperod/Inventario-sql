@@ -22,6 +22,24 @@ function consumosGet(req, res) {
     })
 }
 
+function consumoPost(req, res){
+    let usuario = req.session.user,
+    categoria = req.body.categoria, // obtienes el nombre de la categoria
+    sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
+
+    if( usuario.permisos === 2){ // si es administrador general
+        // obtengo el consumo
+        AlmacenModel.getConsumoByPlazaAndCategory( sucursal, categoria, (error, consumos) => {
+            if(!error) res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada            
+        })
+    }else{ // si es administrador de sucursal o recepcionista
+        // obtengo el consumo
+        AlmacenModel.getConsumoBySucursalAndCategory( sucursal, categoria, (error, consumos) => {
+            if(!error) res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada
+        })
+    }    
+}
+
 function consumosIdConsumoPut(req, res) {
     // obtenemos la cantidad
     let cantidad = parseInt(req.body.cantidad)
@@ -74,26 +92,8 @@ function consumosIdConsumoPut(req, res) {
     }
 }
 
-function consumoCategoryGet(req, res){
-    let usuario = req.session.user,
-    categoria = req.body.categoria, // obtienes el nombre de la categoria
-    sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
-
-    if( usuario.permisos === 2){ // si es administrador general
-        // obtengo el consumo
-        AlmacenModel.getConsumoByPlazaAndCategory( sucursal, categoria, (error, consumos) => {
-            if(!error) res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada            
-        })
-    }else{ // si es administrador de sucursal o recepcionista
-        // obtengo el consumo
-        AlmacenModel.getConsumoBySucursalAndCategory( sucursal, categoria, (error, consumos) => {
-            if(!error) res.send(consumos) // se envia el consumo con los productos de la caterogia seleccionada
-        })
-    }    
-}
-
 module.exports = {
     consumosGet,
     consumosIdConsumoPut,
-    consumoCategoryGet
+    consumoPost
 }

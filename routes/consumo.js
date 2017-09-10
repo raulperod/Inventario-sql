@@ -10,7 +10,7 @@ const express = require("express"),
 // gelishtime/consumos
 consumo.get("/", ConsumoController.consumosGet )
 // gelishtime/categoria/categoria/get
-consumo.post('/categoria/get', ConsumoController.consumoCategoryGet )
+consumo.post('/', ConsumoController.consumoPost )
 // gelishtime/consumos/:idConsumo
 consumo.put("/:idConsumo", ConsumoController.consumosIdConsumoPut )
 
