@@ -10,8 +10,7 @@ function agregarFilas(productos){
             idAlmacen = producto.idAlmacen,
             esBasico = producto.esBasico;
 
-        $('#dataTables-example tr:last')
-            .after(getFila(nombre, codigo, cantidad, minimo, idAlmacen, esBasico));
+        $('#dataTables-example tbody').append(getFila(nombre, codigo, cantidad, minimo, idAlmacen, esBasico));
     }
 }
 
@@ -40,23 +39,24 @@ function getFila(nombre, codigo, cantidad, minimo, idAlmacen, esBasico){
 
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    // Obtenemos el total de columnas (tr) del id "dataTables-example"
-    var trs=$("#dataTables-example tr").length;
-    for(var i=1 ; i<trs ; i++){
-        // Eliminamos la ultima columna
-        $("#dataTables-example tr:last").remove();
-    }
+    $("#tbodyid").empty();    
 };
 
 function ajustarTabla(){
-    $('#dataTables-example').DataTable();
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
+}
+
+function reiniciarTabla(){
+    $('#dataTables-example').DataTable().ajax.reload();
 }
 
 function reiniciarExcel(){
+    $('.xlsx').remove();
     $("table").tableExport({
         formats: ["xlsx"],
         bootstrap: true,
-        ignoreCols: 3,
         fileName: "Almacen"
     });
 }
@@ -73,8 +73,25 @@ function obtenerAlmacen() {
             // si no he inicializado productos
             agregarFilas(data);
             // ajusto la tabla
-            ajustarTabla()
             reiniciarExcel();
+            ajustarTabla();
+            activarBotones();
+        }
+    });
+}
+
+// obtencion de los datos para el top ten
+function reiniciarAlmacen() {
+    $.ajax({
+        url: '/almacen',
+        type: 'POST',
+        data: formularioAlmacen.serialize(),
+        success : function(data) {
+            // Almacen
+            eliminaFilas();
+            agregarFilas(data);
+            reiniciarExcel();
+            reiniciarTabla();
             activarBotones();
         }
     });
@@ -156,11 +173,11 @@ $(function(){
 
     // fechas para el top ten
     $("select[name=plaza]").change(function(){
-        obtenerAlmacen();
+        reiniciarAlmacen();
     });
         // select de sucursal
     $("select[name=categoria]").change(function(){
-        obtenerAlmacen();
+        reiniciarAlmacen();
     });
 });
 

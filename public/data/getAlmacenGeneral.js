@@ -8,8 +8,7 @@ function agregarFilas(productos){
             cantidad = producto.cantidadAlmacen,
             minimo = producto.minimo;
 
-        $('#dataTables-example tr:last')
-            .after(getFila(nombre, codigo, cantidad, minimo));
+        $('#dataTables-example tbody').append(getFila(nombre, codigo, cantidad, minimo));
     }
 }
 
@@ -27,19 +26,21 @@ function getFila(nombre, codigo, cantidad, minimo){
 
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    // Obtenemos el total de columnas (tr) del id "dataTables-example"
-    var trs=$("#dataTables-example tr").length;
-    for(var i=1 ; i<trs ; i++){
-        // Eliminamos la ultima columna
-        $("#dataTables-example tr:last").remove();
-    }
+    $("#tbodyid").empty();
 };
 
-function ajustarTabla(){
-    $('#dataTables-example').DataTable();
+function activarTabla(){
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
+}
+
+function reiniciarTabla(){
+    $('#dataTables-example').DataTable().ajax.reload();
 }
 
 function reiniciarExcel(){
+    $('.xlsx').remove();
     $("table").tableExport({
         formats: ["xlsx"],
         bootstrap: true,
@@ -58,9 +59,24 @@ function obtenerAlmacen() {
             eliminaFilas(); // elimino las filas
             // si no he inicializado productos
             agregarFilas(data);
-            // ajusto la tabla
-            ajustarTabla()
-            reiniciarExcel()
+            reiniciarExcel();
+            activarTabla();
+        }
+    });
+}
+
+function reiniciarAlmacen(){
+    $.ajax({
+        url: '/almacen',
+        type: 'POST',
+        data: formularioAlmacen.serialize(),
+        success : function(data) {
+            // Almacen
+            eliminaFilas(); // elimino las filas
+            // si no he inicializado productos
+            agregarFilas(data);
+            reiniciarExcel();
+            reiniciarTabla();
         }
     });
 }
@@ -70,14 +86,13 @@ $(function(){
     // obtengo el formulario del almacen
     formularioAlmacen = $('#formalmacen');
     obtenerAlmacen();
-
     // fechas para el top ten
     $("select[name=plaza]").change(function(){
-        obtenerAlmacen();
+        reiniciarAlmacen();
     });
         // select de sucursal
     $("select[name=categoria]").change(function(){
-        obtenerAlmacen();
+        reiniciarAlmacen();
     });
 });
     
