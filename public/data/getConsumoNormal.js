@@ -10,70 +10,58 @@ function agregarFilas(productos){
             idAlmacen = producto.idAlmacen,
             esBasico = producto.esBasico;
 
-        $('#dataTables-example tr:last')
-            .after(getFila(nombre, codigo, cantidad, idAlmacen, esBasico));
+        getFilas(nombre, codigo, cantidad, idAlmacen, esBasico);
     }
+    $('#dataTables-example').DataTable().draw();
 }
 
-function getFila(nombre, codigo, cantidad, idAlmacen, esBasico){
-    var string;
+function getFilas(nombre, codigo, cantidad, idAlmacen, esBasico){
+    var table = $('#dataTables-example').DataTable();
+    var string1,string2,string3,string4;
     // llenar el string :(
-    string = '<tr class="odd gradeX"><td>' + nombre + '</td><td>' + codigo + '</td><td name="' + idAlmacen + '">' + cantidad + '</td><td>';
+    string1 = '<td>' + nombre + '</td>';
+    string2 = '<td>' + codigo + '</td>';
+    string3 = '<p name="' + idAlmacen + '">' + cantidad + '</p>';
     if(!esBasico){
-        string += '<form id="' + idAlmacen + '" style="display:inline" action="/consumos/' + idAlmacen + '?_method=PUT" method="POST" onsubmit="return false">';
-        string += '<input id="' + codigo + '" type="number" name="cantidad" min="0" max="10000" value="0" required="required" class="form-control"/>';
-        string += '<b>&nbsp &nbsp &nbsp</b>';
-        string += '<button type="submit/image" alt="text" name="button1" onclick="return false" class="btn btn-danger btn-circle ' + idAlmacen + ' ' + codigo + '">';
-        string += '<i title="Pasar a bajas" class="fa fa-times"></i></button></form>';
+        string4 = '<form id="' + idAlmacen + '" style="display:inline" action="/consumos/' + idAlmacen + '?_method=PUT" method="POST" onsubmit="return false">';
+        string4 += '<input id="' + codigo + '" type="number" name="cantidad" min="0" max="10000" value="0" required="required" class="form-control"/>';
+        string4 += '<b>&nbsp &nbsp &nbsp</b>';
+        string4 += '<button type="submit/image" alt="text" name="button1" onclick="return false" class="btn btn-danger btn-circle ' + idAlmacen + ' ' + codigo + '">';
+        string4 += '<i title="Pasar a bajas" class="fa fa-times"></i></button></form>';
     }else{
-        string += '<fieldset disabled="">';
-        string += '<form style="display:inline" action="/consumos/' + idAlmacen + '?_method=PUT" method="POST" onsubmit="return false">';
-        string += '<input id="disabledInput" type="number" name="cantidad" min="0" max="10000" value="0" required="required" disabled="disabled" class="form-control"/><b>&nbsp &nbsp &nbsp</b>';
-        string += '<button type="submit/image" alt="text" class="btn btn-danger btn-circle"><i title="Pasar a bajas" class="fa fa-times"></i></button>';
-        string += '</form></fieldset></td></tr>';
+        string4 = '<fieldset disabled="">';
+        string4 += '<form style="display:inline" action="/consumos/' + idAlmacen + '?_method=PUT" method="POST" onsubmit="return false">';
+        string4 += '<input id="disabledInput" type="number" name="cantidad" min="0" max="10000" value="0" required="required" disabled="disabled" class="form-control"/><b>&nbsp &nbsp &nbsp</b>';
+        string4 += '<button type="submit/image" alt="text" class="btn btn-danger btn-circle"><i title="Pasar a bajas" class="fa fa-times"></i></button>';
+        string4 += '</form></fieldset>';
     }
-    return string;
+    table.row.add([
+        string1,
+        string2,
+        string3,
+        string4
+    ]);
 }
 
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    // Obtenemos el total de columnas (tr) del id "dataTables-example"
-    var trs=$("#dataTables-example tr").length;
-    for(var i=1 ; i<trs ; i++){
-        // Eliminamos la ultima columna
-        $("#dataTables-example tr:last").remove();
-    }
+    //$("#tbodyid").empty();    
+    $('#dataTables-example').DataTable().clear().draw();
 };
 
 function ajustarTabla(){
-    $('#dataTables-example').DataTable();
-}
-
-function reiniciarExcel(){
-    $("table").tableExport({
-        formats: ["xlsx"],
-        bootstrap: true,
-        ignoreCols: 3,
-        fileName: "Almacen"
+    $('#dataTables-example').DataTable({
+        responsive: true
     });
 }
 
-// obtencion de los datos para el top ten
-function obtenerConsumo() {
-    $.ajax({
-        url: '/consumos',
-        type: 'POST',
-        data: formularioConsumo.serialize(),
-        success : function(data) {
-            // Almacen
-            eliminaFilas(); // elimino las filas
-            // si no he inicializado productos
-            agregarFilas(data);
-            // ajusto la tabla
-            ajustarTabla()
-            reiniciarExcel();
-            activarBotones();
-        }
+function excel(){
+    $('.xlsx').remove();
+    $("table").tableExport({
+        formats: ["xlsx"],
+        bootstrap: true,
+        fileName: "Almacen",
+        ignoreCols: 3
     });
 }
 
@@ -94,9 +82,9 @@ function activarBotones(){
                 success: function(cantidad){
                     if(cantidad !== ""){
                         var input = $("#"+codigo)
-                        var td = $("td[name="+id+"]")
+                        var p = $("p[name="+id+"]")
                         input.val("0") // coloco en 0 al input
-                        td.text(cantidad) // pongo la nueva cantidad
+                        p.text(cantidad) // pongo la nueva cantidad
                     }
                 },
                 error: function(data){
@@ -107,18 +95,47 @@ function activarBotones(){
     })
 }
 
+// obtencion de los datos para el top ten
+function obtenerConsumo() {
+    $.ajax({
+        url: '/consumos',
+        type: 'POST',
+        data: formularioConsumo.serialize(),
+        success : function(data) {
+            // Almacen
+            ajustarTabla();
+            agregarFilas(data);
+            activarBotones();
+            excel();
+        }
+    });
+}
+
+
+// obtencion de los datos para el top ten
+function reiniciarConsumo() {
+    $.ajax({
+        url: '/consumos',
+        type: 'POST',
+        data: formularioConsumo.serialize(),
+        success : function(data) {
+            // Almacen
+            eliminaFilas();
+            agregarFilas(data);
+            activarBotones();
+            excel();
+        }
+    });
+}
+
 // funcion principal
 $(function(){ 
     // obtengo el formulario del almacen
     formularioConsumo = $('#formconsumo');
     obtenerConsumo();
 
-    // fechas para el top ten
-    $("select[name=plaza]").change(function(){
-        obtenerConsumo();
-    });
-        // select de sucursal
+    // select de sucursal
     $("select[name=categoria]").change(function(){
-        obtenerConsumo();
+        reiniciarConsumo();
     });
 });

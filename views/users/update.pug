@@ -21,10 +21,10 @@ block contenido
                   input.form-control(type="text" , name="last_name", value=usuarioUpdate.apellido , id="last", required)
                 .form-group
                   h5  Contraseña:
-                  input.form-control(type="text" , name="password", value=usuarioUpdate.password, id="pass" required)
+                  input.form-control(type="text" , name="password", placeholder="Contraseña", id="pass" required)
                 .form-group
                   h5  Confirmación de contraseña:
-                  input.form-control(type="text" , name="password_confirmation" , value=usuarioUpdate.password , id="pass2" required)
+                  input.form-control(type="text" , name="password_confirmation" , placeholder="Confirmar Contraseña" , id="pass2" required)
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:

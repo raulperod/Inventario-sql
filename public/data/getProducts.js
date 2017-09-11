@@ -10,39 +10,47 @@ function agregarFilas(productos){
             basico = producto.esBasico
             idProducto = producto.idProducto;
 
-        $('#dataTables-example tr:last')
-            .after(getFila(nombre, descripcion, codigo, minimo, basico, idProducto));
+        getFilas(nombre, descripcion, codigo, minimo, basico, idProducto);
     }
+    $('#dataTables-example').DataTable().draw();
 }
 
-function getFila(nombre, descripcion, codigo, minimo, basico, idProducto){
-    var string;
+function getFilas(nombre, descripcion, codigo, minimo, basico, idProducto){
+    var table = $('#dataTables-example').DataTable();
+    var string1,string2,string3,string4,string5;
     // llenar el string :(
-    string = '<tr class="odd gradeX"><td>'+nombre+'</td><td>'+descripcion+'</td><td>'+codigo+'</td><td>'+minimo+'</td>';
+    string1 = '<td>'+nombre+'</td>';
+    string2 = '<td>'+descripcion+'</td>';
+    string3 = '<td>'+codigo+'</td>';
+    string4 = '<td>'+minimo+'</td>';
     if(basico){ 
-        string += '<td>Si</td>'; 
+        string5 = '<td>Si</td>'; 
     } else { 
-        string += '<td>No</td>'; 
+        string5 = '<td>No</td>'; 
     }
-    string += '<td><a href="/products/'+idProducto+'" class="btn btn btn-primary btn-circle"><i title="Editar" class="fa fa-list"></i></a><b>&nbsp &nbsp &nbsp</b>'; 
-    string += '<form id="eliminar" style="display:inline" action="/products/'+idProducto+'?_method=DELETE" method="POST" onsubmit="return confirm("¿Continuar con la eliminación?")">';
-    string += '<button type="submit/image" alt="text" value="" class="btn btn-danger btn-circle"><i title="Eliminar" class="fa fa-times"></i></button>';
-    string += '</form></td></tr>';
-    return string;
+    string6 = '<a href="/products/'+idProducto+'" class="btn btn btn-primary btn-circle"><i title="Editar" class="fa fa-list"></i></a><b>&nbsp &nbsp &nbsp</b>'; 
+    string6 += '<form id="eliminar" style="display:inline" action="/products/'+idProducto+'?_method=DELETE" method="POST" onsubmit="return confirm(\'¿Continuar con la eliminación?\')">';
+    string6 += '<button type="submit/image" alt="text" value="" class="btn btn-danger btn-circle"><i title="Eliminar" class="fa fa-times"></i></button></form>';
+    table.row.add([
+        string1,
+        string2,
+        string3,
+        string4,
+        string5,
+        string6
+    ]);
 }
 
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    // Obtenemos el total de columnas (tr) del id "dataTables-example"
-    var trs=$("#dataTables-example tr").length;
-    for(var i=1 ; i<trs ; i++){
-        // Eliminamos la ultima columna
-        $("#dataTables-example tr:last").remove();
-    }
+    //$("#tbodyid").empty();    
+    $('#dataTables-example').DataTable().clear().draw();
 };
 
 function ajustarTabla(){
-    $('#dataTables-example').DataTable();
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
 }
 
 // obtencion de los datos para el top ten
@@ -52,11 +60,23 @@ function obtenerProductos() {
         type: 'POST',
         data: formularioProducts.serialize(),
         success : function(data) {
-            // Almacen
-            console.log(data)
-            eliminaFilas(); // elimino las filas
+            // Productos
+            ajustarTabla();
             agregarFilas(data);
-            ajustarTabla()
+        }
+    });
+}
+
+// obtencion de los datos para el top ten
+function reiniciarProductos() {
+    $.ajax({
+        url: '/products',
+        type: 'POST',
+        data: formularioProducts.serialize(),
+        success : function(data) {
+            // Productos
+            eliminaFilas();
+            agregarFilas(data);
         }
     });
 }
@@ -67,9 +87,8 @@ $(function(){
     formularioProducts = $('#formproducto');
     obtenerProductos();
 
-    // fechas para el top ten
-    $("selects[name=categoria]").change(function(){
-        obtenerProductos();
+    $("select[name=categoria]").change(function(){
+        reiniciarProductos();
     });
    
 });

@@ -177,8 +177,7 @@ function createUser(res, user) {
     })
 }
 
-function updateUser(res, user) {
-    
+function updateUser(res, user) { 
     UserModel.updateUser(user, error => { // si no hubo error al actualizar el usuario
         (error) ? ( // se repitio el username
             // mando una alerta que se repitio el username

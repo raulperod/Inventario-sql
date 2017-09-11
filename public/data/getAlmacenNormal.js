@@ -10,36 +10,43 @@ function agregarFilas(productos){
             idAlmacen = producto.idAlmacen,
             esBasico = producto.esBasico;
 
-        $('#dataTables-example tbody').append(getFila(nombre, codigo, cantidad, minimo, idAlmacen, esBasico));
+        getFilas(nombre, codigo, cantidad, minimo, idAlmacen, esBasico)
     }
+    $('#dataTables-example').DataTable().draw();
 }
 
-function getFila(nombre, codigo, cantidad, minimo, idAlmacen, esBasico){
-    var string;
+function getFilas(nombre, codigo, cantidad, minimo, idAlmacen, esBasico){
+    var table = $('#dataTables-example').DataTable();
+    var string1,string2,string3,string4;
     // llenar el string :(
-    string = '<tr class="odd gradeX">';
-    string += '<td>' + nombre + '</td>';
-    string += '<td>' + codigo + '</td>';
+    string1 = '<td>' + nombre + '</td>';
+    string2 = '<td>' + codigo + '</td>';
     if(cantidad > minimo){
-        string += '<td name="' + idAlmacen + '">' + cantidad + '</td>';
+        string3 = '<p name="' + idAlmacen + '">' + cantidad + '</p>';
     }else{
-        string += '<td name="' + idAlmacen + '" style="color:red" title="Pocos productos">' + cantidad + '</td>';
+        string3 = '<p name="' + idAlmacen + '" style="color:red" title="Pocos productos">' + cantidad + '</p>';
     }
-    string += '<td><form id="' + idAlmacen + '" style="display:inline" action="/almacen/' + idAlmacen + '?_method=PUT" method="POST" onsubmit="return false">';
-    string += '<input id="' + codigo + '" type="number" name="cantidad" min="0" max="10000" value="0" class="form-control" required />';
-    string += '<b>&nbsp &nbsp &nbsp</b>';
-    string += '<button type="submit/image" alt="text" name="button1" onclick="return false" class="btn btn-primary btn-circle ' + idAlmacen + ' ' + codigo + ' ' + minimo + '"><i title="Agregar" class="fa fa-plus"></i></button></form>';
+    string4 = '<form id="' + idAlmacen + '" style="display:inline" action="/almacen/' + idAlmacen + '?_method=PUT" method="POST" onsubmit="return false">';
+    string4 += '<input id="' + codigo + '" type="number" name="cantidad" min="0" max="10000" value="0" class="form-control" required />';
+    string4 += '<b>&nbsp &nbsp &nbsp</b>';
+    string4 += '<button type="submit/image" alt="text" name="button1" onclick="return false" class="btn btn-primary btn-circle ' + idAlmacen + ' ' + codigo + ' ' + minimo + '"><i title="Agregar" class="fa fa-plus"></i></button></form>';
     if(!esBasico){
-        string += '<b>&nbsp &nbsp &nbsp</b><button type="submit/image" alt="text" name="button2" onclick="return false" class="btn btn-danger btn-circle ' + idAlmacen + ' ' + codigo + ' ' + minimo + '"><i title="Pasar a consumo" class="fa fa-minus"></i></button>';
+        string4 += '<b>&nbsp &nbsp &nbsp</b><button type="submit/image" alt="text" name="button2" onclick="return false" class="btn btn-danger btn-circle ' + idAlmacen + ' ' + codigo + ' ' + minimo + '"><i title="Pasar a consumo" class="fa fa-minus"></i></button>';
     }else{
-        string += '<b>&nbsp &nbsp &nbsp<button type="submit/image" alt="text" name="button2" disabled="disabled" class="btn btn-danger btn-circle"><i title="Pasar a consumo" class="fa fa-minus"></i></button></b>';
+        string4 += '<b>&nbsp &nbsp &nbsp</b><button type="submit/image" alt="text" name="button2" disabled="disabled" class="btn btn-danger btn-circle"><i title="Pasar a consumo" class="fa fa-minus"></i></button>';
     }
-    return string;
+    table.row.add([
+        string1,
+        string2,
+        string3,
+        string4
+    ]);
 }
 
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    $("#tbodyid").empty();    
+    //$("#tbodyid").empty();    
+    $('#dataTables-example').DataTable().clear().draw();
 };
 
 function ajustarTabla(){
@@ -48,52 +55,13 @@ function ajustarTabla(){
     });
 }
 
-function reiniciarTabla(){
-    $('#dataTables-example').DataTable().ajax.reload();
-}
-
-function reiniciarExcel(){
+function excel(){
     $('.xlsx').remove();
     $("table").tableExport({
         formats: ["xlsx"],
         bootstrap: true,
-        fileName: "Almacen"
-    });
-}
-
-// obtencion de los datos para el top ten
-function obtenerAlmacen() {
-    $.ajax({
-        url: '/almacen',
-        type: 'POST',
-        data: formularioAlmacen.serialize(),
-        success : function(data) {
-            // Almacen
-            eliminaFilas(); // elimino las filas
-            // si no he inicializado productos
-            agregarFilas(data);
-            // ajusto la tabla
-            reiniciarExcel();
-            ajustarTabla();
-            activarBotones();
-        }
-    });
-}
-
-// obtencion de los datos para el top ten
-function reiniciarAlmacen() {
-    $.ajax({
-        url: '/almacen',
-        type: 'POST',
-        data: formularioAlmacen.serialize(),
-        success : function(data) {
-            // Almacen
-            eliminaFilas();
-            agregarFilas(data);
-            reiniciarExcel();
-            reiniciarTabla();
-            activarBotones();
-        }
+        fileName: "Almacen",
+        ignoreCols: 3
     });
 }
 
@@ -119,10 +87,10 @@ function activarBotones(){
                     function(cantidad){
                         if(cantidad !== ""){
                             var input = $("#"+codigo)
-                            var td = $("td[name="+id+"]")
+                            var p = $("p[name="+id+"]")
                             input.val("0") // coloco en 0 al input
-                            td.text(cantidad) // pongo la nueva cantidad
-                            if( parseInt(cantidad) > minimo ) td.css("color", "#000000")
+                            p.text(cantidad) // pongo la nueva cantidad
+                            if( parseInt(cantidad) > minimo ) p.css("color", "#000000")
                         }
                     },
                   error: function(data){
@@ -151,10 +119,10 @@ function activarBotones(){
                 success: function(cantidad){
                     if(cantidad !== ""){
                         var input = $("#"+codigo)
-                        var td = $("td[name="+id+"]")
+                        var p = $("p[name="+id+"]")
                         input.val("0") // coloco en 0 al input
-                        td.text(cantidad) // pongo la nueva cantidad
-                        if( parseInt(cantidad) < minimo ) td.css("color", "#FF0040")
+                        p.text(cantidad) // pongo la nueva cantidad
+                        if( parseInt(cantidad) < minimo ) p.css("color", "#FF0040")
                     }
                 },
                 error: function(data){
@@ -165,17 +133,46 @@ function activarBotones(){
     })
 }
 
+
+// obtencion de los datos para el top ten
+function obtenerAlmacen() {
+    $.ajax({
+        url: '/almacen',
+        type: 'POST',
+        data: formularioAlmacen.serialize(),
+        success : function(data) {
+            // Almacen
+            ajustarTabla();
+            agregarFilas(data);
+            activarBotones();
+            excel();
+        }
+    });
+}
+
+// obtencion de los datos para el top ten
+function reiniciarAlmacen() {
+    $.ajax({
+        url: '/almacen',
+        type: 'POST',
+        data: formularioAlmacen.serialize(),
+        success : function(data) {
+            // Almacen
+            eliminaFilas();
+            agregarFilas(data);
+            activarBotones();
+            excel();
+        }
+    });
+}
+
 // funcion principal
 $(function(){ 
     // obtengo el formulario del almacen
     formularioAlmacen = $('#formalmacen');
     obtenerAlmacen();
 
-    // fechas para el top ten
-    $("select[name=plaza]").change(function(){
-        reiniciarAlmacen();
-    });
-        // select de sucursal
+    // select de sucursal
     $("select[name=categoria]").change(function(){
         reiniciarAlmacen();
     });

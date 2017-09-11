@@ -15,7 +15,6 @@ block contenido
               thead
                 tr
                   th Usuario
-                  th Password
                   th Nombres
                   th Apellidos
                   if usuario.permisos === 2
@@ -28,7 +27,6 @@ block contenido
                   for user in usuarios
                     tr.odd.gradeX
                       td #{user.username}
-                      td #{user.password}
                       td #{user.nombre}
                       td #{user.apellido}
                       td #{user.plaza}
@@ -49,7 +47,6 @@ block contenido
                   for user in usuarios
                     tr.odd.gradeX
                       td #{user.username}
-                      td #{user.password}
                       td #{user.nombre}
                       td #{user.apellido}
                       if user.status

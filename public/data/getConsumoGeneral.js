@@ -7,37 +7,43 @@ function agregarFilas(productos){
             codigo = producto.codigo,
             cantidad = producto.cantidadConsumo;
 
-        $('#dataTables-example tr:last')
-            .after(getFila(nombre, codigo, cantidad));
+        getFilas(nombre, codigo, cantidad);
     }
+    $('#dataTables-example').DataTable().draw();
 }
 
-function getFila(nombre, codigo, cantidad){
-    var string;
+function getFilas(nombre, codigo, cantidad){
+    var table = $('#dataTables-example').DataTable();
+    var string1,string2,string3;
     // llenar el string :(
-    string = '<tr class="odd gradeX"><td>' + nombre + '</td><td>' + codigo + '</td><td>' + cantidad + '</td></tr>';
-    return string;
+    string1 = '<td>' + nombre + '</td>';
+    string2 = '<td>' + codigo + '</td>';
+    string3 = '<td>' + cantidad + '</td>';
+
+    table.row.add([
+        string1,
+        string2,
+        string3
+    ]);
 }
 
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    // Obtenemos el total de columnas (tr) del id "dataTables-example"
-    var trs=$("#dataTables-example tr").length;
-    for(var i=1 ; i<trs ; i++){
-        // Eliminamos la ultima columna
-        $("#dataTables-example tr:last").remove();
-    }
+    //$("#tbodyid").empty();    
+    $('#dataTables-example').DataTable().clear().draw();
 };
 
 function ajustarTabla(){
-    $('#dataTables-example').DataTable();
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
 }
 
-function reiniciarExcel(){
+function excel(){
+    $('.xlsx').remove();
     $("table").tableExport({
         formats: ["xlsx"],
         bootstrap: true,
-        ignoreCols: 3,
         fileName: "Almacen"
     });
 }
@@ -49,11 +55,25 @@ function obtenerConsumo() {
         type: 'POST',
         data: formularioConsumo.serialize(),
         success : function(data) {
-            // Almacen
-            eliminaFilas(); // elimino las filas
+            // Consumo
+            ajustarTabla();
             agregarFilas(data);
-            ajustarTabla()
-            reiniciarExcel();
+            excel();
+        }
+    });
+}
+
+// obtencion de los datos para el top ten
+function reiniciarConsumo() {
+    $.ajax({
+        url: '/consumos',
+        type: 'POST',
+        data: formularioConsumo.serialize(),
+        success : function(data) {
+            // Almacen
+            eliminaFilas();
+            agregarFilas(data);
+            excel();
         }
     });
 }
@@ -66,10 +86,10 @@ $(function(){
 
     // fechas para el top ten
     $("select[name=plaza]").change(function(){
-        obtenerConsumo();
+        reiniciarConsumo();
     });
         // select de sucursal
     $("select[name=categoria]").change(function(){
-        obtenerConsumo();
+        reiniciarConsumo();
     });
 });

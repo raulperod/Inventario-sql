@@ -12,10 +12,11 @@ block contenido
             .panel-body
               .col-lg-4
               .col-lg-4
-                label Sucursal:
-                select.form-control(id="sucursal" name="plaza" )
-                  for sucursal in sucursales
-                    option(name="1") #{sucursal.plaza}
+                if usuario.permisos === 2
+                  label Sucursal:
+                  select.form-control(id="sucursal" name="plaza" )
+                    for sucursal in sucursales
+                      option(name="1") #{sucursal.plaza}
               .col-lg-4
                 label Categoria:
                 select.form-control(id="categoria" name="categoria" )
@@ -35,7 +36,7 @@ block contenido
                   th Codigo
                   th Cantidad
                   if usuario.permisos < 2
-                    th Acción
+                    th Accion
               tbody#tbodyid
     
   // jQuery

@@ -28,7 +28,7 @@ function getUserByUsername(username, next) {
 
 function getUsers(next) {
     UserModel
-        .query(`SELECT u.username, u.password, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario, s.plaza 
+        .query(`SELECT u.username, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario, s.plaza 
                 FROM usuarios u 
                 INNER JOIN sucursales s ON u.idSucursal = s.idSucursal AND NOT u.permisos = 2` , (error, resultado, fields) => {
 
@@ -38,7 +38,7 @@ function getUsers(next) {
 
 function getUsersBySucursal(idSucursal, next) {
     UserModel
-        .query(`SELECT u.username, u.password, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario 
+        .query(`SELECT u.username, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario 
                 FROM usuarios u 
                 WHERE u.idSucursal = ? AND u.permisos = 0`, idSucursal ,(error, resultado, fields) => {
 
