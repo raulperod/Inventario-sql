@@ -14,7 +14,9 @@
   "keywords": [
     "Node.js",
     "Express",
-    "Mysql"
+    "Mysql",
+    "Excel",
+    "Pdf"
   ],
   "author": "Raul Perez, Cesar Salazar",
   "license": "MIT",
