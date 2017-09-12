@@ -49,22 +49,6 @@ function eliminaFilas(){
     $('#dataTables-example').DataTable().clear().draw();
 };
 
-function ajustarTabla(){
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-}
-
-function excel(){
-    $('.xlsx').remove();
-    $("table").tableExport({
-        formats: ["xlsx"],
-        bootstrap: true,
-        fileName: "Almacen",
-        ignoreCols: 3
-    });
-}
-
 function activarBotones(){
     $("button[name=button1]").click(function(){
         if( confirm('¿Esta seguro que desea realizar la baja de esos productos?') ){
@@ -103,10 +87,8 @@ function obtenerConsumo() {
         data: formularioConsumo.serialize(),
         success : function(data) {
             // Almacen
-            ajustarTabla();
             agregarFilas(data);
             activarBotones();
-            excel();
         }
     });
 }
@@ -123,7 +105,6 @@ function reiniciarConsumo() {
             eliminaFilas();
             agregarFilas(data);
             activarBotones();
-            excel();
         }
     });
 }

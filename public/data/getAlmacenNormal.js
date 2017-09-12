@@ -49,22 +49,6 @@ function eliminaFilas(){
     $('#dataTables-example').DataTable().clear().draw();
 };
 
-function ajustarTabla(){
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-}
-
-function excel(){
-    $('.xlsx').remove();
-    $("table").tableExport({
-        formats: ["xlsx"],
-        bootstrap: true,
-        fileName: "Almacen",
-        ignoreCols: 3
-    });
-}
-
 function activarBotones(){
     $("button[name=button1]").click(function(){
         if( confirm('¿Esta seguro que desea agregar esos productos?') ){
@@ -133,7 +117,6 @@ function activarBotones(){
     })
 }
 
-
 // obtencion de los datos para el top ten
 function obtenerAlmacen() {
     $.ajax({
@@ -142,10 +125,8 @@ function obtenerAlmacen() {
         data: formularioAlmacen.serialize(),
         success : function(data) {
             // Almacen
-            ajustarTabla();
             agregarFilas(data);
             activarBotones();
-            excel();
         }
     });
 }
@@ -161,7 +142,6 @@ function reiniciarAlmacen() {
             eliminaFilas();
             agregarFilas(data);
             activarBotones();
-            excel();
         }
     });
 }

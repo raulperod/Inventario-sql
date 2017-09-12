@@ -37,21 +37,6 @@ function eliminaFilas(){
     $('#dataTables-example').DataTable().clear().draw();
 };
 
-function ajustarTabla(){
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-}
-
-function excel(){
-    $('.xlsx').remove();
-    $("table").tableExport({
-        formats: ["xlsx"],
-        bootstrap: true,
-        fileName: "Almacen"
-    });
-}
-
 // obtencion de los datos para el top ten
 function obtenerAlmacen() {
     $.ajax({
@@ -60,9 +45,7 @@ function obtenerAlmacen() {
         data: formularioAlmacen.serialize(),
         success : function(data) {
             // Almacen
-            ajustarTabla();
             agregarFilas(data);
-            excel();
         }
     });
 }
@@ -77,7 +60,6 @@ function reiniciarAlmacen() {
             // Almacen
             eliminaFilas();
             agregarFilas(data);
-            excel();
         }
     });
 }

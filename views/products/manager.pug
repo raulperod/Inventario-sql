@@ -34,23 +34,42 @@ block contenido
                   th Acción
               tbody
                     
-            // /.panel-body
-        // /.panel
-      // /.col-lg-12
-    // /.row
-    // jQuery
-    script(src='/public/vendor/jquery/jquery.min.js')
-    script(src='/public/data/getProducts.js')
-    // Bootstrap Core JavaScript
-    script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
-    // Metis Menu Plugin JavaScript
-    script(src='/public/vendor/metisMenu/metisMenu.min.js')
-    // Custom Theme JavaScript
-    script(src='/public/dist/js/sb-admin-2.js')
-    // DataTables JavaScript
-    script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
-    script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
-    script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
-    // Custom Theme JavaScript
-    script(src='/public/dist/js/sb-admin-2.js')
-    // Page-Level Demo Scripts - Tables - Use for reference
+  // jQuery
+  script(src='/public/dataTables/jquery/jquery.js') 
+  // Bootstrap Core JavaScript
+  script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
+  // Metis Menu Plugin JavaScript
+  script(src='/public/vendor/metisMenu/metisMenu.min.js')
+  // DataTables JavaScript
+  script(src='/public/dist/js/sb-admin-2.js')
+  script(src='/public/stuk/dist/jszip.min.js')  
+  script(src='/public/dataTables/media/js/jquery.dataTables.min.js')
+  script(src='/public/dataTables/media/js/dataTables.bootstrap.min.js')
+  script(src='/public/dataTables/extensions/Responsive/js/dataTables.responsive.js')
+  script(src='/public/dataTables/extensions/Buttons/js/dataTables.buttons.min.js')
+  script(src='/public/dataTables/extensions/Buttons/js/buttons.html5.min.js')
+  script(src='/public/pdfmake/build/pdfmake.min.js')
+  script(src='/public/pdfmake/build/vfs_fonts.js') 
+  script.
+    $('#dataTables-example').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+             {
+                extend: 'excelHtml5',
+                title: 'Productos',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4 ]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'Productos',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4 ]
+                }
+            }
+        ]
+    });
+
+  script(src='/public/data/getProducts.js')

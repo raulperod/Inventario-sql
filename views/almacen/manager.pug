@@ -16,7 +16,7 @@ block contenido
                   label Sucursal:
                   select.form-control(id="sucursal" name="plaza" )
                     for sucursal in sucursales
-                      option(name="1") #{sucursal.plaza}
+                     option(name="1") #{sucursal.plaza}
               .col-lg-4
                 label Categoria:
                 select.form-control(id="categoria" name="categoria" )
@@ -40,20 +40,48 @@ block contenido
               tbody#tbodyid
     
   // jQuery
-  script(src='/public/vendor/jquery/jquery.min.js')    
-  if usuario.permisos < 2 
-    script(src='/public/data/getAlmacenNormal.js')
-  else
-
-    script(src='/public/data/getAlmacenGeneral.js')  
-    
+  script(src='/public/dataTables/jquery/jquery.js') 
   // Bootstrap Core JavaScript
   script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
   // Metis Menu Plugin JavaScript
   script(src='/public/vendor/metisMenu/metisMenu.min.js')
   // DataTables JavaScript
-  script(src='/public/vendor/datatables/js/jquery.dataTables.min.js')
-  script(src='/public/vendor/datatables-plugins/dataTables.bootstrap.min.js')
-  script(src='/public/vendor/datatables-responsive/dataTables.responsive.js')
+  script(src='/public/stuk/dist/jszip.min.js')
+  script(src='/public/dataTables/media/js/jquery.dataTables.min.js')
+  script(src='/public/dataTables/media/js/dataTables.bootstrap.min.js')
+  script(src='/public/dataTables/extensions/Responsive/js/dataTables.responsive.js')
+  script(src='/public/dataTables/extensions/Buttons/js/dataTables.buttons.min.js')
+  script(src='/public/dataTables/extensions/Buttons/js/buttons.html5.min.js')
+  script(src='/public/pdfmake/build/pdfmake.min.js')
+  script(src='/public/pdfmake/build/vfs_fonts.js')
+  
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
+  // scripts
+  script.
+    $('#dataTables-example').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+             {
+                extend: 'excelHtml5',
+                title: 'Almacen',
+                exportOptions: {
+                    columns: [ 0, 1, 2 ]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'Almacen',
+                exportOptions: {
+                    columns: [ 0, 1, 2 ]
+                }
+            }
+        ]
+    });
+
+  if usuario.permisos < 2 
+    script(src='/public/data/getAlmacenNormal.js')
+  else
+
+    script(src='/public/data/getAlmacenGeneral.js')

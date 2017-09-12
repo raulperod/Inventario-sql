@@ -33,21 +33,6 @@ function eliminaFilas(){
     $('#dataTables-example').DataTable().clear().draw();
 };
 
-function ajustarTabla(){
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-}
-
-function excel(){
-    $('.xlsx').remove();
-    $("table").tableExport({
-        formats: ["xlsx"],
-        bootstrap: true,
-        fileName: "Almacen"
-    });
-}
-
 // obtencion de los datos para el top ten
 function obtenerConsumo() {
     $.ajax({
@@ -56,9 +41,7 @@ function obtenerConsumo() {
         data: formularioConsumo.serialize(),
         success : function(data) {
             // Consumo
-            ajustarTabla();
             agregarFilas(data);
-            excel();
         }
     });
 }
@@ -73,7 +56,6 @@ function reiniciarConsumo() {
             // Almacen
             eliminaFilas();
             agregarFilas(data);
-            excel();
         }
     });
 }

@@ -47,12 +47,6 @@ function eliminaFilas(){
     $('#dataTables-example').DataTable().clear().draw();
 };
 
-function ajustarTabla(){
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-}
-
 // obtencion de los datos para el top ten
 function obtenerProductos() {
     $.ajax({
@@ -61,7 +55,6 @@ function obtenerProductos() {
         data: formularioProducts.serialize(),
         success : function(data) {
             // Productos
-            ajustarTabla();
             agregarFilas(data);
         }
     });
