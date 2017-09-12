@@ -39,7 +39,6 @@ function loginPost(req, res){
                 .then(() => {
                     // comprueba si la contraseña es correcta
                     try{
-                        console.log(password, usuario.password);
                         return Utilidad.returnPromise( password === usuario.password || bcrypt.compareSync(password, usuario.password) , true, { msg: 'Error contraseña incorrecta', tipo: 3 })
                     } catch (error){
                         return Utilidad.returnPromise( false , true, { msg: 'Error contraseña incorrecta', tipo: 3 })
