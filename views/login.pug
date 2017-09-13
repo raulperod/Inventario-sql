@@ -38,13 +38,13 @@ html(lang="es")
                 h3.panel-title Inicio de sesión
               .panel-body
                 #aviso
-                form(action="/login",method="POST",role='form', id="formLogin")
+                form(action="/login" method="POST" role='form' id="formLogin")
                   fieldset
                     // input normal
                     .form-group
-                      input.form-control(placeholder='Nombre de usuario',name='username',type='text', required, id="user")
+                      input.form-control(placeholder='Nombre de usuario' name='username' type='text' id="user")
                     .form-group
-                      input.form-control(placeholder='Contraseña',name='password',type='password', required, id="pass")
+                      input.form-control(placeholder='Contraseña' name='password' type='password' id="pass")
                     // boton para logearte
                     .form-group
                       input(type="submit" value="Entrar" class="btn btn-lg btn-primary btn-block", id="login")
