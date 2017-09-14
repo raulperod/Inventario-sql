@@ -10,22 +10,32 @@ const AlmacenModel = require('../models/almacen'),
       Utilidad = require('../ayuda/utilidad')
 
 function consumosGet(req, res) {
-    // muestra la vista de los productos en consumo
-    SucursalModel.getPlazasOfSucursales((error, sucursales) => {
-        if(!error){
-            CategoryModel.getNamesOfCategories((error, categorias) => {
-                if(!error){
-                    res.render('./consumos/manager', {usuario: req.session.user, sucursales, categorias})
-                }
-            })
-        }
-    })
+    let usuario = req.session.user
+
+    if( usuario.permisos < 2){
+        CategoryModel.getNamesOfCategories((error, categorias) => {
+            if(!error){
+                res.render('./consumos/manager', {usuario, categorias})
+            }
+        })
+    }else{
+        // muestra la vista de los productos en consumo
+        SucursalModel.getPlazasOfSucursales((error, sucursales) => {
+            if(!error){
+                CategoryModel.getNamesOfCategories((error, categorias) => {
+                    if(!error){
+                        res.render('./consumos/manager', {usuario, sucursales, categorias})
+                    }
+                })
+            }
+        })
+    }
 }
 
 function consumoPost(req, res){
     let usuario = req.session.user,
-    categoria = req.body.categoria, // obtienes el nombre de la categoria
-    sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
+        categoria = req.body.categoria, // obtienes el nombre de la categoria
+        sucursal = (usuario.permisos < 2) ? usuario.idSucursal : req.body.plaza    
 
     if( usuario.permisos === 2){ // si es administrador general
         // obtengo el consumo
@@ -70,10 +80,8 @@ function consumosIdConsumoPut(req, res) {
                     } else {
                         // creo el movimiento
                         let baja = {
-                            idSucursal: usuario.idSucursal,
                             idUsuario: usuario.idUsuario,
                             idProducto: almacen.idProducto,
-                            idCategoria: almacen.idCategoria,
                             cantidad: ( verificar ) ? ( almacen.cantidadConsumo ) : ( cantidad )
                         }
                         // guardo el movimiento que ocurrio

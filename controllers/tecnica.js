@@ -11,6 +11,7 @@ const TecnicaModel = require('../models/tecnica'),
 
 function tecnicasGet(req, res) {
     let usuario = req.session.user
+
     if( usuario.permisos === 2 ){ // si es administrador general
         // busco todas las tecnicas
         TecnicaModel.getTecnicas( (error, tecnicas) => {
@@ -34,6 +35,7 @@ function tecnicasGet(req, res) {
 
 function tecnicasNewGet(req, res) {
     let usuario = req.session.user
+
     if( usuario.permisos === 2 ){ // si es administrador general
         // busco las sucursales
         SucursalModel.getPlazasOfSucursales( (error, sucursales) => { // si no hubo error
@@ -49,9 +51,10 @@ function tecnicasNewGet(req, res) {
 }
 
 function tecnicasNewPost(req, res) {
-    let usuario = req.session.user
+    let usuario = req.session.user,
+        plaza = req.body.plaza
+    
     if( usuario.permisos === 2 ){ // si es administrador general
-        let plaza = req.body.plaza
         // busco la sucursal
         SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => { // si no hubo error
             if(error){
@@ -112,10 +115,10 @@ function tecnicasIdTecnicaGet(req, res) {
 
 function tecnicasIdTecnicaPut(req, res) {
     let usuario = req.session.user,
-        idTecnica = req.params.idTecnica
+        idTecnica = req.params.idTecnica,
+        plaza = req.body.plaza
 
     if( usuario.permisos === 2 ){ // si es administrador general
-        let plaza = req.body.plaza
         // busco las sucurales
         SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => { // si no hubo error
             if(error){
@@ -181,17 +184,16 @@ function generarBasicosEnUso(res, tecnica){
                     Utilidad.printError(res, {msg:`Error al obtener los productos basicos: ${error}`, tipo: 0})
                 } else { // si no hubo error
                     // genero un basico en uso por cada producto basico existente
-                    productosBasicos.forEach(productoBasico => generarBasicoEnUso(res, tecnica.idSucursal, idTecnica, productoBasico.idProducto))
+                    productosBasicos.forEach(productoBasico => generarBasicoEnUso(res, idTecnica, productoBasico.idProducto))
                 }
             })
         }
     })
 }
 
-function generarBasicoEnUso(res, idSucursal, idTecnica, idProducto) {
+function generarBasicoEnUso(res, idTecnica, idProducto) {
     // creo el basico
     let basico = {
-        idSucursal,
         idTecnica,
         idProducto,
         enUso: false

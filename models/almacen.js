@@ -7,7 +7,7 @@ const AlmacenModel = require('./coneccion')
 
 function getAlmacenById(idAlmacen, next) {
     AlmacenModel
-        .query(`SELECT a.idProducto, a.idCategoria, a.cantidadAlmacen 
+        .query(`SELECT a.idProducto, a.cantidadAlmacen 
                 FROM almacen a 
                 WHERE idAlmacen = ?` , idAlmacen ,(error, resultado, fields) => {
 
@@ -27,7 +27,7 @@ function getAlmacenBySucursalAndProduct(idSucursal, idProducto, next) {
 
 function getConsumoById(idAlmacen, next) {
     AlmacenModel
-        .query(`SELECT a.idProducto, a.idCategoria, a.cantidadAlmacen, a.cantidadConsumo 
+        .query(`SELECT a.idProducto, a.cantidadAlmacen, a.cantidadConsumo 
                 FROM almacen a 
                 WHERE idAlmacen = ?` , idAlmacen ,(error, resultado, fields) => {
 
@@ -40,7 +40,7 @@ function getAlmacenByPlazaAndCategory(plaza, categoria, next) {
         .query(`SELECT a.cantidadAlmacen, p.nombre nombreProducto, p.codigo, p.minimo
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
-                JOIN categorias c on a.idCategoria = c.idCategoria AND c.nombre = ?
+                JOIN categorias c on p.idCategoria = c.idCategoria AND c.nombre = ?
                 JOIN sucursales s on a.idSucursal = s.idSucursal AND s.plaza = ?` , [categoria, plaza], (error, resultado, fields) => {
 
             next(error, resultado)
@@ -52,7 +52,7 @@ function getAlmacenBySucursalAndCategory(idSucursal, categoria, next) {
         .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, a.cantidadAlmacen, p.minimo, p.esBasico
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
-                JOIN categorias c ON a.idCategoria = c.idCategoria AND c.nombre = ?
+                JOIN categorias c ON p.idCategoria = c.idCategoria AND c.nombre = ?
                 WHERE a.idSucursal = ?`  , [categoria, idSucursal] ,(error, resultado, fields) => {
 
             next(error, resultado)

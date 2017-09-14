@@ -32,7 +32,6 @@ function categoriesNewPost(req, res) {
         (error) ? (
             Utilidad.printError(res, { msg: `Error al agregar la nueva categoria: ${error}`, tipo: 1})
         ) : (
-            //res.redirect('/categories')
             res.json({msg:"",tipo:3})
         )
     })

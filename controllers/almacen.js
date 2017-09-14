@@ -10,16 +10,27 @@ const AlmacenModel = require('../models/almacen'),
       Utilidad = require('../ayuda/utilidad')
 
 function almacenGet(req, res) { 
-    // muestra la vista del almacen
-    SucursalModel.getPlazasOfSucursales((error, sucursales) => {
-        if(!error){
-            CategoryModel.getNamesOfCategories((error, categorias) => {
-                if(!error){
-                    res.render('./almacen/manager', {usuario: req.session.user, sucursales, categorias})
-                }
-            })
-        }
-    })
+    let usuario = req.session.user
+
+    if( usuario.permisos < 2){
+        CategoryModel.getNamesOfCategories((error, categorias) => {
+            if(!error){
+                res.render('./almacen/manager', {usuario, categorias})
+            }
+        })
+    }else{
+        // muestra la vista del almacen
+        SucursalModel.getPlazasOfSucursales((error, sucursales) => {
+            if(!error){
+                CategoryModel.getNamesOfCategories((error, categorias) => {
+                    if(!error){
+                        res.render('./almacen/manager', {usuario, sucursales, categorias})
+                    }
+                })
+            }
+        })
+    }
+    
 }
 
 function almacenPost(req, res){
@@ -66,10 +77,8 @@ function almacenIdAlmacenAddPut(req, res) {
                     } else { // si no hubo error
                         // creo el movimiento
                         let movimiento = {
-                            idSucursal: usuario.idSucursal,
                             idUsuario: usuario.idUsuario,
                             idProducto: almacen.idProducto,
-                            idCategoria: almacen.idCategoria,
                             cantidad,
                             tipo: 1 // es una alta
                         }
@@ -103,7 +112,7 @@ function almacenIdAlmacenSubPut(req, res) {
         AlmacenModel.getConsumoById(idAlmacen, (error, almacen) => {
             if(error){ // si hubo error
                 Utilidad.printError(res, {msg:`Error al obtener el almacen: ${error}`, tipo: 0})
-            } else if(almacen.cantidadAlmacen === 0){ // si no hay nada en consumo
+            } else if(almacen.cantidadAlmacen === 0){ // si no hay productos en el almacen
                 res.send("")
             } else { // si no hubo error
                 // genero los cambios
@@ -120,10 +129,8 @@ function almacenIdAlmacenSubPut(req, res) {
                     } else {
                         // creo el movimiento
                         let movimiento = {
-                            idSucursal: usuario.idSucursal,
                             idUsuario: usuario.idUsuario,
                             idProducto: almacen.idProducto,
-                            idCategoria: almacen.idCategoria,
                             cantidad: ( verificar ) ? ( almacen.cantidadAlmacen ) : ( cantidad ),
                             tipo: 0 // es una baja
                         }

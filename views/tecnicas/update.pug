@@ -18,9 +18,11 @@ block contenido
                 if usuario.permisos === 2
                   .form-group
                     h5  Sucursal:
-                    select.form-control.selectpicker(name="plaza", data-live-search="true")
+                    select.form-control(name="plaza")
+                      option #{tecnicaUpdate.plaza}
                       for sucursal in sucursales
-                        option(name="1") #{sucursal.plaza}
+                        if sucursal.plaza != tecnicaUpdate.plaza
+                          option #{sucursal.plaza}
                   
                 input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
   // jQuery

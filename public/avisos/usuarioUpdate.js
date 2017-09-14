@@ -10,11 +10,11 @@ $(function(){
 		last = document.getElementById('last').value;
 		pass = document.getElementById('pass').value;
 		pass2 = document.getElementById('pass2').value;
-		if(user== "" || name=="" || last=="" || pass=="" || pass2==""){
+		if(user== "" || name=="" || last==""){
 			mostrarAviso(2);
 			return false;
 		}
-		if(pass!=pass2){
+		if( pass== "" && pass2 != "" || pass2== "" && pass != "" || pass!=pass2){
 			mostrarAviso(10);
 			return false;
 		}
@@ -35,7 +35,9 @@ function mostrarAviso(error){
 	    case 10:
 	        $("#aviso").html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close'"
 		 	+"data-dismiss='alert' aria-hidden='true'>&times;</button>Las contraseñas deben coincidir!</div>");
-	        break;	
+			break;
+		default:
+			break;			
 	}
 }
 function obtenerMensaje() {

@@ -8,8 +8,9 @@ const UserModel = require('./coneccion')
 
 function getUserById(idUser, next) {
     UserModel
-        .query(`SELECT * 
+        .query(`SELECT u.idUsuario, u.username, u.nombre, u.apellido, u.status, u.permisos, s.plaza
                 FROM usuarios u 
+                JOIN sucursales s ON u.idSucursal = s.idSucursal
                 WHERE u.idUsuario = ?`, idUser ,(error, resultado, fields) => {
 
             next(error, resultado[0])
@@ -30,7 +31,7 @@ function getUsers(next) {
     UserModel
         .query(`SELECT u.username, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario, s.plaza 
                 FROM usuarios u 
-                INNER JOIN sucursales s ON u.idSucursal = s.idSucursal AND NOT u.permisos = 2` , (error, resultado, fields) => {
+                INNER JOIN sucursales s ON u.idSucursal = s.idSucursal` , (error, resultado, fields) => {
 
             next(error, resultado)
         })

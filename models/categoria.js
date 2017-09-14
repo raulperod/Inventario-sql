@@ -36,8 +36,8 @@ function getCategories(next) {
 
 function getNamesOfCategories(next) {
     CategoryModel
-        .query(`SELECT nombre 
-                FROM categorias` , (error, resultado, fields) => {
+        .query(`SELECT c.nombre 
+                FROM categorias c` , (error, resultado, fields) => {
 
             next(error, resultado)
         })

@@ -12,35 +12,49 @@ block contenido
               fieldset
                 .form-group
                   h5  Usuario:
-                  input.form-control(type="text", name="username", value=usuarioUpdate.username, id="user" required)
+                  input.form-control(type="text", name="username", value=usuarioUpdate.username, id="user" )
                 .form-group
                   h5  Nombres:
-                  input.form-control(type="text", name="name", value=usuarioUpdate.nombre , id="name" required)
+                  input.form-control(type="text", name="name", value=usuarioUpdate.nombre , id="name" )
                 .form-group
                   h5  Apellidos:
-                  input.form-control(type="text" , name="last_name", value=usuarioUpdate.apellido , id="last", required)
+                  input.form-control(type="text" name="last_name", value=usuarioUpdate.apellido, id="last")
                 .form-group
                   h5  Contraseña:
-                  input.form-control(type="text" , name="password", placeholder="Contraseña", id="pass" required)
+                  input.form-control(type="password" name="password" placeholder="Contraseña" id="pass")
                 .form-group
                   h5  Confirmación de contraseña:
-                  input.form-control(type="text" , name="password_confirmation" , placeholder="Confirmar Contraseña" , id="pass2" required)
-                if usuario.permisos === 2
+                  input.form-control(type="password" name="password_confirmation" placeholder="Confirmar Contraseña" id="pass2")
+                if usuarioUpdate.permisos !== 2
+                  if usuario.permisos === 2
+                    .form-group
+                      h5  Sucursal:
+                      select.form-control(name="plaza")
+                        option #{usuarioUpdate.plaza}
+                        for sucursal in sucursales
+                          if sucursal.plaza != usuarioUpdate.plaza 
+                            option #{sucursal.plaza}
+                    .form-group
+                      h5  Permisos:
+                      select.form-control(name="permisos")
+                        if usuarioUpdate.permisos == 1
+                          option(name="administrador") Administrador
+                          option(name="recepcionista") Recepcionista
+                        else
+
+                          option(name="recepcionista") Recepcionista
+                          option(name="administrador") Administrador
                   .form-group
-                    h5  Sucursal:
-                    select.form-control.selectpicker(name="plaza", data-live-search="true")
-                      for sucursal in sucursales
-                        option(name="1") #{sucursal.plaza}
-                  .form-group
-                    h5  Permisos:
-                    select.form-control(name="permisos")
-                      option(name="administrador") Administrador
-                      option(name="recepcionista") Recepcionista
-                .form-group
-                  h5  Estado:
-                  select.form-control(name="status")
-                    option(name="activo") Activo
-                    option(name="inactivo") Inactivo
+                    h5  Estado:
+                    select.form-control(name="status")
+                      if usuarioUpdate.status
+                          option(name="activo") Activo
+                          option(name="inactivo") Inactivo
+                      else
+
+                        option(name="inactivo") Inactivo
+                        option(name="activo") Activo
+
                 .form-group
                 input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
 

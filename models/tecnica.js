@@ -7,8 +7,9 @@ const TecnicaModel = require('./coneccion')
 
 function getTecnicaById(idTecnica, next) {
     TecnicaModel
-        .query(`SELECT *
+        .query(`SELECT t.nombre, t.apellido, t.idTecnica, s.plaza
                 FROM tecnicas t
+                JOIN sucursales s ON t.idSucursal = s.idSucursal
                 WHERE t.idTecnica = ?`, idTecnica, (error, resultado, fields) => {
 
             next(error, resultado[0])
@@ -45,9 +46,9 @@ function getTecnicas(next) {
         })
 }
 
-function getIdTecnicasAndIdSucursales(next) {
+function getAllIdTecnica(next) {
     TecnicaModel
-        .query(`SELECT t.idTecnica, t.idSucursal
+        .query(`SELECT t.idTecnica
                 FROM tecnicas t`, (error, resultado, fields) => {
 
             next(error, resultado)
@@ -87,7 +88,7 @@ module.exports = {
     getIdTecnicaByFullNameAndIdSucursal,
     getTecnicasNameBySucursal,
     getTecnicas,
-    getIdTecnicasAndIdSucursales,
+    getAllIdTecnica,
     getTecnicasBySucursal,
     createTecnica,
     updateTecnica

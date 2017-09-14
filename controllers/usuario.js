@@ -9,7 +9,8 @@ const UserModel = require('../models/usuario'),
       bcrypt = require('bcrypt-nodejs')
 
 function usersGet(req, res) {
-    let usuario = req.session.user
+    let usuario = req.session.user,
+        idSucursal = req.session.user.idSucursal
     // verifica que tipo de usuario es
     if( usuario.permisos === 2 ){  // si es admin general
         UserModel.getUsers((error, usuarios) => { // si se pudieron obtener los usuarios
@@ -20,7 +21,7 @@ function usersGet(req, res) {
             )
         })
     } else { // si es admin de sucursal
-        let idSucursal = req.session.user.idSucursal // obtienes el id de la sucursal del usuario
+         // obtienes el id de la sucursal del usuario
         UserModel.getUsersBySucursal(idSucursal, (error, usuarios) => { // si se pudieron obtener los usuarios
             (error) ? ( // si hubo error
                 Utilidad.printError(res, {msg: `Error al obtener los usuarios: ${error}`, tipo: 0})
@@ -33,6 +34,7 @@ function usersGet(req, res) {
 
 function usersNewGet(req, res) {
     let usuario = req.session.user
+
     if( usuario.permisos === 2 ){ // si es admin general
         SucursalModel.getPlazasOfSucursales( (error, sucursales) => { // si se pudo obtener las sucursales
             (error) ? ( // si hubo error
@@ -47,10 +49,10 @@ function usersNewGet(req, res) {
 }
 
 function usersNewPost(req, res) {
-    const usuario = req.session.user
+    let usuario = req.session.user,
+        plaza = req.body.plaza
+    
     if( usuario.permisos === 2 ){ // si es administrador general
-        // declaro constantes necesarias
-        let plaza = req.body.plaza
         // busco la sucursal del nuevo usuario
         SucursalModel.getIdSucursalByPlaza(plaza, (error, idSucursal) => {
             if (error) {
@@ -92,10 +94,10 @@ function usersIdUsuarioGet(req, res) {
     // declarar variables necesarias
     let usuario = req.session.user, // obtengo al usuario logeado
         idUsuario = req.params.idUsuario // obtengo el id del usuario a editar
+
     if( usuario.permisos === 2 ){ //  si es administrador general
         // busca las sucursales
         SucursalModel.getPlazasOfSucursales( (error, sucursales) => { // si no hubo error
-            // si hubo error
             if(error){
                 Utilidad.printError(res, { msg: `Error al obtener la sucursal: ${error}`, tipo:0})
                 return
@@ -124,6 +126,7 @@ function usersIdUsuarioGet(req, res) {
 function usersIdUsuarioPut(req ,res) {
     let usuario = req.session.user, // obtenemos el usuario logeado
         idUsuario = req.params.idUsuario // obtengo el id del usuario
+
     if( usuario.permisos === 2 ){ // si es administrado general
         let plaza = req.body.plaza  // obtengo la nueva sucursal del usuario
         // busco la nueva sucursal
@@ -143,8 +146,17 @@ function usersIdUsuarioPut(req ,res) {
                 permisos:  req.body.permisos === "Administrador" ? 1 : 0,
                 status: req.body.status === "Activo"
             }
-            // encripto la clave
-            usuarioUpdate.password = bcrypt.hashSync(usuarioUpdate.password)
+            // encripto la clave o la elimino
+            if( usuarioUpdate.password != "" ) {
+                usuarioUpdate.password = bcrypt.hashSync(usuarioUpdate.password) 
+            }else{
+                delete usuarioUpdate.password 
+            }
+            if(idSucursal === 0){ // el administrador general se esta editando
+                delete usuarioUpdate.idSucursal
+                delete usuarioUpdate.permisos
+                delete usuarioUpdate.status
+            }
             // guardo los cambios del usuario en la base de datos
             updateUser(res, usuarioUpdate)
         })
@@ -158,8 +170,12 @@ function usersIdUsuarioPut(req ,res) {
             password: req.body.password,
             status: req.body.status === "Activo"
         }
-        // encripto la clave
-        usuarioUpdate.password = bcrypt.hashSync(usuarioUpdate.password)
+        // encripto la clave o la elimino
+        if( usuarioUpdate.password != "" ) {
+            usuarioUpdate.password = bcrypt.hashSync(usuarioUpdate.password) 
+        }else{
+            delete usuarioUpdate.password 
+        }  
         // guardo los cambios del usuario en la base de datos
         updateUser(res, usuarioUpdate)
     }
@@ -188,6 +204,7 @@ function updateUser(res, user) {
         )
     })
 }
+
 
 module.exports = {
     usersGet,

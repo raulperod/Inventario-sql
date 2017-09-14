@@ -4,12 +4,12 @@
 'use strict'
 
 const ProductoModel = require("../models/producto"),
-    AlmacenModel = require("../models/almacen"),
-    MovimientoModel = require("../models/movimiento"),
-    BajaModel = require("../models/baja"),
-    TecnicaModel = require("../models/tecnica"),
-    BasicoModel = require("../models/basico"),
-    Utilidad = require('../ayuda/utilidad')
+      AlmacenModel = require("../models/almacen"),
+      MovimientoModel = require("../models/movimiento"),
+      BajaModel = require("../models/baja"),
+      TecnicaModel = require("../models/tecnica"),
+      BasicoModel = require("../models/basico"),
+      Utilidad = require('../ayuda/utilidad')
 
 function basicosGet(req, res) {
     let usuario = req.session.user
@@ -38,7 +38,6 @@ function basicosPut(req, res) {
         almacen = null,
         idTecnica = null,
         idProducto = null,
-        idCategoria = null,
         promesa = new Promise((resolve, reject) =>{
             // busco el id de la tecnica
             TecnicaModel.getIdTecnicaByFullNameAndIdSucursal(nombreTecnica, usuario.idSucursal,(error, idTecnica) => {
@@ -52,7 +51,7 @@ function basicosPut(req, res) {
             .then(resolved => {
                 idTecnica = resolved
                 return new Promise((resolve, reject) => {
-                    ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
+                    ProductoModel.getIdProductoByCode(codigoProducto, (error, producto) => {
                         return(error) ? ( reject({msg:`Error al obtener el id del producto: ${error}`, tipo: 0}) ) : ( resolve(producto) )
                     })
                 })
@@ -60,7 +59,6 @@ function basicosPut(req, res) {
             // busco el 'basico en uso' del producto con el id del producto y el id de la tecnica
             .then(resolved => {
                 idProducto = resolved.idProducto
-                idCategoria = resolved.idCategoria
                 return new Promise((resolve, reject) => {
                     BasicoModel.getBasicoByProductAndTecnica(idProducto, idTecnica, (error, basico) => {
                         return(error) ? ( reject({msg:`Error al obtener el basico: ${error}`, tipo: 0}) ) : ( resolve(basico) )
@@ -100,11 +98,9 @@ function basicosPut(req, res) {
                 return new Promise((resolve, reject) => {
                     // se genera el movimiento
                     let movimiento = {
-                        idSucursal: usuario.idSucursal,
                         idUsuario: usuario.idUsuario,
                         idTecnica,
-                        idProducto,
-                        idCategoria
+                        idProducto
                     }
                     MovimientoModel.createMovimientoBasico(movimiento, error => {
                         return(error) ? ( reject({msg:`Error al crear el movimiento: ${error}`,tipo: 0}) ) : ( resolve(true) )
@@ -141,7 +137,6 @@ function basicosDelete(req, res) {
         almacen = null,
         idTecnica = null,
         idProducto = null,
-        idCategoria = null,
         promesa = new Promise((resolve, reject) =>{
             // busco el id de la tecnica
             TecnicaModel.getIdTecnicaByFullNameAndIdSucursal(nombreTecnica, usuario.idSucursal,(error, idTecnica) => {
@@ -155,7 +150,7 @@ function basicosDelete(req, res) {
         .then(resolved => {
             idTecnica = resolved
             return new Promise((resolve, reject) => {
-                ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
+                ProductoModel.getIdProductoByCode(codigoProducto,(error, producto) => {
                     return(error) ? ( reject({msg:`Error al obtener el id del producto: ${error}`, tipo: 0}) ) : ( resolve(producto) )
                 })
             })
@@ -163,7 +158,6 @@ function basicosDelete(req, res) {
         // busco el 'basico en uso' del producto con el id del producto y el id de la tecnica
         .then(resolved => {
             idProducto = resolved.idProducto
-            idCategoria = resolved.idCategoria
             return new Promise((resolve, reject) => {
                 BasicoModel.getBasicoByProductAndTecnica(idProducto, idTecnica, (error, basico) => {
                     return(error) ? ( reject({msg:`Error al obtener el basico: ${error}`, tipo: 0}) ) : ( resolve(basico) )
@@ -197,11 +191,9 @@ function basicosDelete(req, res) {
             return new Promise((resolve, reject) => {
                 // se genera el movimiento
                 let baja = {
-                    idSucursal: usuario.idSucursal,
                     idUsuario: usuario.idUsuario,
                     idTecnica,
-                    idProducto,
-                    idCategoria
+                    idProducto
                 }
                 BajaModel.createBajaBasico(baja, error => {
                     return(error) ? ( reject({msg:`Error al crear la baja: ${error}`,tipo: 0}) ) : ( resolve(true) )

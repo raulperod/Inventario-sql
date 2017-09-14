@@ -24,10 +24,12 @@ block contenido
                   input.form-control(type="number", value=productoUpdate.minimo ,name="minimo", min="0", max="10000" required,id="min")
                 .form-group
                   h5  Categoria:
-                  select.form-control.selectpicker(name="categoria", data-live-search="true")
+                  select.form-control(name="categoria")
+                    option #{productoUpdate.nombreCategoria}
                     for categoria in categorias
-                      option #{categoria.nombre}
-                //esto todavia hay que ver los estilos para poner un select en vez de un input
+                      if categoria.nombre != productoUpdate.nombreCategoria
+                        option #{categoria.nombre}
+                
                 // boton para registrar
                 if productoUpdate.esBasico
                   .form-group
