@@ -92,7 +92,6 @@ function productsIdProductoGet(req, res) {
             (error) ? (
                 Utilidad.printError(res, { msg: `Error al obtener el producto: ${error}`, tipo: 0})
             ) : (
-                req.session.productoUpdate = productoUpdate,
                 res.render("./products/update",{ usuario, categorias, productoUpdate })
             )
         })
@@ -124,9 +123,7 @@ function productsIdProductoPut(req, res) {
             if(error) {
                 Utilidad.printError(res, {msg: `Error al editar el producto: ${error}`, tipo: 1})
             } else {
-                if(productoUpdate.esbasico && req.session.productoUpdate.esBasico == 0) generarBasicosEnUso(req, res, productoUpdate.codigo)
-                // restablesco el productoUpdate
-                req.session.productoUpdate = null
+                if(productoUpdate.esbasico) generarBasicosEnUso(req, res, productoUpdate.codigo)
                 //res.redirect('/products')
                 res.json({msg:"",tipo:3})
             }
@@ -258,9 +255,9 @@ function generarBasicosEnUso(req, res, productCode) {
             // obtengo el id de las tecnicas
             TecnicaModel.getAllIdTecnica((error, tecnicas) => {
                 if(error){ // si hubo error
-                    Utilidad.printError(res, {msg:`Error al obtener las tecnicas: ${error}`, tipo: 0})
+                    Utilidad.printError(res, {msg:`Error al obtener las tecsnicas: ${error}`, tipo: 0})
                 } else { // si no hubo error
-                    tecnicas.forEach(tecnica => generarBasicoEnUso(req, res, idTecnica, producto.idProducto))
+                    tecnicas.forEach(tecnica => generarBasicoEnUso(req, res, tecnica.idTecnica, producto.idProducto))
                 }
             })
         }

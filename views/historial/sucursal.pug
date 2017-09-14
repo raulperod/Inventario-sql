@@ -51,7 +51,7 @@ block contenido
                         label Producto:
                         select.form-control(id="producto" name="basico" )
                           for basico in basicos
-                            option(name="1") #{basico.nombre}
+                            option #{basico.nombre}
                 .col-lg-10.col-lg-offset-1
                   #grafica
   script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js') 

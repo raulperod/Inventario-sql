@@ -11,7 +11,7 @@ function getMovimientosNoBasicos(next) {
                 FROM movimientos m
                 JOIN productos p ON m.idProducto = p.idProducto
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
-                JOIN sucursales s ON m.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN sucursales s ON u.idSucursal = s.idSucursal`, (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -24,7 +24,7 @@ function getMovimientosBasicos(next) {
                 JOIN productos p ON m.idProducto = p.idProducto
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
                 JOIN tecnicas t ON m.idTecnica = t.idTecnica
-                JOIN sucursales s ON m.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN sucursales s ON u.idSucursal = s.idSucursal`, (error, resultado, fields) => {
 
             next(error, resultado)
         })

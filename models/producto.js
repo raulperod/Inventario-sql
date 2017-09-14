@@ -7,7 +7,7 @@ const ProductModel = require('./coneccion')
 
 function getProductById(idProduct, next) {
     ProductModel
-        .query(`SELECT p.idProducto, p.nombre, p.codigo, p.descripcion, p.minimo, c.nombre nombreCategoria
+        .query(`SELECT p.idProducto, p.nombre, p.codigo, p.descripcion, p.minimo, p.esBasico, c.nombre nombreCategoria
                 FROM productos p
                 JOIN categorias c ON p.idCategoria = c.idCategoria
                 WHERE p.idProducto = ?`, idProduct ,(error, resultado, fields) => {

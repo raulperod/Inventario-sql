@@ -123,7 +123,7 @@ function historialSucursalBasicosPost(req, res) {
         codigoProducto = getCodigoByName(req.session.basicos, req.body.basico)
 
     // obtener el id del producto a comparar
-    ProductoModel.getIdProductoAndIdCategoriaByCode(codigoProducto,(error, producto) => {
+    ProductoModel.getIdProductoByCode(codigoProducto,(error, producto) => {
         if(!error){
             EstadisticaModel.getComparacion(idSucursal, producto.idProducto, inicio, final, (error, comparacion) => {
                 if(!error){

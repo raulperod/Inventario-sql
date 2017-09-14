@@ -11,7 +11,7 @@ function getBajasNoBasicos(next) {
                 FROM bajas b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
-                JOIN sucursales s ON b.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN sucursales s ON u.idSucursal = s.idSucursal`, (error, resultado, fields) => {
 
             next(error, resultado)
          })
@@ -24,7 +24,7 @@ function getBajasBasicos(next) {
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
                 JOIN tecnicas t ON b.idTecnica = t.idTecnica
-                JOIN sucursales s ON b.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN sucursales s ON u.idSucursal = s.idSucursal OR t.idSucursal = s.idSucursal`, (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -36,7 +36,7 @@ function getBajasNoBasicosBySucursal(idSucursal, next) {
                 FROM bajas b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
-                WHERE b.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
+                WHERE u.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -49,7 +49,7 @@ function getBajasBasicosBySucursal(idSucursal, next) {
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
                 JOIN tecnicas t ON b.idTecnica = t.idTecnica
-                WHERE b.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
+                WHERE u.idSucursal = ? OR t.idSucursal = ?`, [idSucursal, idSucursal], (error, resultado, fields) => {
 
             next(error, resultado)
         })

@@ -64,7 +64,7 @@ function getConsumoByPlazaAndCategory(plaza, categoria, next) {
         .query(`SELECT p.nombre nombreProducto, p.codigo, a.cantidadConsumo 
                 FROM almacen a 
                 JOIN productos p on a.idProducto = p.idProducto
-                JOIN categorias c on a.idCategoria = c.idCategoria AND c.nombre = ?
+                JOIN categorias c on p.idCategoria = c.idCategoria AND c.nombre = ?
                 JOIN sucursales s on a.idSucursal = s.idSucursal AND s.plaza = ?` 
                 , [categoria, plaza], (error, resultado, fields) => {
 
@@ -77,7 +77,7 @@ function getConsumoBySucursalAndCategory(idSucursal, categoria, next) {
         .query(`SELECT a.idAlmacen, p.nombre nombreProducto, p.codigo, c.nombre nombreCategoria, a.cantidadConsumo, p.esBasico
                 FROM almacen a
                 JOIN productos p ON a.idProducto = p.idProducto
-                JOIN categorias c ON a.idCategoria = c.idCategoria AND c.nombre = ?
+                JOIN categorias c ON p.idCategoria = c.idCategoria AND c.nombre = ?
                 WHERE a.idSucursal = ?` , [categoria, idSucursal] ,(error, resultado, fields) => {
 
             next(error, resultado)
