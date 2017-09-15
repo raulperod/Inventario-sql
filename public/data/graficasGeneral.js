@@ -9,7 +9,7 @@ var formularioTopTen,
     bar: { groupWidth: "80%" },
     width: 900,
     height: 400
-},
+    },
     grafica;//para la grafica// funcion que obtiene el nombre de los productos
 
 // funcion que agrega las nuevas filas a la tabla
@@ -60,7 +60,6 @@ function obtenerTopTen() {
         type: 'POST',
         data: formularioTopTen.serialize(),
         success : function(data) {
-            console.log(data)
             // top ten
             eliminaFilas(); // elimino las filas
             // si no he inicializado productos
@@ -76,7 +75,6 @@ function obtenerComparacion() {
         data: formularioComparacion.serialize(),
         success : function(data) {
             // top ten
-            console.log(data)
             dibujar(data)
         }
     });

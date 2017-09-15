@@ -32,6 +32,7 @@ block contenido
                       table#dataTables-example.table.table-striped.table-bordered.table-hover
                         thead
                           tr
+                            th Codigo 
                             th Producto
                             th Cantidad
                         tbody
@@ -54,16 +55,47 @@ block contenido
                             option #{basico.nombre}
                 .col-lg-10.col-lg-offset-1
                   #grafica
-  script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js') 
-  script(src='/public/vendor/jquery/jquery.min.js')
+                  
+  // jQuery
+  script(src='/public/dataTables/jquery/jquery.js') 
   script(src='/public/data/fechaInicial.js')
-  script(src='/public/data/graficasSucursal.js' charset="utf-8")
   // Bootstrap Core JavaScript
   script(src='/public/vendor/bootstrap/js/bootstrap.min.js')
   // Metis Menu Plugin JavaScript
   script(src='/public/vendor/metisMenu/metisMenu.min.js')
   // DataTables JavaScript
+  script(src='/public/stuk/dist/jszip.min.js')
+  script(src='/public/dataTables/media/js/jquery.dataTables.min.js')
+  script(src='/public/dataTables/media/js/dataTables.bootstrap.min.js')
+  script(src='/public/dataTables/extensions/Responsive/js/dataTables.responsive.js')
+  script(src='/public/dataTables/extensions/Buttons/js/dataTables.buttons.min.js')
+  script(src='/public/dataTables/extensions/Buttons/js/buttons.html5.min.js')
+  script(src='/public/pdfmake/build/pdfmake.min.js')
+  script(src='/public/pdfmake/build/vfs_fonts.js')
   // Custom Theme JavaScript
   script(src='/public/dist/js/sb-admin-2.js')
-  // inputs inicial del date  
-    
+  // scripts
+  script.
+    $('#dataTables-example').DataTable({
+        responsive: true,
+        "order": [[ 2, "desc" ]],
+        dom: 'Bfrtip',
+        buttons: [
+             {
+                extend: 'excelHtml5',
+                title: 'TopTen',
+                exportOptions: {
+                    columns: [ 0, 1, 2 ]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'TopTen',
+                exportOptions: {
+                    columns: [ 0, 1, 2 ]
+                }
+            }
+        ]
+    }); 
+  script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js') 
+  script(src='/public/data/graficasSucursal.js' charset="utf-8")

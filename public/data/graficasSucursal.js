@@ -9,25 +9,29 @@ var formularioTopTen,
     bar: { groupWidth: "80%" },
     width: 900,
     height: 400
-},
+    },
     grafica;//para la grafica
 
 // funcion que agrega las nuevas filas a la tabla
 function agregarFilas(bajas){
-    for(var i=0 ; bajas[i] && i<10 ; i++){
-        var nombre = bajas[i].nombre;
-        var cantidad = bajas[i].cantidad;
-        $('#dataTables-example tr:last').after('<tr><td>'+nombre+'</td><td>'+cantidad+'</td></tr>');
+    var table = $('#dataTables-example').DataTable();
+    for(var i=0 ; bajas[i] ; i++){
+        var baja = bajas[i],
+            nombre = baja.nombre,
+            codigo = baja.codigo,
+            cantidad = baja.cantidad;
+
+        table.row.add([
+            codigo,
+            nombre,
+            cantidad
+        ]);
     }
+    table.draw();
 }
 // elimina todas las filas de la tabla, menos la principal
 function eliminaFilas(){
-    // Obtenemos el total de columnas (tr) del id "dataTables-example"
-    var trs=$("#dataTables-example tr").length;
-    for(var i=1 ; i<trs ; i++){
-        // Eliminamos la ultima columna
-        $("#dataTables-example tr:last").remove();
-    }
+    $('#dataTables-example').DataTable().clear().draw();
 };
 // dibuja la grafica de comparar basicos por tecnica inicial
 function dibujar(data){
