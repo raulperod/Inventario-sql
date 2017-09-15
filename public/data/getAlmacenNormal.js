@@ -1,4 +1,5 @@
-var formularioAlmacen;
+var formularioAlmacen,
+    table;
 // funcion que agrega las nuevas filas a la tabla
 function agregarFilas(productos){
     for(var i=0 ; productos[i] ; i++){
@@ -117,6 +118,11 @@ function activarBotones(){
     })
 }
 
+function desactivarBotones(){
+    $("button[name=button1]").unbind('click');
+    $("button[name=button2]").unbind('click');
+}
+
 // obtencion de los datos para el top ten
 function obtenerAlmacen() {
     $.ajax({
@@ -126,7 +132,6 @@ function obtenerAlmacen() {
         success : function(data) {
             // Almacen
             agregarFilas(data);
-            activarBotones();
         }
     });
 }
@@ -141,7 +146,6 @@ function reiniciarAlmacen() {
             // Almacen
             eliminaFilas();
             agregarFilas(data);
-            activarBotones();
         }
     });
 }
@@ -156,6 +160,12 @@ $(function(){
     $("select[name=categoria]").change(function(){
         reiniciarAlmacen();
     });
+
+    $('#dataTables-example').on( 'draw.dt', function () {
+        desactivarBotones()
+        activarBotones();
+    });
+    
 });
 
     

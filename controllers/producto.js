@@ -92,6 +92,7 @@ function productsIdProductoGet(req, res) {
             (error) ? (
                 Utilidad.printError(res, { msg: `Error al obtener el producto: ${error}`, tipo: 0})
             ) : (
+                res.session.productoUpdate = productoUpdate,
                 res.render("./products/update",{ usuario, categorias, productoUpdate })
             )
         })
@@ -123,7 +124,9 @@ function productsIdProductoPut(req, res) {
             if(error) {
                 Utilidad.printError(res, {msg: `Error al editar el producto: ${error}`, tipo: 1})
             } else {
-                if(productoUpdate.esbasico) generarBasicosEnUso(req, res, productoUpdate.codigo)
+                if(productoUpdate.esbasico && !res.session.productoUpdate.esBasico){ 
+                    generarBasicosEnUso(req, res, productoUpdate.codigo)
+                }
                 //res.redirect('/products')
                 res.json({msg:"",tipo:3})
             }
@@ -270,9 +273,17 @@ function generarBasicoEnUso(req, res, idTecnica, idProducto) {
         idProducto,
         enUso: false
     }
-    // guardo el basico en uso
-    BasicoModel.createBasico(basico, error => {
-        if(error) Utilidad.printError(res, {msg:`Error al crear el basico en uso: ${error}`, tipo: 0})
+    // compruebo que no haya basicoenuso repetido
+    BasicoModel.getBasicoByProductAndTecnica(basico.idProducto, basico.idTecnica, (error, bas) => {
+        if(bas || error){
+            // no hago nada, ya existe    
+            console.log(`Error, ya existe basico en uso`)
+        }else{
+            // guardo el basico en uso
+            BasicoModel.createBasico(basico, error => {
+                if(error) Utilidad.printError(res, {msg:`Error al crear el basico en uso: ${error}`, tipo: 0})
+            })
+        }
     })
 }
 

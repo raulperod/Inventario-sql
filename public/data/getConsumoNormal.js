@@ -79,6 +79,10 @@ function activarBotones(){
     })
 }
 
+function desactivarBotones(){
+    $("button[name=button1]").unbind('click');
+}
+
 // obtencion de los datos para el top ten
 function obtenerConsumo() {
     $.ajax({
@@ -88,7 +92,6 @@ function obtenerConsumo() {
         success : function(data) {
             // Almacen
             agregarFilas(data);
-            activarBotones();
         }
     });
 }
@@ -104,7 +107,6 @@ function reiniciarConsumo() {
             // Almacen
             eliminaFilas();
             agregarFilas(data);
-            activarBotones();
         }
     });
 }
@@ -118,5 +120,10 @@ $(function(){
     // select de sucursal
     $("select[name=categoria]").change(function(){
         reiniciarConsumo();
+    });
+
+    $('#dataTables-example').on( 'draw.dt', function () {
+        desactivarBotones()
+        activarBotones();
     });
 });
