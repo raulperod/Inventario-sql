@@ -97,7 +97,12 @@ function tecnicasIdTecnicaGet(req, res) {
                 (error) ? (
                     Utilidad.printError(res, { msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
                 ) : (
-                    res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate: tecnicaUpdate })
+                    (comprobarTecnicaGeneral(tecnicaUpdate)) ? (
+                        res.render('./tecnicas/update', { usuario, sucursales, tecnicaUpdate })
+                    ) : (
+                        res.redirect('/tecnicas')
+                    )
+                    
                 )
             })
         })
@@ -107,7 +112,11 @@ function tecnicasIdTecnicaGet(req, res) {
             (error) ? (
                 Utilidad.printError(res, { msg: `Error al obtener la tecnica: ${error}`, tipo: 0})
             ) : (
-                res.render('./tecnicas/update', { usuario, tecnicaUpdate })
+                (comprobarTecnica(tecnicaUpdate, usuario)) ? (
+                    res.render('./tecnicas/update', { usuario, tecnicaUpdate })
+                ) : (
+                    res.redirect('/tecnicas')
+                )
             )
         })
     }
@@ -202,6 +211,22 @@ function generarBasicoEnUso(res, idTecnica, idProducto) {
     BasicoModel.createBasico(basico, error => {
         if(error) Utilidad.printError(res, {msg:`Error al crear basico en uso: ${error}`, tipo: 0})
     })
+}
+
+function comprobarTecnica(tecnicaUpdate, usuario){
+    try{
+        return tecnicaUpdate.idSucursal === usuario.idSucursal 
+    }catch(error){
+        return false
+    }
+}
+
+function comprobarTecnicaGeneral(tecnicaUpdate){
+    try{
+        return tecnicaUpdate.idTecnica != null 
+    }catch(error){
+        return false
+    }
 }
 
 module.exports = {

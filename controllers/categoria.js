@@ -39,14 +39,19 @@ function categoriesNewPost(req, res) {
 
 function categoriesIdCategoryGet(req, res) {
     let idCategory = req.params.idCategoria
-    // busco la categoria
+    // busco la categoria 
     CategoryModel.getCategoryById(idCategory, (error, categoryUpdate) => { // si no hubo error
-        (error) ? (
+        if(error){
             Utilidad.printError(res, { msg: `Error al obtener la categoria: ${error}`, tipo: 0})
-        ) : (
-            res.render('./categories/update', { usuario: req.session.user, categoryUpdate })
-        )
+        }else{
+            ( comprobarCategoria(categoryUpdate) ) ? (
+                res.render('./categories/update', { usuario: req.session.user, categoryUpdate })
+            ) : (
+                res.redirect('/categories')
+            ) 
+        }
     })
+    
 }
 
 function categoriesIdCategoryPut(req, res) {
@@ -73,6 +78,15 @@ function categoriesIdCategoryDelete(req, res) {
         if(error) Utilidad.printError(res, {msg:`Error al borrar la categoria`, tipo: 0})
         res.redirect('/categories')
     })
+}
+
+function comprobarCategoria(categoria){
+    try {
+        return categoria.idCategoria != null
+    } catch (error) {
+        return false
+    }
+    
 }
 
 module.exports = {

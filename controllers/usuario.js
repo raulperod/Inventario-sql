@@ -107,7 +107,11 @@ function usersIdUsuarioGet(req, res) {
                 (error) ? (
                     Utilidad.printError(res, { msg: `Error al obtener el usuario: ${error}`, tipo:0})
                 ) : (
-                    res.render('./users/update', { sucursales, usuarioUpdate, usuario })
+                    (comprobarUsuarioGeneral(usuarioUpdate)) ? (
+                        res.render('./users/update', { sucursales, usuarioUpdate, usuario })
+                    ) : (
+                        res.redirect('/users')
+                    )
                 )
             })
         })
@@ -117,7 +121,12 @@ function usersIdUsuarioGet(req, res) {
             (error) ? ( // si hubo error
                 Utilidad.printError(res, { msg: `Error al obtener el usuario: ${error}`, tipo:0})
             ) : ( // si no hubo error
-                res.render('./users/update', { usuarioUpdate, usuario })
+                // compruebo si pertenece a su sucursal
+                (comprobarUsuario(usuarioUpdate, usuario)) ?  (
+                    res.render('./users/update', { usuarioUpdate, usuario })
+                ) : (
+                    res.redirect("/users")
+                )
             )
         })
     }
@@ -205,6 +214,21 @@ function updateUser(res, user) {
     })
 }
 
+function comprobarUsuario(usuarioUpdate, usuario){
+    try{
+        return usuarioUpdate.idSucursal === usuario.idSucursal && usuarioUpdate.permisos < usuario.permisos 
+    }catch(error){
+        return false
+    }
+}
+
+function comprobarUsuarioGeneral(usuarioUpdate){
+    try{
+        return usuarioUpdate.idSucursal != null 
+    }catch(error){
+        return false
+    }
+}
 
 module.exports = {
     usersGet,

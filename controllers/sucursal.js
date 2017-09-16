@@ -59,7 +59,12 @@ function sucursalesIdSucursalGet(req, res) {
         (error) ? ( // si hubo error
             Utilidad.printError(res, { msg: `Error al obtener la sucursal: ${error}`, tipo: 0 })
         ) : ( // si no hubo error
-            res.render('./sucursales/update', {  usuario, sucursalUpdate })
+            (comprobarSucursal(sucursalUpdate)) ? (
+                res.render('./sucursales/update', {  usuario, sucursalUpdate })
+            ) : (
+                res.redirect('/sucursales')
+            )
+
         )
     })
 }
@@ -111,6 +116,14 @@ function generarAlmacen(req, res, idSucursal, idProducto) {
     AlmacenModel.createAlmacen(nuevoAlmacen, error => {
         if(error) Utilidad.printError(res, {msg:`Error al crear el almacen: ${error}`, tipo: 1})
     })
+}
+
+function comprobarSucursal(sucursalUpdate){
+    try {
+        return sucursalUpdate.idSucursal != null
+    } catch (error) {
+        return false
+    }
 }
 
 module.exports = {

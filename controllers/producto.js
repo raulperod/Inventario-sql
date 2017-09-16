@@ -92,8 +92,13 @@ function productsIdProductoGet(req, res) {
             if(error){
                 Utilidad.printError(res, { msg: `Error al obtener el producto: ${error}`, tipo: 0})
             }else{  
-                req.session.productoUpdate = productoUpdate
-                res.render("./products/update",{ usuario, categorias, productoUpdate })
+                (comprobarProducto(productoUpdate)) ? (
+                    req.session.productoUpdate = productoUpdate,
+                    res.render("./products/update",{ usuario, categorias, productoUpdate })
+                ) : (
+                    res.redirect('/products')
+                )
+                
             }
         })
     })
@@ -285,6 +290,14 @@ function generarBasicoEnUso(req, res, idTecnica, idProducto) {
             })
         }
     })
+}
+
+function comprobarProducto(producto){
+    try {
+        return producto.idProducto != null
+    } catch (error) {
+        return false
+    }
 }
 
 module.exports = {
