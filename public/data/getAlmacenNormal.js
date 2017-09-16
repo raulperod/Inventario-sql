@@ -37,8 +37,8 @@ function getFilas(nombre, codigo, cantidad, minimo, idAlmacen, esBasico){
         string4 += '<b>&nbsp &nbsp &nbsp</b><button type="submit/image" alt="text" name="button2" disabled="disabled" class="btn btn-danger btn-circle"><i title="Pasar a consumo" class="fa fa-minus"></i></button>';
     }
     table.row.add([
-        string1,
         string2,
+        string1,
         string3,
         string4
     ]);

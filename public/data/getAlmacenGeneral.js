@@ -26,8 +26,8 @@ function getFilas(nombre, codigo, cantidad, minimo){
     }
      
     table.row.add([
-        string1,
         string2,
+        string1,
         string3
     ]);
 }

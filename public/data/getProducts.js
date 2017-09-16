@@ -32,9 +32,9 @@ function getFilas(nombre, descripcion, codigo, minimo, basico, idProducto){
     string6 += '<form id="eliminar" style="display:inline" action="/products/'+idProducto+'?_method=DELETE" method="POST" onsubmit="return confirm(\'¿Continuar con la eliminación?\')">';
     string6 += '<button type="submit/image" alt="text" value="" class="btn btn-danger btn-circle"><i title="Eliminar" class="fa fa-times"></i></button></form>';
     table.row.add([
+        string3,
         string1,
         string2,
-        string3,
         string4,
         string5,
         string6

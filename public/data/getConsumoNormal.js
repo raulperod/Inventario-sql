@@ -36,8 +36,8 @@ function getFilas(nombre, codigo, cantidad, idAlmacen, esBasico){
         string4 += '</form></fieldset>';
     }
     table.row.add([
-        string1,
         string2,
+        string1,
         string3,
         string4
     ]);

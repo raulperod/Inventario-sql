@@ -21,8 +21,8 @@ function getFilas(nombre, codigo, cantidad){
     string3 = '<td>' + cantidad + '</td>';
 
     table.row.add([
-        string1,
         string2,
+        string1,
         string3
     ]);
 }
