@@ -80,7 +80,8 @@ function almacenIdAlmacenAddPut(req, res) {
                             idUsuario: usuario.idUsuario,
                             idProducto: almacen.idProducto,
                             cantidad,
-                            tipo: 1 // es una alta
+                            tipo: 1, // es una alta
+                            fecha: fechaActual()
                         }
                         // guardo el movimiento que ocurrio
                         MovimientoModel.createMovimientoNoBasico(movimiento, error => {
@@ -132,7 +133,8 @@ function almacenIdAlmacenSubPut(req, res) {
                             idUsuario: usuario.idUsuario,
                             idProducto: almacen.idProducto,
                             cantidad: ( verificar ) ? ( almacen.cantidadAlmacen ) : ( cantidad ),
-                            tipo: 0 // es una baja
+                            tipo: 0, // es una baja
+                            fecha: fechaActual()
                         }
                         // guardo el movimiento que ocurrio
                         MovimientoModel.createMovimientoNoBasico(movimiento, error => {
@@ -148,6 +150,12 @@ function almacenIdAlmacenSubPut(req, res) {
             }
         })
     }
+}
+
+function fechaActual(){
+    let fecha = new Date(); // obtengo la fecha actual
+    fecha.setHours(fecha.getHours() - 7) // le resto 7 horas a la hora actual
+    return fecha // regreso la fecha
 }
 
 module.exports = {

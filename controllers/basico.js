@@ -100,7 +100,8 @@ function basicosPut(req, res) {
                     let movimiento = {
                         idUsuario: usuario.idUsuario,
                         idTecnica,
-                        idProducto
+                        idProducto,
+                        fecha: fechaActual()
                     }
                     MovimientoModel.createMovimientoBasico(movimiento, error => {
                         return(error) ? ( reject({msg:`Error al crear el movimiento: ${error}`,tipo: 0}) ) : ( resolve(true) )
@@ -193,7 +194,8 @@ function basicosDelete(req, res) {
                 let baja = {
                     idUsuario: usuario.idUsuario,
                     idTecnica,
-                    idProducto
+                    idProducto,
+                    fecha: fechaActual()
                 }
                 BajaModel.createBajaBasico(baja, error => {
                     return(error) ? ( reject({msg:`Error al crear la baja: ${error}`,tipo: 0}) ) : ( resolve(true) )
@@ -238,6 +240,11 @@ function getCodigoByName(basicos, nombre){
     return codigo
 }
 
+function fechaActual(){
+    let fecha = new Date(); // obtengo la fecha actual
+    fecha.setHours(fecha.getHours() - 7) // le resto 7 horas a la hora actual
+    return fecha // regreso la fecha
+}
 
 module.exports = {
     basicosGet,

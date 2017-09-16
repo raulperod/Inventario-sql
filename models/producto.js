@@ -11,7 +11,7 @@ function getProductById(idProduct, next) {
                 FROM productos p
                 JOIN categorias c ON p.idCategoria = c.idCategoria
                 WHERE p.idProducto = ?`, idProduct ,(error, resultado, fields) => {
-
+                   
             next(error, resultado[0])
         })
 }

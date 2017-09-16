@@ -82,7 +82,8 @@ function consumosIdConsumoPut(req, res) {
                         let baja = {
                             idUsuario: usuario.idUsuario,
                             idProducto: almacen.idProducto,
-                            cantidad: ( verificar ) ? ( almacen.cantidadConsumo ) : ( cantidad )
+                            cantidad: ( verificar ) ? ( almacen.cantidadConsumo ) : ( cantidad ),
+                            fecha: fechaActual()
                         }
                         // guardo el movimiento que ocurrio
                         BajaModel.createBajaNoBasico(baja, error => {
@@ -98,6 +99,12 @@ function consumosIdConsumoPut(req, res) {
             }
         })
     }
+}
+
+function fechaActual(){
+    let fecha = new Date(); // obtengo la fecha actual
+    fecha.setHours(fecha.getHours() - 7) // le resto 7 horas a la hora actual
+    return fecha // regreso la fecha
 }
 
 module.exports = {

@@ -89,12 +89,12 @@ function productsIdProductoGet(req, res) {
         }
         // busco el producto a editar
         ProductModel.getProductById(idProducto, (error, productoUpdate) => { // si no hubo error
-            (error) ? (
+            if(error){
                 Utilidad.printError(res, { msg: `Error al obtener el producto: ${error}`, tipo: 0})
-            ) : (
-                res.session.productoUpdate = productoUpdate,
+            }else{  
+                req.session.productoUpdate = productoUpdate
                 res.render("./products/update",{ usuario, categorias, productoUpdate })
-            )
+            }
         })
     })
 }
@@ -124,7 +124,7 @@ function productsIdProductoPut(req, res) {
             if(error) {
                 Utilidad.printError(res, {msg: `Error al editar el producto: ${error}`, tipo: 1})
             } else {
-                if(productoUpdate.esbasico && !res.session.productoUpdate.esBasico){ 
+                if(productoUpdate.esbasico && !req.session.productoUpdate.esBasico){ 
                     generarBasicosEnUso(req, res, productoUpdate.codigo)
                 }
                 //res.redirect('/products')
