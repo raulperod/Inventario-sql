@@ -7,7 +7,7 @@ const TecnicaModel = require('./coneccion')
 
 function getTecnicaById(idTecnica, next) {
     TecnicaModel
-        .query(`SELECT t.nombre, t.apellido, t.idTecnica, s.plaza
+        .query(`SELECT t.nombre, t.apellido, t.idTecnica, t.idSucursal , s.plaza
                 FROM tecnicas t
                 JOIN sucursales s ON t.idSucursal = s.idSucursal
                 WHERE t.idTecnica = ?`, idTecnica, (error, resultado, fields) => {

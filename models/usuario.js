@@ -8,7 +8,7 @@ const UserModel = require('./coneccion')
 
 function getUserById(idUser, next) {
     UserModel
-        .query(`SELECT u.idUsuario, u.username, u.nombre, u.apellido, u.status, u.permisos, s.plaza
+        .query(`SELECT u.idUsuario, u.username, u.nombre, u.apellido, u.status, u.permisos, u.idSucursal, s.plaza
                 FROM usuarios u 
                 JOIN sucursales s ON u.idSucursal = s.idSucursal
                 WHERE u.idUsuario = ?`, idUser ,(error, resultado, fields) => {
