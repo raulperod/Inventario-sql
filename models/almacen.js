@@ -93,6 +93,15 @@ function createAlmacen(almacen, next) {
         })
 }
 
+function createAlmacenes(almacenes, next){
+    AlmacenModel
+        .query(`INSERT INTO almacen ( idSucursal, idProducto ) 
+                VALUES ?`, [almacenes], (error, resultado, fields) => {
+
+            next(error)
+        })
+}
+
 function updateAlmacen(almacen, next) {
     AlmacenModel
         .query(`UPDATE almacen 
@@ -112,5 +121,6 @@ module.exports = {
     getConsumoByPlazaAndCategory,
     getConsumoBySucursalAndCategory,
     createAlmacen,
+    createAlmacenes,
     updateAlmacen
 }

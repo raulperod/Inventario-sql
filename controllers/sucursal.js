@@ -99,22 +99,18 @@ function sucursalesIdSucursalDelete(req, res) {
 function generarAlmacenes(req, res, idSucursal){
     // busco todos los productos registrados
     ProductModel.getAllIdProducto((error, productos) => {
-        (error) ? (
+        if(error){
             Utilidad.printError(res, {msg: `Error al obtener los ids de los productos: ${error}`, tipo: 0})
-        ) : (
-            productos.forEach(producto => generarAlmacen(req, res, idSucursal, producto.idProducto))
-        )
-    })
-}
-
-function generarAlmacen(req, res, idSucursal, idProducto) {
-    // genero un almacen, con la sucursal y el producto dado
-    let nuevoAlmacen = {
-        idProducto,
-        idSucursal
-    }
-    AlmacenModel.createAlmacen(nuevoAlmacen, error => {
-        if(error) Utilidad.printError(res, {msg:`Error al crear el almacen: ${error}`, tipo: 1})
+        }else{
+            let values = []
+            for(let i=0 ; productos[i] ; i++){
+                values.push([ idSucursal, productos[i].idProducto])
+            }     
+            
+            AlmacenModel.createAlmacenes(values, (error) => {
+                if(error) Utilidad.printError(res, {msg:`Error al crear el almacen: ${error}`, tipo: 1})
+            })
+        }
     })
 }
 
