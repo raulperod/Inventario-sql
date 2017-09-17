@@ -5,51 +5,57 @@
 
 const BajaModel = require('./coneccion')
 
-function getBajasNoBasicos(next) {
+function getBajasNoBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, next) {
     BajaModel
-        .query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, b.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, b.fecha
                 FROM bajas b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
-                JOIN sucursales s ON u.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN categoria c ON p.idCategoria = c.idCategoria
+                JOIN sucursales s ON u.idSucursal = s.idSucursal
+                WHERE (b.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, categoria], (error, resultado, fields) => {
 
             next(error, resultado)
          })
 }
 
-function getBajasBasicos(next) {
+function getBajasBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, next) {
     BajaModel
-        .query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, b.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, b.fecha
                 FROM bajasbasicos b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
                 JOIN tecnicas t ON b.idTecnica = t.idTecnica
-                JOIN sucursales s ON u.idSucursal = s.idSucursal OR t.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN categoria c ON p.idCategoria = c.idCategoria
+                JOIN sucursales s ON u.idSucursal = s.idSucursal OR t.idSucursal = s.idSucursal
+                WHERE (b.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, categoria], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getBajasNoBasicosBySucursal(idSucursal, next) {
+function getBajasNoBasicosByIdSucursalAndCategoria(idSucursal, category, inicio, final, next) {
     BajaModel
-        .query(`SELECT p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, b.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, b.cantidad, concat(u.nombre,' ',u.apellido) nombreUsuario, b.fecha
                 FROM bajas b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
-                WHERE u.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                WHERE (b.fecha BETWEEN ? AND ?) AND u.idSucursal = ? AND c.nombre = ?`, [inicio, final, idSucursal, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getBajasBasicosBySucursal(idSucursal, next) {
+function getBajasBasicosByIdSucursalAndCategoria(idSucursal, category, inicio, final, next) {
     BajaModel
-        .query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, b.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, b.fecha
                 FROM bajasbasicos b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
                 JOIN tecnicas t ON b.idTecnica = t.idTecnica
-                WHERE u.idSucursal = ? OR t.idSucursal = ?`, [idSucursal, idSucursal], (error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                WHERE (b.fecha BETWEEN ? AND ?) AND (u.idSucursal = ? OR t.idSucursal = ?) AND c.nombre = ?`, [inicio, final, idSucursal, idSucursal, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -74,10 +80,10 @@ function createBajaBasico(baja, next) {
 }
 
 module.exports = {
-    getBajasNoBasicos,
-    getBajasBasicos,
-    getBajasNoBasicosBySucursal,
-    getBajasBasicosBySucursal,
+    getBajasNoBasicosByPlazaAndCategoria,
+    getBajasBasicosByPlazaAndCategoria,
+    getBajasNoBasicosByIdSucursalAndCategoria,
+    getBajasBasicosByIdSucursalAndCategoria,
     createBajaNoBasico,
     createBajaBasico
 }

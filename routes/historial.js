@@ -13,8 +13,10 @@ historial
     .get( HistorialController.historialMovimientosGet )
     .post( HistorialController.historialMovimientosPost )
 // gelishtime/historial/bajas
-// Metodo GET
-historial.get("/bajas", HistorialController.historialBajasGet )
+historial
+    .route('/bajas')
+    .get( HistorialController.historialBajasGet )
+    .post( HistorialController.historialBajasPost )
 // gelishtime/historial/general
 // Metodo GET
 historial.get("/general", HistorialController.historialGeneralGet )

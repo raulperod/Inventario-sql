@@ -13,8 +13,7 @@ const MovimientoModel = require('../models/movimiento'),
       Utilidad = require('../ayuda/utilidad')
 
 function historialMovimientosGet(req, res) {
-    let usuario = req.session.user,
-        idSucursal = usuario.idSucursal
+    let usuario = req.session.user
 
     if( usuario.permisos === 1){ // si es administrador de sucursales
         CategoriaModel.getNamesOfCategories((error, categorias) => {
@@ -47,7 +46,7 @@ function historialMovimientosPost(req, res) {
         final = sumarDia( req.body.final ),
         idSucursal = usuario.idSucursal,
         categoria = req.body.categoria,
-        sucursal = (usuario.permisos === 1) ? null : req.body.plaza
+        plaza = (usuario.permisos === 1) ? null : req.body.plaza
 
     if( usuario.permisos === 1){ // si es administrador de sucursales
         MovimientoModel.getMovimientosNoBasicosByIdSucursalAndCategoria(idSucursal, categoria, inicio, final, (error, movimientos) => {
@@ -64,11 +63,11 @@ function historialMovimientosPost(req, res) {
             }
         })
     }else{ // si es administrador general
-        MovimientoModel.getMovimientosNoBasicosByPlazaAndCategoria(sucursal, categoria, inicio, final, (error, movimientos) => {
+        MovimientoModel.getMovimientosNoBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, (error, movimientos) => {
             if(error){
                 Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0}) 
             }else{
-                MovimientoModel.getMovimientosBasicosByPlazaAndCategoria(sucursal, categoria, inicio, final, (error, asignaciones) => {
+                MovimientoModel.getMovimientosBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, (error, asignaciones) => {
                     (error) ? (
                         Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
                     ) : (
@@ -81,41 +80,68 @@ function historialMovimientosPost(req, res) {
 }
 
 function historialBajasGet(req, res) {
-    let usuario = req.session.user,
-        idSucursal = usuario.idSucursal
+    let usuario = req.session.user
 
     if( usuario.permisos === 1){ // si es administrador de sucursales
-        // obtener los movimientos de productos basicos y no basicos de la sucursal
-        BajaModel.getBajasNoBasicosBySucursal(idSucursal, (error, bajas) => {
-            if(error){
-                Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
-                return
-            }
-            BajaModel.getBajasBasicosBySucursal(idSucursal, (error, bajasBasicos) => {
-                if(error){
-                    Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
-                    return
-                }
-                // unir movimientos
-                res.render('./historial/bajas',{usuario, bajas, bajasBasicos})
-            })
+        CategoriaModel.getNamesOfCategories((error, categorias) => {
+            (error) ? (
+                Utilidad.printError(res, {msg:`Error al obtener las categorias: ${error}`,tipo: 0})
+            ) : (
+                res.render('./historial/bajas',{ usuario, categorias })
+            )
         })
     }else{ // si es administrador general
-        // obtener los movimientos de productos basicos y no basicos de todas las sucursales
-        // obtener los movimientos de productos basicos y no basicos de la sucursal
-        BajaModel.getBajasNoBasicos((error, bajas) => {
+        CategoriaModel.getNamesOfCategories((error, categorias) => {
+            (error) ? (
+                Utilidad.printError(res, {msg:`Error al obtener las categorias: ${error}`,tipo: 0})
+            ) : (
+                SucursalModel.getPlazasOfSucursales((error, sucursales) => {
+                    (error) ? (
+                        Utilidad.printError(res, {msg:`Error al obtener las sucursales: ${error}`, tipo:0})
+                    ) : (
+                        res.render('./historial/bajas',{ usuario, sucursales, categorias })
+                    )
+                })
+            )
+        })
+    } 
+}
+
+function historialBajasPost(req, res){
+    let usuario = req.session.user,
+        inicio = req.body.inicio,
+        final = sumarDia( req.body.final ),
+        idSucursal = usuario.idSucursal,
+        categoria = req.body.categoria,
+        plaza = (usuario.permisos === 1) ? null : req.body.plaza
+
+    if( usuario.permisos === 1){ // si es administrador de sucursales
+        BajaModel.getBajasNoBasicosByIdSucursalAndCategoria(idSucursal, categoria, inicio, final, (error, bajas) => {
             if(error){
                 Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
-                return
+            }else{
+                BajaModel.getBajasBasicosByIdSucursalAndCategoria(idSucursal, categoria, inicio, final, (error, bajasBasicos) => {
+                    (error) ? (
+                        Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
+                    ) : (
+                        res.send({bajas, bajasBasicos})
+                    )
+                })
             }
-            BajaModel.getBajasBasicos((error, bajasBasicos) => {
-                if(error){
-                    Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
-                    return
-                }
-                // unir movimientos
-                res.render('./historial/bajas',{usuario, bajas, bajasBasicos})
-            })
+        })
+    }else{ // si es administrador general
+        BajaModel.getBajasNoBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, (error, bajas) => {
+            if(error){
+                Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
+            }else{
+                BajaModel.getBajasBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, (error, bajasBasicos) => {
+                    (error) ? (
+                        Utilidad.printError(res, {msg:`Error al obtener los movimientos: ${error}`, tipo: 0})
+                    ) : (
+                        res.send({bajas, bajasBasicos})
+                    )
+                })
+            }
         })
     }
 }
@@ -249,6 +275,7 @@ module.exports = {
     historialMovimientosGet,
     historialMovimientosPost,
     historialBajasGet,
+    historialBajasPost,
     historialGeneralGet,
     historialSucursalGet,
     historialSucursalTopPost,

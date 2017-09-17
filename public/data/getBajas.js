@@ -1,23 +1,21 @@
-var formularioMovimiento;
+var formularioBajas;
 // funcion que agrega las nuevas filas a la tabla
-function agregarMovimientos(movimientos){
+function agregarBajas(bajas){
     var table = $('#dataTables-example').DataTable();
 
-    for(var i=0 ; movimientos[i] ; i++){
-        var movimiento = movimientos[i],
-            nombre = movimiento.nombreProducto,
-            codigo = movimiento.codigo,
-            cantidad = movimiento.cantidad,
-            tipo = (movimiento.tipo === 0 ) ? 'Paso a consumo' : 'Agrego producto' ,
-            usuario = movimiento.nombreUsuario,
+    for(var i=0 ; bajas[i] ; i++){
+        var baja = bajas[i],
+            nombre = baja.nombreProducto,
+            codigo = baja.codigo,
+            cantidad = baja.cantidad,
+            usuario = baja.nombreUsuario,
             tecnica = 'Sin tecnica',
-            fecha = getFecha(movimiento.fecha);
+            fecha = getFecha(baja.fecha);
 
         table.row.add([
             codigo,
             nombre,
             cantidad,
-            tipo,
             usuario,
             tecnica,
             fecha  
@@ -26,24 +24,22 @@ function agregarMovimientos(movimientos){
 }
 
 // funcion que agrega las nuevas filas a la tabla
-function agregarAsignaciones(asignaciones){
+function agregarBajasBasicos(bajasBasicos){
     var table = $('#dataTables-example').DataTable();
     
-    for(var i=0 ; asignaciones[i] ; i++){
-        var asignacion = asignaciones[i],
-            nombre = asignacion.nombreProducto,
-            codigo = asignacion.codigo,
+    for(var i=0 ; bajasBasicos[i] ; i++){
+        var bajaBasico = bajasBasicos[i],
+            nombre = bajaBasico.nombreProducto,
+            codigo = bajaBasico.codigo,
             cantidad = 1,
-            tipo = 'Paso a consumo',
-            usuario = asignacion.nombreUsuario,
-            tecnica = asignacion.nombreTecnica,
-            fecha = getFecha(asignacion.fecha);
+            usuario = bajaBasico.nombreUsuario,
+            tecnica = bajaBasico.nombreTecnica,
+            fecha = getFecha(bajaBasico.fecha);
 
         table.row.add([
             codigo,
             nombre,
             cantidad,
-            tipo,
             usuario,
             tecnica,
             fecha  
@@ -73,15 +69,15 @@ function eliminaFilas(){
 };
 
 // obtencion de los datos para el top ten
-function obtenerMovimientos() {
+function obtenerBajas() {
     $.ajax({
-        url: '/historial/movimientos',
+        url: '/historial/bajas',
         type: 'POST',
-        data: formularioMovimiento.serialize(),
+        data: formularioBajas.serialize(),
         success : function(data) {
-            // Movimientos
-            agregarMovimientos(data.movimientos);
-            agregarAsignaciones(data.asignaciones);
+            // Bajas
+            agregarBajas(data.bajas);
+            agregarBajasBasicos(data.bajasBasicos);
             // recarga la tabla
             $('#dataTables-example').DataTable().draw();
         }
@@ -89,16 +85,16 @@ function obtenerMovimientos() {
 }
 
 // obtencion de los datos para el top ten
-function reiniciarMovimientos() {
+function reiniciarBajas() {
     $.ajax({
-        url: '/historial/movimientos',
+        url: '/historial/bajas',
         type: 'POST',
-        data: formularioMovimiento.serialize(),
+        data: formularioBajas.serialize(),
         success : function(data) {
-            // Movimientos
+            // Bajas
             eliminaFilas();
-            agregarMovimientos(data.movimientos);
-            agregarAsignaciones(data.asignaciones);
+            agregarBajas(data.bajas);
+            agregarBajasBasicos(data.bajasBasicos);
             // recarga la tabla
             $('#dataTables-example').DataTable().draw();
         }
@@ -108,23 +104,22 @@ function reiniciarMovimientos() {
 // funcion principal
 $(function(){ 
     // obtengo el formulario del almacen
-    formularioMovimiento = $('#formmovimiento');
-    obtenerMovimientos();
+    formularioBajas = $('#formbaja');
+    obtenerBajas();
 
     $("input[name=inicio]").change(function(){
-        reiniciarMovimientos();
+        reiniciarBajas();
     });
 
     $("input[name=final]").change(function(){
-        reiniciarMovimientos();
+        reiniciarBajas();
     });
 
     $("select[name=plaza]").change(function(){
-        reiniciarMovimientos();
+        reiniciarBajas();
     });
 
     $("select[name=categoria]").change(function(){
-        reiniciarMovimientos();
+        reiniciarBajas();
     });
-
 });

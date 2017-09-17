@@ -26,7 +26,7 @@ function getMovimientosBasicosByIdSucursalAndCategoria(idSucursal, category, ini
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
                 JOIN tecnicas t ON m.idTecnica = t.idTecnica
                 JOIN categorias c ON p.idCategoria = c.idCategoria
-                WHERE (m.fecha BETWEEN ? AND ?) AND u.idSucursal = ? AND c.nombre = ?`, [inicio, final, idSucursal, category], (error, resultado, fields) => {
+                WHERE (m.fecha BETWEEN ? AND ?) AND (u.idSucursal = ? OR t.idSucursal = ?) AND c.nombre = ?`, [inicio, final, idSucursal, idSucursal, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -54,7 +54,7 @@ function getMovimientosBasicosByPlazaAndCategoria(plaza, category, inicio, final
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
                 JOIN tecnicas t ON m.idTecnica = t.idTecnica
                 JOIN categorias c ON p.idCategoria = c.idCategoria
-                JOIN sucursales s ON u.idSucursal = s.idSucursal
+                JOIN sucursales s ON u.idSucursal = s.idSucursal OR t.idSucursal = s.idSucursal
                 WHERE (m.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, category], (error, resultado, fields) => {
 
             next(error, resultado)
