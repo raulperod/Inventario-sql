@@ -5,51 +5,57 @@
 
 const MovimientoModel = require('./coneccion')
 
-function getMovimientosNoBasicos(next) {
+function getMovimientosNoBasicosByIdSucursalAndCategoria(idSucursal, category, inicio, final, next) {
     MovimientoModel
-        .query(`SELECT p.nombre nombreProducto, m.cantidad, m.tipo, concat(u.nombre,' ',u.apellido) nombreUsuario, s.plaza, m.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, m.cantidad, m.tipo, concat(u.nombre,' ',u.apellido) nombreUsuario, m.fecha
                 FROM movimientos m
                 JOIN productos p ON m.idProducto = p.idProducto
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
-                JOIN sucursales s ON u.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                WHERE (m.fecha BETWEEN ? AND ?) AND u.idSucursal = ? AND c.nombre = ?`, [inicio, final, idSucursal, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getMovimientosBasicos(next) {
+function getMovimientosBasicosByIdSucursalAndCategoria(idSucursal, category, inicio, final, next) {
     MovimientoModel
-        .query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, s.plaza, m.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, m.fecha
                 FROM asignacionbasicos m
                 JOIN productos p ON m.idProducto = p.idProducto
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
                 JOIN tecnicas t ON m.idTecnica = t.idTecnica
-                JOIN sucursales s ON u.idSucursal = s.idSucursal`, (error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                WHERE (m.fecha BETWEEN ? AND ?) AND u.idSucursal = ? AND c.nombre = ?`, [inicio, final, idSucursal, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getMovimientosNoBasicosBySucursal(idSucursal, next) {
+function getMovimientosNoBasicosByPlazaAndCategoria(plaza, category, inicio, final, next) {
     MovimientoModel
-        .query(`SELECT p.nombre nombreProducto, m.cantidad, m.tipo, concat(u.nombre,' ',u.apellido) nombreUsuario, m.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, m.cantidad, m.tipo, concat(u.nombre,' ',u.apellido) nombreUsuario, m.fecha
                 FROM movimientos m
                 JOIN productos p ON m.idProducto = p.idProducto
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
-                WHERE u.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                JOIN sucursales s ON u.idSucursal = s.idSucursal
+                WHERE (m.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
 }
 
-function getMovimientosBasicosBySucursal(idSucursal, next) {
+function getMovimientosBasicosByPlazaAndCategoria(plaza, category, inicio, final, next) {
     MovimientoModel
-        .query(`SELECT p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, m.fecha
+        .query(`SELECT p.codigo, p.nombre nombreProducto, concat(u.nombre,' ',u.apellido) nombreUsuario, concat(t.nombre,' ',t.apellido) nombreTecnica, m.fecha
                 FROM asignacionbasicos m
                 JOIN productos p ON m.idProducto = p.idProducto
                 JOIN usuarios u ON m.idUsuario = u.idUsuario
                 JOIN tecnicas t ON m.idTecnica = t.idTecnica
-                WHERE u.idSucursal = ?`, idSucursal, (error, resultado, fields) => {
+                JOIN categorias c ON p.idCategoria = c.idCategoria
+                JOIN sucursales s ON u.idSucursal = s.idSucursal
+                WHERE (m.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, category], (error, resultado, fields) => {
 
             next(error, resultado)
         })
@@ -74,10 +80,10 @@ function createMovimientoBasico(movimiento, next) {
 }
 
 module.exports = {
-    getMovimientosNoBasicos,
-    getMovimientosBasicos,
-    getMovimientosNoBasicosBySucursal,
-    getMovimientosBasicosBySucursal,
+    getMovimientosNoBasicosByIdSucursalAndCategoria,
+    getMovimientosBasicosByIdSucursalAndCategoria,
+    getMovimientosNoBasicosByPlazaAndCategoria,
+    getMovimientosBasicosByPlazaAndCategoria,
     createMovimientoNoBasico,
     createMovimientoBasico
 }

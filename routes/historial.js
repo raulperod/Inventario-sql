@@ -8,8 +8,10 @@ const express = require("express"),
     historial = express.Router()
 
 // gelishtime/historial/movimientos
-// Metodo GET
-historial.get("/movimientos", HistorialController.historialMovimientosGet)
+historial
+    .route('/movimientos')
+    .get( HistorialController.historialMovimientosGet )
+    .post( HistorialController.historialMovimientosPost )
 // gelishtime/historial/bajas
 // Metodo GET
 historial.get("/bajas", HistorialController.historialBajasGet )
