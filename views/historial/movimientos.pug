@@ -23,7 +23,7 @@ block contenido
                     for sucursal in sucursales
                       option(name="1") #{sucursal.plaza}
                 .col-lg-3
-                  label Categoria:
+                  label Categoría:
                   select.form-control(id="categoria" name="categoria" )
                     for categoria in categorias
                       option(name="1") #{categoria.nombre}
@@ -37,7 +37,7 @@ block contenido
                   label Fecha Final:
                   input.form-control(id="final" type="date" name="final" )
                 .col-lg-4
-                  label Categoria:
+                  label Categoría:
                   select.form-control(id="categoria" name="categoria" )
                     for categoria in categorias
                       option(name="1") #{categoria.nombre}
@@ -51,12 +51,12 @@ block contenido
             table#dataTables-example.table.table-striped.table-bordered.table-hover
               thead
                 tr
-                  th Codigo
+                  th Código
                   th Producto
                   th Cantidad
                   th Tipo
                   th Usuario
-                  th Tecnica  
+                  th Técnica  
                   th Fecha
               tbody
                 

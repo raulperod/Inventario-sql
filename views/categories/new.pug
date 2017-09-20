@@ -5,7 +5,7 @@ block contenido
       .col-md-4.col-md-offset-4
         .login-panel.panel.panel-default
           .panel-heading
-            h3.panel-title Registrar categoria
+            h3.panel-title Registrar categoría
           .panel-body
             #aviso
             form(action="/categories/new",method="POST",role='form',id="formNew")
@@ -14,7 +14,7 @@ block contenido
                   h5  Nombre:
                   input.form-control(type="text" name="nombre" placeholder="Nombre", id="name" required)
                 .form-group
-                  h5  Descripcion:
+                  h5  Descripción:
                   input.form-control(type="text" name="descripcion" placeholder="Descripcion" id="desc" required)
                 .form-group
                 input(type="submit" value="Agregar categoria" class="btn btn-lg btn-primary btn-block")

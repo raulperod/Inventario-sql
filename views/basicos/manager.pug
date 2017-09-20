@@ -4,17 +4,17 @@ block contenido
   #page-wrapper
     .row
       .col-lg-12
-        h3.page-header Asignacion y baja de producto basico
+        h3.page-header Asignación y baja de producto básico
     .row
       .col-md-12
         .panel.panel-primary
           .panel-heading
-            | Eleccion
+            | Elección
           .panel-body
             .row
               .col-md-5
                 h4
-                  | Asignacion de basico
+                  | Asignación de básico
                 #aviso1
                 form(action="/basicos?_method=PUT",method="POST",role='form', id="form1")
                   .form-group
@@ -23,7 +23,7 @@ block contenido
                       for producto in productos
                         option(name="1") #{producto.nombre}
                   .form-group
-                    h5  Tecnica:
+                    h5  Técnica:
                     select.form-control.selectpicker(name="tecnica", data-live-search="true")
                       for tecnica in tecnicas
                         option(name="1") #{tecnica.nombre}
@@ -33,7 +33,7 @@ block contenido
               
               .col-md-5      
                 h4
-                  | Baja de basico
+                  | Baja de básico
                 #aviso2  
                 form(action="/basicos?_method=DELETE",method="POST",role='form', id="form2")
                   .form-group
@@ -42,7 +42,7 @@ block contenido
                       for producto in productos
                         option(name="1") #{producto.nombre}
                   .form-group
-                    h5  Tecnica:
+                    h5  Técnica:
                     select.form-control.selectpicker(name="tecnica", data-live-search="true")
                       for tecnica in tecnicas
                         option(name="1") #{tecnica.nombre}

@@ -14,23 +14,23 @@ block contenido
                   h5  Nombre:
                   input.form-control(type="text", name="nombre", placeholder="Nombre", required,id="name")
                 .form-group
-                  h5  Codigo de barras:
+                  h5  Código:
                   input.form-control(type="text", name="codigo", placeholder="Codigo de barra", required,id="cb")
                 .form-group
-                  h5  Descripcion:
+                  h5  Descripción:
                   input.form-control(type="text", name="descripcion", placeholder="Descripcion", required,id="desc")
                 .form-group
-                  h5  Cantidad minima:
+                  h5  Cantidad mínima:
                   input.form-control(type="number" placeholder="Cantidad minima" name="minimo" min="0" max="10000" required,id="min")
                 .form-group
-                  h5  Categoria:
+                  h5  Categoría:
                   select.form-control.selectpicker(name="categoria", data-live-search="true")
                     for categoria in categorias
                       option #{categoria.nombre}
                 //esto todavia hay que ver los estilos para poner un select en vez de un input
                 // boton para registrar
                 .form-group
-                  label Basico
+                  label Básico
                   .radio
                     label
                       input#optionsRadios1(type='radio', name='basico', value='Si')

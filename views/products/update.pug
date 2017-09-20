@@ -14,16 +14,16 @@ block contenido
                   h5  Nombre:
                   input.form-control(type="text", name="nombre", value=productoUpdate.nombre, required,id="name")
                 .form-group
-                  h5  Codigo de barras:
+                  h5  Código:
                   input.form-control(type="text", name="codigo", value=productoUpdate.codigo, required,id="cb")
                 .form-group
-                  h5  Descripcion:
+                  h5  Descripción:
                   input.form-control(type="text", name="descripcion", value=productoUpdate.descripcion, required,id="desc")
                 .form-group
-                  h5  Cantidad minima:
+                  h5  Cantidad mínima:
                   input.form-control(type="number", value=productoUpdate.minimo ,name="minimo", min="0", max="10000" required,id="min")
                 .form-group
-                  h5  Categoria:
+                  h5  Categoría:
                   select.form-control(name="categoria")
                     option #{productoUpdate.nombreCategoria}
                     for categoria in categorias
@@ -33,7 +33,7 @@ block contenido
                 // boton para registrar
                 if productoUpdate.esBasico
                   .form-group
-                    label Basico
+                    label Básico
                     .radio
                       label
                         input#optionsRadios1(type='radio', name='basico', value='Si', checked='')
@@ -46,7 +46,7 @@ block contenido
                 else
 
                   .form-group
-                    label Basico
+                    label Básico
                     .radio
                       label
                         input#optionsRadios1(type='radio', name='basico', value='Si')
