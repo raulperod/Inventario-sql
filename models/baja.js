@@ -11,7 +11,7 @@ function getBajasNoBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, n
                 FROM bajas b
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
-                JOIN categoria c ON p.idCategoria = c.idCategoria
+                JOIN categorias c ON p.idCategoria = c.idCategoria
                 JOIN sucursales s ON u.idSucursal = s.idSucursal
                 WHERE (b.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, categoria], (error, resultado, fields) => {
 
@@ -26,7 +26,7 @@ function getBajasBasicosByPlazaAndCategoria(plaza, categoria, inicio, final, nex
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
                 JOIN tecnicas t ON b.idTecnica = t.idTecnica
-                JOIN categoria c ON p.idCategoria = c.idCategoria
+                JOIN categorias c ON p.idCategoria = c.idCategoria
                 JOIN sucursales s ON u.idSucursal = s.idSucursal OR t.idSucursal = s.idSucursal
                 WHERE (b.fecha BETWEEN ? AND ?) AND s.plaza = ? AND c.nombre = ?`, [inicio, final, plaza, categoria], (error, resultado, fields) => {
 
