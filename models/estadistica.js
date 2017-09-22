@@ -12,7 +12,7 @@ function getTopTen(idSucursal, inicio, final, next) {
                 JOIN productos p ON b.idProducto = p.idProducto
                 JOIN usuarios u ON b.idUsuario = u.idUsuario
                 WHERE p.esBasico = 0 AND u.idSucursal = ? AND (b.fecha BETWEEN ? AND ?)  
-                GROUP BY p.codigo LIMIT 10` , [idSucursal, inicio, final], (error, resultado, fields) => {
+                GROUP BY p.codigo ORDER BY cantidad DESC LIMIT 10` , [idSucursal, inicio, final], (error, resultado, fields) => {
 
             next(error, resultado)
         })
