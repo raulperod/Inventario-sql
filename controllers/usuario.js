@@ -185,6 +185,9 @@ function usersIdUsuarioPut(req ,res) {
         }else{
             delete usuarioUpdate.password 
         }  
+        if(usuarioUpdate.idUsuario == usuario.idUsuario){ // so el admin de sucursal se esta editando
+            delete usuarioUpdate.status
+        }
         // guardo los cambios del usuario en la base de datos
         updateUser(res, usuarioUpdate)
     }
@@ -216,7 +219,7 @@ function updateUser(res, user) {
 
 function comprobarUsuario(usuarioUpdate, usuario){
     try{
-        return usuarioUpdate.idSucursal === usuario.idSucursal && usuarioUpdate.permisos < usuario.permisos 
+        return usuarioUpdate.idSucursal === usuario.idSucursal && usuarioUpdate.permisos <= usuario.permisos 
     }catch(error){
         return false
     }

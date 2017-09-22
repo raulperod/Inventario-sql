@@ -25,8 +25,7 @@ block contenido
                 .form-group
                   h5  Confirmación de contraseña:
                   input.form-control(type="password" name="password_confirmation" placeholder="Confirmar Contraseña" id="pass2")
-                if usuarioUpdate.permisos !== 2
-                  if usuario.permisos === 2
+                if usuarioUpdate.permisos < 2 && usuario.permisos === 2
                     .form-group
                       h5  Sucursal:
                       select.form-control(name="plaza")
@@ -41,19 +40,28 @@ block contenido
                           option(name="administrador") Administrador
                           option(name="recepcionista") Recepcionista
                         else
-
                           option(name="recepcionista") Recepcionista
                           option(name="administrador") Administrador
-                  .form-group
-                    h5  Estado:
-                    select.form-control(name="status")
-                      if usuarioUpdate.status
+                    .form-group
+                      h5  Estado:
+                      select.form-control(name="status")
+                        if usuarioUpdate.status
                           option(name="activo") Activo
                           option(name="inactivo") Inactivo
-                      else
+                        else
+                          option(name="inactivo") Inactivo
+                          option(name="activo") Activo
+                else if usuarioUpdate.permisos === 0 && usuario.permisos === 1  
+                  .form-group
+                      h5  Estado:
+                      select.form-control(name="status")
+                        if usuarioUpdate.status
+                          option(name="activo") Activo
+                          option(name="inactivo") Inactivo
+                        else
+                          option(name="inactivo") Inactivo
+                          option(name="activo") Activo
 
-                        option(name="inactivo") Inactivo
-                        option(name="activo") Activo
 
                 .form-group
                 input(type="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block")
