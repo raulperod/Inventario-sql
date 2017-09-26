@@ -22,7 +22,7 @@ function usersGet(req, res) {
         })
     } else { // si es admin de sucursal
          // obtienes el id de la sucursal del usuario
-        UserModel.getUsersBySucursal(idSucursal, (error, usuarios) => { // si se pudieron obtener los usuarios
+        UserModel.getUsersBySucursal(usuario.idUsuario, idSucursal, (error, usuarios) => { // si se pudieron obtener los usuarios
             (error) ? ( // si hubo error
                 Utilidad.printError(res, {msg: `Error al obtener los usuarios: ${error}`, tipo: 0})
             ) : ( // si no hubo error
@@ -219,7 +219,7 @@ function updateUser(res, user) {
 
 function comprobarUsuario(usuarioUpdate, usuario){
     try{
-        return usuarioUpdate.idSucursal === usuario.idSucursal && usuarioUpdate.permisos <= usuario.permisos 
+        return usuarioUpdate.idSucursal === usuario.idSucursal && usuarioUpdate.permisos < usuario.permisos || usuarioUpdate.idUsuario === usuario.idUsuario 
     }catch(error){
         return false
     }

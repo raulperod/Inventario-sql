@@ -54,7 +54,7 @@ function consumosIdConsumoPut(req, res) {
     // obtenemos la cantidad
     let cantidad = parseInt(req.body.cantidad)
     // si no mandaron cambios
-    if( cantidad === 0 ){
+    if( isNaN(cantidad) || cantidad === 0 ){
         res.send("")
     }else{ // quitamos lo productos de consumo
         let usuario = req.session.user,

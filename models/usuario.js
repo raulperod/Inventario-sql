@@ -37,11 +37,11 @@ function getUsers(next) {
         })
 }
 
-function getUsersBySucursal(idSucursal, next) {
+function getUsersBySucursal(idUsuario, idSucursal, next) {
     UserModel
         .query(`SELECT u.username, u.nombre, u.apellido, u.permisos, u.status, u.idUsuario 
                 FROM usuarios u 
-                WHERE u.idSucursal = ? AND u.permisos < 2`, idSucursal ,(error, resultado, fields) => {
+                WHERE (u.idSucursal = ? AND u.permisos = 0) OR u.idUsuario = ?`, [idSucursal, idUsuario] ,(error, resultado, fields) => {
 
             next(error, resultado)
         })

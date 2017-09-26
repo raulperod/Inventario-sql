@@ -55,7 +55,7 @@ function almacenIdAlmacenAddPut(req, res) {
     // obtengo la cantidad
     let cantidad = parseInt(req.body.cantidad)
     // si no mandaron cambios
-    if( cantidad === 0 ){
+    if( isNaN(cantidad) || cantidad === 0 ){
         res.send("") // no mando nada
     }else{ // si agregaron productos
         let usuario = req.session.user,
@@ -103,7 +103,7 @@ function almacenIdAlmacenSubPut(req, res) {
     // obtengo la cantidad
     let cantidad = parseInt(req.body.cantidad)
     // si no mandaron cambios
-    if( cantidad === 0 ){
+    if( isNaN(cantidad) || cantidad === 0 ){
         res.send("") // no mando nada
     }else{ // si se quitaron productos
         let usuario = req.session.user,
